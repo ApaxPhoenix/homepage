@@ -138,7 +138,7 @@ export function Cas() {
                 <span className="text-xs tracking-widest text-muted uppercase">{c.group}</span>
                 {c.level && (
                   <span className={`rounded-full px-3 py-1 text-xs font-medium ${c.level === "HL" ? "bg-accent text-paper" : "bg-soft"}`}>
-                    {c.level}
+                    {c.level === "HL" ? "Higher Level" : "Standard Level"}
                   </span>
                 )}
               </div>
@@ -154,8 +154,8 @@ export function Cas() {
       <div className="ib-cores mt-6 grid gap-4 md:grid-cols-3">
         {IB_CORE.map((c, i) => (
           <div key={c.short} className={`ib-core rounded-3xl p-6 sm:p-8 ${["bg-ink text-paper", "bg-accent text-ink", "bg-soft"][i]}`}>
-            <span className="font-display text-6xl font-semibold tracking-tighter">{c.short}</span>
-            <p className="font-display mt-6 text-xl font-semibold">{c.title}</p>
+            <span className="text-xs tracking-widest uppercase opacity-60">({c.short})</span>
+            <p className="font-display mt-6 text-3xl leading-tight font-semibold tracking-tight">{c.title}</p>
             <p className="mt-2 text-sm opacity-75">{c.body}</p>
           </div>
         ))}
@@ -163,16 +163,15 @@ export function Cas() {
 
       <div id="cas" className="mt-28 mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <span className="text-xs tracking-widest text-muted uppercase">(The core — in depth)</span>
+          <span className="text-xs tracking-widest text-muted uppercase">(CAS — part of the IB core)</span>
           <Split
             as="h2"
-            by="chars"
-            className="cas-head font-display mt-3 block text-[22vw] leading-[0.85] font-semibold tracking-[-0.05em] sm:text-[13vw]"
-            text="CAS"
+            className="cas-head font-display mt-3 block text-5xl leading-[0.9] font-semibold tracking-tighter sm:text-7xl lg:text-8xl"
+            text="Creativity, Activity, Service"
           />
         </div>
         <p className="max-w-sm text-muted">
-          Creativity, Activity, Service. Eighteen months of experiences outside the classroom — planned, lived and
+          Eighteen months of experiences outside the classroom — planned, lived and
           reflected on. Here&apos;s how the library can help you get it done.
         </p>
       </div>
@@ -278,10 +277,10 @@ export function Cas() {
       <div id="ia" className="mt-28">
         <div className="grid gap-6 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
-            <span className="text-xs tracking-widest text-muted uppercase">(Internal Assessment)</span>
-            <h3 className="font-display mt-3 text-4xl leading-[0.95] font-semibold tracking-tighter sm:text-6xl">
-              The IA<span className="text-accent">.</span>
-            </h3>
+            <span className="text-xs tracking-widest text-muted uppercase">(IA — in every IB course)</span>
+            <h2 className="font-display mt-3 text-5xl leading-[0.9] font-semibold tracking-tighter sm:text-7xl lg:text-8xl">
+              Internal Assessment<span className="text-accent">.</span>
+            </h2>
           </div>
           <p className="text-muted md:col-span-5">
             Every IB course has one. It&apos;s a piece of independent work — an investigation, a project or an oral —

@@ -1,7 +1,8 @@
 // All site copy and links live here so the library team can edit one file.
 
 export const SITE = {
-  name: "Commons",
+  name: "LHS Commons",
+  fullName: "Linden High School Library Commons",
   wordmark: "COMMONS",
   school: "Linden High School",
   librarian: "Ms. Colish",
@@ -19,7 +20,7 @@ export const NAV = [
   { label: "Books", href: "#books" },
   { label: "Find a book", href: "#find" },
   { label: "Resources", href: "#resources" },
-  { label: "IB", href: "#ib" },
+  { label: "International Baccalaureate", href: "#ib" },
   { label: "Courses", href: "#courses" },
   { label: "Help", href: "#help" },
   { label: "Visit", href: "#visit" },

@@ -10,6 +10,7 @@ export function Nav() {
   const menu = useRef<HTMLDivElement>(null);
   const menuTl = useRef<gsap.core.Timeline | null>(null);
   const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState("");
 
   useGSAP(() => {
     gsap.set(bar.current, { yPercent: -100 });
@@ -21,6 +22,20 @@ export function Nav() {
       .fromTo(menu.current, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.8, ease: "expo.inOut" })
       .from(".menu-link", { yPercent: 110, stagger: 0.06, duration: 0.8, ease: "expo.out" }, "-=0.35")
       .from(".menu-foot", { autoAlpha: 0, y: 20, duration: 0.5 }, "-=0.5");
+
+    // Highlight the nav link for the section in the middle of the screen.
+    NAV.forEach((item) => {
+      if (!document.querySelector(item.href)) return;
+      ScrollTrigger.create({
+        trigger: item.href,
+        start: "top center",
+        end: "bottom center",
+        onToggle: (self) => {
+          if (self.isActive) setCurrent(item.href);
+          else setCurrent((c) => (c === item.href ? "" : c));
+        },
+      });
+    });
 
     const off = onIntroDone(() => {
       gsap.to(bar.current, { yPercent: 0, duration: 1, ease: "expo.out", delay: 0.6 });
@@ -77,7 +92,8 @@ export function Nav() {
                 href={item.href}
                 onMouseEnter={(e) => hover(e, true)}
                 onMouseLeave={(e) => hover(e, false)}
-                className="relative block h-[1.25em] overflow-hidden leading-[1.25em]"
+                aria-current={current === item.href ? "location" : undefined}
+                className={`relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === item.href ? "text-accent" : ""}`}
               >
                 <span className="roll block">{item.label}</span>
                 <span className="roll block" aria-hidden>
@@ -118,7 +134,7 @@ export function Nav() {
           ))}
         </nav>
         <div className="menu-foot text-sm text-white/60">
-          <p>{SITE.school} Library Learning Commons</p>
+          <p>{SITE.fullName}</p>
           <p>{SITE.location}</p>
         </div>
       </div>

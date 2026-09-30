@@ -113,7 +113,7 @@ export function Footer() {
 
       <div className="mt-16 flex justify-between gap-4 text-xs">
         <span>
-          © {new Date().getFullYear()} {SITE.school} Library Learning Commons
+          © {new Date().getFullYear()} {SITE.fullName}
         </span>
         <a href="#top" className="shrink-0 hover:underline">
           Back to top ↑

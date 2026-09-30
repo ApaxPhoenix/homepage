@@ -13,9 +13,9 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "Commons — Linden High School Library Learning Commons",
+  title: "LHS Commons — Linden High School Library Commons",
   description:
-    "Books, research databases, International Baccalaureate support, courses and a game and create space at the Linden High School Library Learning Commons.",
+    "Books, research databases, International Baccalaureate support, courses and a game and create space at the Linden High School Library Commons.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -61,7 +61,7 @@ export function Preloader() {
     >
       <div className="flex justify-between text-xs uppercase tracking-widest text-white/60">
         <span>Loading</span>
-        <span>{SITE.school}</span>
+        <span>{SITE.fullName}</span>
       </div>
       <div className="font-display text-[17vw] leading-none font-semibold tracking-tighter">
         <span className="split-mask">

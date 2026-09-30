@@ -4,7 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP, onIntroDone } from "./gsap";
 import { Split } from "./Split";
 import { confirmLeave } from "./ExitModal";
-import { HOURS, SITE } from "../data";
+import { HOURS, NOODLETOOLS, SITE } from "../data";
+
+const QUICK = [
+  { label: "Find a book", href: "#find" },
+  { label: "Research databases", href: "#resources" },
+  { label: "NoodleTools ↗", href: NOODLETOOLS.student },
+  { label: "Internal Assessment", href: "#ia" },
+  { label: "Ask Ms. Colish", href: "#help" },
+];
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -95,7 +103,7 @@ export function Hero() {
           />
           <div className="flex flex-col gap-4 text-sm text-muted md:col-span-4 md:col-start-9 md:pt-3">
             <p className="hero-fade">
-              The {SITE.school} Library Learning Commons — books, research databases, International Baccalaureate support and a makerspace, all in
+              The {SITE.fullName} — books, research databases, International Baccalaureate support and a makerspace, all in
               one place.
             </p>
             <form onSubmit={search} role="search" className="hero-fade flex items-center gap-2 rounded-full bg-soft p-1.5 pl-5">
@@ -119,6 +127,18 @@ export function Hero() {
                 </span>
               </button>
             </form>
+            <nav aria-label="Quick links" className="hero-fade flex flex-wrap gap-2">
+              {QUICK.map((q) => (
+                <a
+                  key={q.label}
+                  href={q.href}
+                  {...(q.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="rounded-full border border-line px-3 py-2 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                >
+                  {q.label}
+                </a>
+              ))}
+            </nav>
           </div>
         </div>
 
