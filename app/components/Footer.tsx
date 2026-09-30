@@ -123,7 +123,7 @@ export function Footer() {
       <Split
         as="p"
         by="chars"
-        className="foot-brand font-display -mb-[3vw] block text-center text-[29vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
+        className="foot-brand font-display -mb-[3vw] block text-center text-[17vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
         text={SITE.wordmark}
       />
     </footer>

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
 import { Ext } from "./Ext";
-import { CAS_LINKS, CAS_OUTCOMES, CAS_STAGES, CAS_STRANDS, IB_HELP } from "../data";
+import { CAS_LINKS, CAS_OUTCOMES, CAS_STAGES, CAS_STRANDS, IB_CORE, IB_COURSES, IB_HELP } from "../data";
 
 const STRAND_STYLE = ["bg-accent text-ink", "bg-ink text-paper", "bg-soft text-ink"];
 
@@ -13,6 +13,29 @@ export function Cas() {
 
   useGSAP(
     () => {
+      gsap.from(".ib-head .split-inner", {
+        yPercent: 110,
+        stagger: 0.04,
+        duration: 1.2,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".ib-head", start: "top 85%" },
+      });
+      gsap.from(".ib-course", {
+        y: 50,
+        autoAlpha: 0,
+        stagger: 0.07,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".ib-courses", start: "top 85%" },
+      });
+      gsap.from(".ib-core", {
+        clipPath: "inset(100% 0% 0% 0% round 24px)",
+        stagger: 0.1,
+        duration: 1.3,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".ib-cores", start: "top 85%" },
+      });
+
       gsap.from(".cas-head .split-inner", {
         yPercent: 110,
         stagger: 0.05,
@@ -75,10 +98,57 @@ export function Cas() {
   };
 
   return (
-    <section id="cas" ref={root} className="bg-paper px-4 pt-28 pb-12 sm:px-8 sm:pt-40">
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+    <section id="ib" ref={root} className="bg-paper px-4 pt-28 pb-12 sm:px-8 sm:pt-40">
+      <div className="grid gap-8 md:grid-cols-12 md:items-end">
+        <div className="md:col-span-8">
+          <span className="text-xs tracking-widest text-muted uppercase">(IB Diploma Programme)</span>
+          <Split
+            as="h2"
+            className="ib-head font-display mt-3 block text-5xl leading-[0.9] font-semibold tracking-tighter sm:text-7xl lg:text-8xl"
+            text="International Baccalaureate"
+          />
+        </div>
+        <p className="text-muted md:col-span-4">
+          A two-year diploma for juniors and seniors. You take six subjects — three at Higher Level (HL) and three at
+          Standard Level (SL) — plus a core of Theory of Knowledge, the Extended Essay and CAS.
+        </p>
+      </div>
+
+      <div className="ib-courses mt-16">
+        <h3 className="font-display mb-6 text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
+        <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+          {IB_COURSES.map((c) => (
+            <li key={c.name + c.level} className="ib-course flex flex-col justify-between gap-8 bg-paper p-6">
+              <div className="flex items-start justify-between gap-4">
+                <span className="text-xs tracking-widest text-muted uppercase">{c.group}</span>
+                {c.level && (
+                  <span className={`rounded-full px-3 py-1 text-xs font-medium ${c.level === "HL" ? "bg-accent text-paper" : "bg-soft"}`}>
+                    {c.level}
+                  </span>
+                )}
+              </div>
+              <div>
+                <p className="font-display text-2xl leading-tight font-semibold tracking-tight">{c.name}</p>
+                <p className="mt-2 text-sm text-muted">Start with: {c.use}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="ib-cores mt-6 grid gap-4 md:grid-cols-3">
+        {IB_CORE.map((c, i) => (
+          <div key={c.short} className={`ib-core rounded-3xl p-6 sm:p-8 ${["bg-ink text-paper", "bg-accent text-ink", "bg-soft"][i]}`}>
+            <span className="font-display text-6xl font-semibold tracking-tighter">{c.short}</span>
+            <p className="font-display mt-6 text-xl font-semibold">{c.title}</p>
+            <p className="mt-2 text-sm opacity-75">{c.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div id="cas" className="mt-28 mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <span className="text-xs tracking-widest text-muted uppercase">(IB Diploma)</span>
+          <span className="text-xs tracking-widest text-muted uppercase">(The core — in depth)</span>
           <Split
             as="h2"
             by="chars"

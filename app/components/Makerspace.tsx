@@ -44,21 +44,28 @@ export function Makerspace() {
           Makerspace<span className="text-accent">.</span>
         </h2>
         <p className="text-muted md:col-span-5 md:pt-4">
-          A shared space for making, learning, exploring and sharing — with high-tech and no-tech tools. Build something,
-          fix something, or just unwind between classes.
+          Board games, something to read and supplies to make things with. Grab a chess board at lunch, add a few pieces to
+          the community puzzle, or just unwind between classes.
         </p>
       </div>
-      <ul className="mk-chips mt-16 flex flex-wrap gap-3">
-        {MAKERSPACE.map((item) => (
-          <li
-            key={item}
-            onMouseEnter={wobble}
-            className="mk-chip font-display rounded-full border border-ink bg-paper px-5 py-3 text-lg font-medium transition-colors hover:border-accent hover:bg-accent sm:text-2xl"
-          >
-            {item}
-          </li>
+      <div className="mk-chips mt-16 grid gap-10 lg:grid-cols-3">
+        {MAKERSPACE.map((g) => (
+          <div key={g.group}>
+            <h3 className="mb-4 text-xs tracking-widest text-muted uppercase">{g.group}</h3>
+            <ul className="flex flex-wrap gap-3">
+              {g.items.map((item) => (
+                <li
+                  key={item}
+                  onMouseEnter={wobble}
+                  className="mk-chip font-display rounded-full border border-ink bg-paper px-5 py-3 text-lg font-medium transition-colors hover:border-accent hover:bg-accent sm:text-xl"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

@@ -95,7 +95,7 @@ export function Hero() {
           />
           <div className="flex flex-col gap-4 text-sm text-muted md:col-span-4 md:col-start-9 md:pt-3">
             <p className="hero-fade">
-              The {SITE.school} Library Learning Commons — books, research databases, IB support and a makerspace, all in
+              The {SITE.school} Library Learning Commons — books, research databases, International Baccalaureate support and a makerspace, all in
               one place.
             </p>
             <form onSubmit={search} role="search" className="hero-fade flex items-center gap-2 rounded-full bg-soft p-1.5 pl-5">
@@ -134,7 +134,7 @@ export function Hero() {
           <Split
             as="p"
             by="chars"
-            className="hero-brand font-display block text-[29vw] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap"
+            className="hero-brand font-display block text-[18.5vw] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap"
             text={SITE.wordmark}
           />
 

@@ -1,12 +1,12 @@
 // All site copy and links live here so the library team can edit one file.
 
 export const SITE = {
-  name: "LHS Commons",
-  wordmark: "LINDEN",
+  name: "Commons",
+  wordmark: "COMMONS",
   school: "Linden High School",
-  librarian: "Ms. Lee",
+  librarian: "Ms. Colish",
   // Library contact email. Leave empty to show "visit the circulation desk" instead.
-  email: "",
+  email: "mcolish@lindenps.org",
   location: "2nd floor, Social Studies wing — across from Room 214",
   // Follett Destiny Discover search; the query is appended to this URL.
   catalogSearch: "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=",
@@ -19,7 +19,8 @@ export const NAV = [
   { label: "Books", href: "#books" },
   { label: "Find a book", href: "#find" },
   { label: "Resources", href: "#resources" },
-  { label: "IB CAS", href: "#cas" },
+  { label: "IB", href: "#ib" },
+  { label: "Courses", href: "#courses" },
   { label: "Help", href: "#help" },
   { label: "Visit", href: "#visit" },
 ];
@@ -138,7 +139,7 @@ export const NOODLETOOLS = {
 export const RESOURCE_GROUPS: ResourceGroup[] = [
   {
     title: "Research databases",
-    intro: "Every database here exports citations to NoodleTools. Ask Ms. Lee for passwords.",
+    intro: "Every database here exports citations to NoodleTools. Ask Ms. Colish for passwords.",
     links: [
       { label: "EBSCOhost", note: "Articles, journals and magazines", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
       { label: "EBSCO Image Collection", note: "Inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
@@ -270,30 +271,36 @@ export const CAS_LINKS = [
 ];
 
 export const IB_HELP = [
-  { title: "Extended Essay", body: "Book a research consult and start your source list in NoodleTools." },
+  { title: "Extended Essay", body: "Book a research consult with Ms. Colish and start your source list in NoodleTools." },
   { title: "Theory of Knowledge", body: "Find real-world examples in ProCon, newspapers and primary sources." },
   { title: "Internal Assessments", body: "Use the subject databases for data, articles and background reading." },
 ];
 
+// IB Diploma courses offered at Linden High. Edit this list as offerings change.
+export const IB_COURSES = [
+  { name: "Biology", level: "HL", group: "Sciences", use: "Science Online, Health Reference Center" },
+  { name: "Biology", level: "SL", group: "Sciences", use: "Science Online, Health Reference Center" },
+  { name: "Chemistry", level: "HL", group: "Sciences", use: "Science Online, EBSCOhost" },
+  { name: "Physics", level: "", group: "Sciences", use: "Science Online, Google Scholar" },
+  { name: "Engineering & Systems Design", level: "", group: "Sciences", use: "Science Online, EBSCOhost" },
+  { name: "Mathematics: Analysis & Approaches", level: "", group: "Mathematics", use: "US Census data, Google Scholar" },
+]
+
+export const IB_CORE = [
+  { title: "Theory of Knowledge", short: "TOK", body: "A course on how we know what we claim to know, ending in an exhibition and an essay." },
+  { title: "Extended Essay", short: "EE", body: "An independent 4,000-word research paper on a topic you choose." },
+  { title: "Creativity, Activity, Service", short: "CAS", body: "Experiences outside the classroom, planned and reflected on across the programme." },
+]
+
+// What's actually in the space: games, reading and hands-on creative supplies.
 export const MAKERSPACE = [
-  "Virtual reality (BYOD)",
-  "KEVA planks",
-  "Makey Makey",
-  "K'NEX",
-  "Snap Circuits",
-  "Knitting & crochet",
-  "Looms",
-  "Sewing",
-  "Community coloring",
-  "Community puzzle",
-  "Origami",
-  "Chess",
-  "Uno",
-  "Battleship",
-  "Mancala",
-  "Connect Four",
-  "Scrabble",
-];
+  { group: "Board games", items: ["Chess", "Scrabble", "Uno", "Battleship", "Mancala", "Connect Four", "Jenga"] },
+  { group: "Read", items: ["Books", "Graphic novels", "Magazines", "Newspapers & articles"] },
+  {
+    group: "Create",
+    items: ["Community coloring", "Community puzzle", "Origami", "Drawing & sketching", "Knitting & crochet", "Looms", "Sewing"],
+  },
+]
 
 export const LIBRARIAN_HELPS = [
   "Research consults for essays, the EE and IAs",
@@ -311,11 +318,11 @@ export const FAQ = [
   },
   {
     q: "Can I come to the library at lunch?",
-    a: "Yes — pick up a lunch pass from Ms. Lee in the library in the morning. The cafeteria does not give out library passes.",
+    a: "Yes — pick up a lunch pass from Ms. Colish in the library in the morning. The cafeteria does not give out library passes.",
   },
   {
     q: "Where do I get database passwords?",
-    a: "Ask Ms. Lee. Cameron's Collection eBooks use the Gale password.",
+    a: "Ask Ms. Colish. Cameron's Collection eBooks use the Gale password.",
   },
   {
     q: "Can I print or make copies?",
@@ -323,7 +330,7 @@ export const FAQ = [
   },
   {
     q: "How do I borrow eBooks and audiobooks?",
-    a: "Use Sora (OverDrive) for eBooks and audiobooks, or Cameron's Collection on Gale for more eBooks. Ms. Lee can help you sign in.",
+    a: "Use Sora (OverDrive) for eBooks and audiobooks, or Cameron's Collection on Gale for more eBooks. Ms. Colish can help you sign in.",
   },
   {
     q: "How do I cite a book?",
@@ -331,7 +338,7 @@ export const FAQ = [
   },
   {
     q: "Can I book a room for group work?",
-    a: "Students can see Ms. Lee to book the conference room. Teachers can request the library classroom or conference room with the online form.",
+    a: "Students can see Ms. Colish to book the conference room. Teachers can request the library classroom or conference room with the online form.",
   },
   {
     q: "Is the library open after school?",

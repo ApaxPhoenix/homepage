@@ -68,7 +68,7 @@ export function Help() {
           <div>
             <div className="lib-rise flex items-center gap-4">
               <span className="font-display grid h-16 w-16 place-items-center rounded-full bg-accent text-2xl font-semibold text-ink">
-                L
+                {SITE.librarian.split(" ").pop()?.[0]}
               </span>
               <div>
                 <p className="font-display text-3xl font-semibold tracking-tight">{SITE.librarian}</p>

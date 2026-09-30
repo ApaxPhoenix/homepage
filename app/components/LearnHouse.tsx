@@ -23,12 +23,12 @@ export function LearnHouse() {
   );
 
   return (
-    <section id="learnhouse" ref={root} className="bg-paper px-4 py-12 sm:px-8">
+    <section id="courses" ref={root} className="bg-paper px-4 py-12 sm:px-8">
       <div className="lh-card grid gap-10 bg-ink p-6 text-paper sm:p-12 md:grid-cols-12 md:items-end">
         <div className="overflow-hidden md:col-span-7">
-          <span className="lh-rise block text-xs tracking-widest text-white/50 uppercase">(Online courses)</span>
+          <span className="lh-rise block text-xs tracking-widest text-white/50 uppercase">(On LearnHouse)</span>
           <h2 className="lh-rise font-display mt-3 text-5xl font-semibold tracking-tighter sm:text-7xl">
-            LearnHouse<span className="text-accent">.</span>
+            Courses<span className="text-accent">.</span>
           </h2>
           <p className="lh-rise mt-4 max-w-md text-white/60">
             Self-paced courses and lessons from the Learning Commons. Sign in to pick up where you left off and track
@@ -47,7 +47,7 @@ export function LearnHouse() {
             href={SITE.learnhouse}
             className="lh-rise group inline-flex items-center gap-3 rounded-full bg-accent py-3 pr-3 pl-6 font-medium"
           >
-            Open LearnHouse
+            Open courses
             <span className="grid h-8 w-8 place-items-center rounded-full bg-ink transition-transform duration-500 group-hover:rotate-45">
               ↗
             </span>
