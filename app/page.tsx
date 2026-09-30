@@ -11,10 +11,15 @@ import { LearnHouse } from "./components/LearnHouse";
 import { Makerspace } from "./components/Makerspace";
 import { Footer } from "./components/Footer";
 import { ExitModal } from "./components/ExitModal";
+import { SmoothScroll } from "./components/SmoothScroll";
+import { BookFinder } from "./components/BookFinder";
+import { Help } from "./components/Help";
+import { CiteDrawer } from "./components/CiteDrawer";
 
 export default function Home() {
   return (
     <>
+      <SmoothScroll />
       <Preloader />
       <Cursor />
       <Nav />
@@ -23,12 +28,15 @@ export default function Home() {
         <Marquee />
         <Mission />
         <Books />
+        <BookFinder />
         <Resources />
         <Cas />
         <LearnHouse />
         <Makerspace />
+        <Help />
       </main>
       <Footer />
+      <CiteDrawer />
       <ExitModal />
     </>
   );

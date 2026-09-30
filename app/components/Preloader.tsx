@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP, INTRO_EVENT } from "./gsap";
 import { SITE } from "../data";
+import { lockScroll } from "./SmoothScroll";
 
 export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
@@ -22,12 +23,12 @@ export function Preloader() {
       }
 
       const counter = { v: 0 };
-      document.documentElement.style.overflow = "hidden";
+      lockScroll("preloader", true);
 
       gsap
         .timeline({
           onComplete: () => {
-            document.documentElement.style.overflow = "";
+            lockScroll("preloader", false);
             gsap.set(root.current, { display: "none" });
           },
         })

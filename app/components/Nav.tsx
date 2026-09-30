@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP, ScrollTrigger, onIntroDone } from "./gsap";
 import { NAV, SITE } from "../data";
+import { lockScroll, scrollToHash } from "./SmoothScroll";
 
 export function Nav() {
   const bar = useRef<HTMLElement>(null);
@@ -45,7 +46,13 @@ export function Nav() {
     setOpen(next);
     if (next) menuTl.current?.timeScale(1).play();
     else menuTl.current?.timeScale(1.6).reverse();
-    document.documentElement.style.overflow = next ? "hidden" : "";
+    lockScroll("menu", next);
+  };
+
+  const go = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    toggle(false);
+    scrollToHash(href);
   };
 
   const hover = (e: React.MouseEvent<HTMLAnchorElement>, enter: boolean) => {
@@ -63,7 +70,7 @@ export function Nav() {
           <a href="#top" className="font-display text-lg font-semibold tracking-tight" onClick={() => open && toggle(false)}>
             {SITE.name}
           </a>
-          <nav className="hidden gap-8 text-sm md:flex">
+          <nav className="hidden gap-7 text-sm lg:flex">
             {NAV.map((item) => (
               <a
                 key={item.href}
@@ -83,7 +90,7 @@ export function Nav() {
             onClick={() => toggle()}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="text-sm md:hidden"
+            className="text-sm lg:hidden"
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -93,14 +100,15 @@ export function Nav() {
       <div
         id="mobile-menu"
         ref={menu}
-        className="invisible fixed inset-0 z-40 flex flex-col justify-between bg-ink px-4 pt-24 pb-8 text-paper md:hidden"
+        data-lenis-prevent
+        className="invisible fixed inset-0 z-40 flex flex-col justify-between overflow-y-auto bg-ink px-4 pt-24 pb-8 text-paper lg:hidden"
       >
         <nav className="flex flex-col">
           {NAV.map((item, i) => (
             <span key={item.href} className="overflow-hidden border-b border-white/15">
               <a
                 href={item.href}
-                onClick={() => toggle(false)}
+                onClick={(e) => go(e, item.href)}
                 className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
               >
                 {item.label}

@@ -4,7 +4,9 @@ export const SITE = {
   name: "LHS Commons",
   wordmark: "LINDEN",
   school: "Linden High School",
-  email: "mcolish@lindenps.org",
+  librarian: "Ms. Lee",
+  // Library contact email. Leave empty to show "visit the circulation desk" instead.
+  email: "",
   location: "2nd floor, Social Studies wing — across from Room 214",
   // Follett Destiny Discover search; the query is appended to this URL.
   catalogSearch: "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=",
@@ -15,9 +17,10 @@ export const SITE = {
 
 export const NAV = [
   { label: "Books", href: "#books" },
+  { label: "Find a book", href: "#find" },
   { label: "Resources", href: "#resources" },
   { label: "IB CAS", href: "#cas" },
-  { label: "LearnHouse", href: "#learnhouse" },
+  { label: "Help", href: "#help" },
   { label: "Visit", href: "#visit" },
 ];
 
@@ -38,46 +41,73 @@ export const HOURS_TABLE = [
   { day: "Thursday", time: "After school until 7:00pm" },
 ];
 
+// Covers come from Open Library by ISBN; publisher and year feed the citation tool.
 export const TOP_BOOKS = [
   {
     title: "The Book Thief",
     author: "Markus Zusak",
     genre: "Historical fiction",
     blurb: "Nazi Germany, narrated by Death, and a girl who steals books to survive it.",
-    href: "https://www.goodreads.com/review/show/2000790435",
+    isbn: "9780375842207",
+    publisher: "Alfred A. Knopf",
+    year: "2006",
+    review: "https://www.goodreads.com/review/show/2000790435",
   },
   {
     title: "The Fifth Season",
     author: "N. K. Jemisin",
     genre: "Fantasy",
     blurb: "A world that ends every few centuries and a mother searching for her daughter as it happens again.",
-    href: "https://www.goodreads.com/review/show/2688764715",
+    isbn: "9780316229296",
+    publisher: "Orbit",
+    year: "2015",
+    review: "https://www.goodreads.com/review/show/2688764715",
   },
   {
     title: "The Things They Carried",
     author: "Tim O'Brien",
     genre: "War fiction",
     blurb: "Linked stories about a platoon in Vietnam and the weight — real and remembered — each soldier holds.",
-    href: "https://www.goodreads.com/review/show/2000811856",
+    isbn: "9780618706419",
+    publisher: "Houghton Mifflin",
+    year: "1990",
+    review: "https://www.goodreads.com/review/show/2000811856",
   },
   {
     title: "Miss Peregrine's Home for Peculiar Children",
     author: "Ransom Riggs",
     genre: "Fantasy / mystery",
     blurb: "An island, an abandoned orphanage and a stack of strange vintage photographs.",
-    href: "https://www.goodreads.com/review/show/2688770664",
+    isbn: "9781594744761",
+    publisher: "Quirk Books",
+    year: "2011",
+    review: "https://www.goodreads.com/review/show/2688770664",
   },
   {
     title: "Sold",
     author: "Patricia McCormick",
     genre: "Novel in verse",
     blurb: "A girl from Nepal is trafficked into India; told in short, unforgettable poems.",
-    href: "https://www.goodreads.com/review/show/2000809987",
+    isbn: "9780786851713",
+    publisher: "Hyperion",
+    year: "2006",
+    review: "https://www.goodreads.com/review/show/2000809987",
   },
 ];
 
+// Genre shelves for the book finder: Open Library searches limited to teen fiction.
+export const GENRES = [
+  { label: "Fantasy", q: 'subject:"young adult fiction" subject:fantasy' },
+  { label: "Mystery", q: 'subject:"young adult fiction" subject:mystery' },
+  { label: "Science fiction", q: 'subject:"young adult fiction" subject:"science fiction"' },
+  { label: "Historical", q: 'subject:"young adult fiction" subject:"historical fiction"' },
+  { label: "Romance", q: 'subject:"young adult fiction" subject:romance' },
+  { label: "Novels in verse", q: 'subject:"novels in verse"' },
+  { label: "Graphic novels", q: 'subject:"young adult fiction" subject:"graphic novels"' },
+];
+
 export const READING_LINKS = [
-  { label: "Mrs. H's full book list", note: "Goodreads", href: "https://www.goodreads.com/review/list/65339918-lindenhs-mediacenter?shelf=read" },
+  { label: "The library's book list", note: "LHS Media Center on Goodreads", href: "https://www.goodreads.com/review/list/65339918-lindenhs-mediacenter?shelf=read" },
   { label: "eBooks & audiobooks", note: "Sora / OverDrive", href: "https://soraapp.com/" },
   {
     label: "Cameron's Collection eBooks",
@@ -108,7 +138,7 @@ export const NOODLETOOLS = {
 export const RESOURCE_GROUPS: ResourceGroup[] = [
   {
     title: "Research databases",
-    intro: "Every database here exports citations to NoodleTools. Ask Mrs. H. or Mrs. Casey for passwords.",
+    intro: "Every database here exports citations to NoodleTools. Ask Ms. Lee for passwords.",
     links: [
       { label: "EBSCOhost", note: "Articles, journals and magazines", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
       { label: "EBSCO Image Collection", note: "Inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
@@ -234,11 +264,9 @@ export const CAS_OUTCOMES = [
 export const CAS_STAGES = ["Investigation", "Preparation", "Action", "Reflection", "Demonstration"];
 
 export const CAS_LINKS = [
-  { label: "CAS at home ideas", note: "LPS OneNote", href: "https://lindenps-my.sharepoint.com/:o:/g/personal/khanusosky_lindenps_org/EnIYt4DjvstEkuejKp-K7pYBlbiCxkjvgy2vCCGnUqC31A" },
   { label: "CAS presentation", note: "Google Slides", href: "https://docs.google.com/presentation/d/e/2PACX-1vSy5KM1rURUFKzTqxpIxTQrzLpv5BVxG30GkkXpMPCWvCvGSGPQ-qCvE7ytX10AJaWZe9RWAvfznPtA/pub?start=false&loop=false&delayms=10000" },
-  { label: "CAS video", note: "YouTube", href: "https://www.youtube.com/watch?v=859auXjG1Ko" },
   { label: "CAS collection", note: "Wakelet", href: "https://wakelet.com/wake/rzd0rJxntmjppbp-_eS2f" },
-  { label: "CAS on the IB website", note: "ibo.org", href: "https://www.ibo.org/programmes/diploma-programme/curriculum/creativity-activity-and-service/" },
+  { label: "CAS on the IB website", note: "Official guide — ibo.org", href: "https://www.ibo.org/programmes/diploma-programme/curriculum/creativity-activity-and-service/" },
 ];
 
 export const IB_HELP = [
@@ -267,27 +295,49 @@ export const MAKERSPACE = [
   "Scrabble",
 ];
 
-export const VISIT_RULES = [
-  {
-    title: "Getting in",
-    body: "Come with your teacher or a pass from class, and wear your student ID. Scan in at the door, hand in your pass and scan out when you leave.",
-  },
-  {
-    title: "Lunch passes",
-    body: "Pick one up from Mrs. H. in the library in the morning. The cafeteria does not give out library passes.",
-  },
-  {
-    title: "Printing & copying",
-    body: "Self-service colour printing and copying for single copies. Bulk and class-set jobs go through the main office.",
-  },
-  {
-    title: "Booking space",
-    body: "Teachers can request the library classroom or conference room online. Students, see Mrs. H. or Mrs. Casey to book the conference room for group work.",
-  },
+export const LIBRARIAN_HELPS = [
+  "Research consults for essays, the EE and IAs",
+  "Database passwords and logins",
+  "Lunch passes",
+  "Book requests and recommendations",
+  "Citations and NoodleTools",
+  "Booking the conference room",
 ];
 
-export const LIBRARY_CALENDAR =
-  "https://calendar.google.com/calendar/embed?src=khanusosky%40lindenps.org&ctz=America%2FNew_York";
+export const FAQ = [
+  {
+    q: "How do I get into the library during class?",
+    a: "Come with your teacher or bring a pass from class, and wear your student ID. Scan in at the front door, hand in your pass, and scan out when you leave.",
+  },
+  {
+    q: "Can I come to the library at lunch?",
+    a: "Yes — pick up a lunch pass from Ms. Lee in the library in the morning. The cafeteria does not give out library passes.",
+  },
+  {
+    q: "Where do I get database passwords?",
+    a: "Ask Ms. Lee. Cameron's Collection eBooks use the Gale password.",
+  },
+  {
+    q: "Can I print or make copies?",
+    a: "Yes. Colour printing and copying are self-service for single copies. Bulk and class-set jobs go through the main office.",
+  },
+  {
+    q: "How do I borrow eBooks and audiobooks?",
+    a: "Use Sora (OverDrive) for eBooks and audiobooks, or Cameron's Collection on Gale for more eBooks. Ms. Lee can help you sign in.",
+  },
+  {
+    q: "How do I cite a book?",
+    a: "Find it in the book finder and press Cite for MLA or APA, then keep your sources organised in NoodleTools.",
+  },
+  {
+    q: "Can I book a room for group work?",
+    a: "Students can see Ms. Lee to book the conference room. Teachers can request the library classroom or conference room with the online form.",
+  },
+  {
+    q: "Is the library open after school?",
+    a: "Yes — until 4:00pm on Tuesday, Wednesday and Friday, and until 7:00pm on Thursday.",
+  },
+];
 
 export const SCHEDULE_FORM =
   "https://docs.google.com/forms/d/e/1FAIpQLScrLQwoIJGkqy5KFdZ_KPgy37p5XMV89fxz7X2Z3zG2zquewA/viewform";

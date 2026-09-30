@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
 import { Ext } from "./Ext";
-import { HOURS_TABLE, LIBRARY_CALENDAR, NAV, SCHEDULE_FORM, SITE, VISIT_RULES } from "../data";
+import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE } from "../data";
 
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -17,15 +17,6 @@ export function Footer() {
         duration: 1.2,
         ease: "expo.out",
         scrollTrigger: { trigger: ".cta-line", start: "top 85%" },
-      });
-
-      gsap.from(".visit-rule", {
-        y: 40,
-        autoAlpha: 0,
-        stagger: 0.08,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".visit-rules", start: "top 88%" },
       });
 
       gsap.from(".foot-brand .split-inner", {
@@ -64,29 +55,20 @@ export function Footer() {
           />
         </div>
         <a
-          href={`mailto:${SITE.email}`}
+          href={SITE.email ? `mailto:${SITE.email}` : "#help"}
           onMouseMove={onMove}
           onMouseLeave={onLeave}
           className="grid h-40 w-40 shrink-0 place-items-center rounded-full bg-ink text-paper sm:h-48 sm:w-48"
         >
           <span className="text-center text-sm font-medium">
-            Email the
+            Ask
             <br />
-            library →
+            {SITE.librarian} →
           </span>
         </a>
       </div>
 
-      <div className="visit-rules mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {VISIT_RULES.map((r) => (
-          <div key={r.title} className="visit-rule rounded-2xl border border-ink/25 p-6">
-            <h3 className="font-display text-xl font-semibold">{r.title}</h3>
-            <p className="mt-2 text-sm text-ink/80">{r.body}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-16 grid gap-10 border-t border-ink/30 pt-10 text-sm sm:grid-cols-2 md:grid-cols-4">
+      <div className="mt-20 grid gap-10 border-t border-ink/30 pt-10 text-sm sm:grid-cols-2 md:grid-cols-4">
         <div>
           <p className="mb-3 text-ink/60">Hours</p>
           {HOURS_TABLE.map((h) => (
@@ -103,17 +85,20 @@ export function Footer() {
         </div>
         <div>
           <p className="mb-3 text-ink/60">Get in touch</p>
-          <a href={`mailto:${SITE.email}`} className="block break-all hover:underline">
-            {SITE.email}
-          </a>
-          <a href={`mailto:${SITE.email}?subject=Book%20request`} className="block hover:underline">
-            Request a book
-          </a>
+          {SITE.email ? (
+            <>
+              <a href={`mailto:${SITE.email}`} className="block break-all hover:underline">
+                {SITE.email}
+              </a>
+              <a href={`mailto:${SITE.email}?subject=Book%20request`} className="block hover:underline">
+                Request a book
+              </a>
+            </>
+          ) : (
+            <p>{SITE.librarian}, School Librarian — at the circulation desk</p>
+          )}
           <Ext href={SCHEDULE_FORM} className="block hover:underline">
             Book the classroom (teachers) ↗
-          </Ext>
-          <Ext href={LIBRARY_CALENDAR} className="block hover:underline">
-            Library calendar ↗
           </Ext>
         </div>
         <div>

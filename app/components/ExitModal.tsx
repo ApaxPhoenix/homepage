@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { SITE } from "../data";
+import { lockScroll } from "./SmoothScroll";
 
 const LEAVE_EVENT = "commons:leave";
 
@@ -32,6 +33,7 @@ export function ExitModal() {
           onComplete: () => confirmBtn.current?.focus(),
           onReverseComplete: () => {
             setUrl(null);
+            lockScroll("exit", false);
             returnFocus.current?.focus();
           },
         })
@@ -59,6 +61,7 @@ export function ExitModal() {
     const show = (href: string) => {
       returnFocus.current = document.activeElement as HTMLElement | null;
       setUrl(href);
+      lockScroll("exit", true);
       tl.current?.timeScale(1).play();
     };
     const onClick = (e: MouseEvent) => {
