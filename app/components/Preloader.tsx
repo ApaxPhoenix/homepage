@@ -62,7 +62,7 @@ export function Preloader() {
         <span>Loading</span>
         <span>{SITE.school}</span>
       </div>
-      <div className="font-display text-[17vw] leading-none font-semibold tracking-tighter">
+      <div className="font-display text-[28vw] leading-none font-semibold tracking-tighter">
         <span className="split-mask">
           {[...SITE.wordmark].map((ch, i) => (
             <span key={i} className="pl-letter inline-block">

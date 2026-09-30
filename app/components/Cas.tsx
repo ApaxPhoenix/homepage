@@ -175,7 +175,7 @@ export function Cas() {
         ))}
       </div>
 
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {CAS_LINKS.map((l) => (
           <Ext
             key={l.href}

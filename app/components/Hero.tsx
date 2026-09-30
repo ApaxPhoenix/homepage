@@ -134,7 +134,7 @@ export function Hero() {
           <Split
             as="p"
             by="chars"
-            className="hero-brand font-display block text-[18.5vw] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap"
+            className="hero-brand font-display block text-[29vw] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap"
             text={SITE.wordmark}
           />
 

@@ -2,7 +2,7 @@
 
 export const SITE = {
   name: "LHS Commons",
-  wordmark: "COMMONS",
+  wordmark: "LINDEN",
   school: "Linden High School",
   email: "mcolish@lindenps.org",
   location: "2nd floor, Social Studies wing — across from Room 214",
@@ -99,62 +99,79 @@ export const FREE_BOOKS = [
 export type ResourceLink = { label: string; note?: string; href: string };
 export type ResourceGroup = { title: string; intro: string; links: ResourceLink[] };
 
+export const NOODLETOOLS = {
+  features: ["Create citations", "Take notes", "Organise & outline", "Collaborate with peers", "Share with teachers"],
+  student: "https://my.noodletools.com/logon/signin?domain=students.lindenps.org",
+  teacher: "https://my.noodletools.com/logon/signin?domain=lindenps.org",
+};
+
 export const RESOURCE_GROUPS: ResourceGroup[] = [
   {
     title: "Research databases",
     intro: "Every database here exports citations to NoodleTools. Ask Mrs. H. or Mrs. Casey for passwords.",
     links: [
-      { label: "NoodleTools — students", note: "Citations, notes, outlines", href: "https://my.noodletools.com/logon/signin?domain=students.lindenps.org" },
-      { label: "NoodleTools — teachers", href: "https://my.noodletools.com/logon/signin?domain=lindenps.org" },
-      { label: "EBSCOhost", note: "Articles and journals", href: "https://search.ebscohost.com/" },
-      { label: "Gale eBooks", href: "https://infotrac.galegroup.com/itweb/lin7273?db=GVRL" },
+      { label: "EBSCOhost", note: "Articles, journals and magazines", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
+      { label: "EBSCO Image Collection", note: "Inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
+      { label: "GreenFILE", note: "Environment research — inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
+      { label: "Gale eBooks", note: "Gale Cengage reference", href: "https://infotrac.galegroup.com/itweb/lin7273?db=GVRL" },
       { label: "Learn360", note: "Infobase streaming video", href: "http://learn360.infobase.com/PortalPlayLists.aspx?wid=18096" },
-      { label: "JerseyClicks", note: "Free via NJ State Library", href: "https://www.njstatelib.org/services_for_libraries/statewide_services/jerseyclicks/jerseyclicks-urls-libraries/" },
+      { label: "JerseyClicks", note: "NJ State Library — works from New Jersey locations", href: "https://www.njstatelib.org/services_for_libraries/statewide_services/jerseyclicks/jerseyclicks-urls-libraries/" },
     ],
   },
   {
-    title: "Infobase subject databases",
-    intro: "Facts on File collections for history, science and careers.",
+    title: "Infobase Facts on File",
+    intro: "Subject databases for history, literature, science, health and careers.",
     links: [
       { label: "American History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE52" },
       { label: "African-American History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE01" },
       { label: "American Indian History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE43" },
       { label: "Ancient & Medieval History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE49" },
+      { label: "Modern World History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE53" },
       { label: "World Geography & Culture", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE39" },
+      { label: "Bloom's Literature", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE54" },
       { label: "Science Online", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE40" },
-      { label: "Health", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE48" },
+      { label: "Health Reference Center", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE48" },
+      { label: "Ferguson's Career Guidance", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE34" },
       { label: "Curriculum Resource Center", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE51" },
     ],
   },
   {
     title: "Primary sources & facts",
-    intro: "Original documents, newspapers, data and both sides of the argument.",
+    intro: "Original documents, historic newspapers, data and both sides of the argument.",
     links: [
-      { label: "Library of Congress", note: "Digital collections", href: "https://www.loc.gov/collections/" },
-      { label: "NJ Digital Newspaper Project", note: "Rutgers", href: "https://blogs.libraries.rutgers.edu/njdnp/available-newspaper-titles/" },
-      { label: "US Census data", href: "https://data.census.gov/" },
-      { label: "ProCon", note: "Pros and cons of big issues", href: "https://www.procon.org/" },
-      { label: "SweetSearch", note: "Search engine for students", href: "https://www.sweetsearch.com/" },
+      { label: "Library of Congress", note: "Digital collections & primary sources", href: "https://www.loc.gov/collections/" },
+      { label: "NJ Digital Newspaper Project", note: "Historic New Jersey papers — Rutgers", href: "https://blogs.libraries.rutgers.edu/njdnp/available-newspaper-titles/" },
+      { label: "US Census data", note: "Statistics", href: "https://data.census.gov/" },
+      { label: "ProCon", note: "Pros and cons of controversial issues", href: "https://www.procon.org/" },
       { label: "Dictionary", href: "https://www.dictionary.com/" },
       { label: "Thesaurus", href: "https://www.thesaurus.com/" },
     ],
   },
   {
-    title: "Writing & citations",
-    intro: "Get the format right and keep your work your own.",
+    title: "Search smarter",
+    intro: "Search engines built for school work, plus tips for getting better results.",
     links: [
-      { label: "Purdue OWL", note: "MLA, APA and general writing help", href: "https://owl.purdue.edu/owl/purdue_owl.html" },
-      { label: "In-text citations guide", href: "https://monroecollege.libguides.com/c.php?g=589208&p=4073045" },
-      { label: "Avoiding plagiarism", href: "https://monroecollege.libguides.com/c.php?g=589208&p=4072931" },
+      { label: "SweetSearch", note: "Search engine for students", href: "https://www.sweetsearch.com/" },
+      { label: "Google Scholar", note: "Scholarly articles and papers", href: "https://scholar.google.com/" },
       { label: "Search tips & tricks", note: "Google for Education PDF", href: "https://static.googleusercontent.com/media/www.google.com/en//educators/downloads/Tips_Tricks_17x22.pdf" },
     ],
   },
   {
+    title: "Writing help",
+    intro: "Get the format right and keep your work your own.",
+    links: [
+      { label: "Purdue OWL", note: "MLA, APA, in-text citations and general writing help", href: "https://owl.purdue.edu/owl/purdue_owl.html" },
+      { label: "In-text citations guide", href: "https://monroecollege.libguides.com/c.php?g=589208&p=4073045" },
+      { label: "Avoiding plagiarism", href: "https://monroecollege.libguides.com/c.php?g=589208&p=4072931" },
+    ],
+  },
+  {
     title: "Evaluating sources",
-    intro: "Before you cite it, check who made it and why.",
+    intro: "Before you cite it, check who made it, when and why.",
     links: [
       { label: "The CRAAP test", href: "https://libguides.cmich.edu/web_research/craap" },
       { label: "5 W's evaluation checklist", href: "https://www.schrockguide.net/uploads/3/9/2/2/392267/schrock_5ws.pdf" },
+      { label: "Finding scholarly sources", note: "University of Illinois Library", href: "https://www.library.illinois.edu/ugl/howdoi/scholarly/" },
       { label: "Academic vs. peer-reviewed journals", note: "EBSCO", href: "https://connect.ebsco.com/s/article/What-is-the-difference-between-Academic-Journals-and-Scholarly-Peer-Reviewed-Journals?language=en_US" },
     ],
   },
@@ -162,12 +179,12 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     title: "College & career",
     intro: "Applications, financial aid, test prep and career research.",
     links: [
+      { label: "College & career collection", note: "Wakelet", href: "https://wakelet.com/wake/hfPp77ukmR8-v0yTPucPb" },
       { label: "Common App", href: "https://www.commonapp.org/" },
       { label: "FAFSA — Federal Student Aid", href: "https://studentaid.gov/" },
       { label: "NJ HESAA", note: "New Jersey state aid", href: "https://www.hesaa.org/" },
       { label: "BigFuture", note: "College search & scholarships", href: "https://bigfuture.collegeboard.org/" },
       { label: "Digital SAT prep", note: "Khan Academy", href: "https://www.khanacademy.org/test-prep/digital-sat" },
-      { label: "Ferguson's Career Guidance", note: "Infobase", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE34" },
     ],
   },
   {
@@ -175,9 +192,10 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     intro: "Support for your head and your health. Wellness books are also on the shelf in the Commons.",
     links: [
       { label: "988 Suicide & Crisis Lifeline", note: "Call or text 988", href: "https://988lifeline.org/" },
+      { label: "Wellness collection", note: "Wakelet — mental health sites and apps", href: "https://wakelet.com/wake/Xnc3RhioDjiBT-4oRVD44" },
+      { label: "Wellness eBooks", note: "Browse and borrow anonymously", href: "https://collections.follettsoftware.com/collection/5e2affecc4050e0012d5216c?h=9bcfef44e29749b57609f258d16b074af3a343f6095ce100c5e5fcc854214b4e" },
       { label: "TeensHealth", note: "Body, mind and relationships", href: "https://kidshealth.org/en/teens/" },
       { label: "MyPlate", note: "Nutrition basics", href: "https://www.myplate.gov/" },
-      { label: "Wellness eBooks", note: "Follett collection", href: "https://collections.follettsoftware.com/collection/5e2affecc4050e0012d5216c?h=9bcfef44e29749b57609f258d16b074af3a343f6095ce100c5e5fcc854214b4e" },
     ],
   },
 ];
@@ -217,6 +235,9 @@ export const CAS_STAGES = ["Investigation", "Preparation", "Action", "Reflection
 
 export const CAS_LINKS = [
   { label: "CAS at home ideas", note: "LPS OneNote", href: "https://lindenps-my.sharepoint.com/:o:/g/personal/khanusosky_lindenps_org/EnIYt4DjvstEkuejKp-K7pYBlbiCxkjvgy2vCCGnUqC31A" },
+  { label: "CAS presentation", note: "Google Slides", href: "https://docs.google.com/presentation/d/e/2PACX-1vSy5KM1rURUFKzTqxpIxTQrzLpv5BVxG30GkkXpMPCWvCvGSGPQ-qCvE7ytX10AJaWZe9RWAvfznPtA/pub?start=false&loop=false&delayms=10000" },
+  { label: "CAS video", note: "YouTube", href: "https://www.youtube.com/watch?v=859auXjG1Ko" },
+  { label: "CAS collection", note: "Wakelet", href: "https://wakelet.com/wake/rzd0rJxntmjppbp-_eS2f" },
   { label: "CAS on the IB website", note: "ibo.org", href: "https://www.ibo.org/programmes/diploma-programme/curriculum/creativity-activity-and-service/" },
 ];
 
@@ -264,6 +285,9 @@ export const VISIT_RULES = [
     body: "Teachers can request the library classroom or conference room online. Students, see Mrs. H. or Mrs. Casey to book the conference room for group work.",
   },
 ];
+
+export const LIBRARY_CALENDAR =
+  "https://calendar.google.com/calendar/embed?src=khanusosky%40lindenps.org&ctz=America%2FNew_York";
 
 export const SCHEDULE_FORM =
   "https://docs.google.com/forms/d/e/1FAIpQLScrLQwoIJGkqy5KFdZ_KPgy37p5XMV89fxz7X2Z3zG2zquewA/viewform";

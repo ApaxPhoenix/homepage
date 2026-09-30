@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
 import { Ext } from "./Ext";
-import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE, VISIT_RULES } from "../data";
+import { HOURS_TABLE, LIBRARY_CALENDAR, NAV, SCHEDULE_FORM, SITE, VISIT_RULES } from "../data";
 
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -112,6 +112,9 @@ export function Footer() {
           <Ext href={SCHEDULE_FORM} className="block hover:underline">
             Book the classroom (teachers) ↗
           </Ext>
+          <Ext href={LIBRARY_CALENDAR} className="block hover:underline">
+            Library calendar ↗
+          </Ext>
         </div>
         <div>
           <p className="mb-3 text-ink/60">On this page</p>
@@ -135,7 +138,7 @@ export function Footer() {
       <Split
         as="p"
         by="chars"
-        className="foot-brand font-display -mb-[3vw] block text-center text-[17vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
+        className="foot-brand font-display -mb-[3vw] block text-center text-[29vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
         text={SITE.wordmark}
       />
     </footer>
