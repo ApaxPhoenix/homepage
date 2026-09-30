@@ -143,9 +143,9 @@ export const NOODLETOOLS = {
 export const RESOURCE_GROUPS: ResourceGroup[] = [
   {
     title: "Research databases",
-    intro: "Every database here exports citations to NoodleTools. Ask Ms. Colish for passwords.",
+    intro: "Research papers, academic journals and reference material — every database here exports citations to NoodleTools. Ask Ms. Colish for passwords.",
     links: [
-      { label: "EBSCOhost", note: "Articles, journals and magazines", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
+      { label: "EBSCOhost", note: "Research papers, peer-reviewed journals and articles", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
       { label: "EBSCO Image Collection", note: "Inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
       { label: "GreenFILE", note: "Environment research — inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
       { label: "Gale eBooks", note: "Gale Cengage reference", href: "https://infotrac.galegroup.com/itweb/lin7273?db=GVRL" },
@@ -289,6 +289,10 @@ export const IB_COURSES = [
   { name: "Physics", level: "SL", group: "Sciences", use: "Science Online, Google Scholar" },
   { name: "Design Technology", level: "SL", group: "Sciences", use: "Science Online, EBSCOhost" },
   { name: "Mathematics: Analysis & Approaches", level: "SL", group: "Mathematics", use: "US Census data, Google Scholar" },
+  { name: "French B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in French" },
+  { name: "Spanish B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Spanish" },
+  { name: "Mandarin Chinese B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Chinese" },
+  { name: "Italian B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Italian" },
 ]
 
 // Internal Assessment by course. Formats follow the current IB subject guides;
@@ -307,6 +311,7 @@ export const IA_BY_COURSE = [
   { course: "Biology SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
   { course: "Physics SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
   { course: "Design Technology SL", task: "Design project", format: "Identify a real problem, then research, develop, prototype and evaluate a solution, documented in a portfolio." },
+  { course: "French, Spanish, Mandarin & Italian B HL", task: "Individual oral", format: "A conversation in the language with your teacher, starting from an extract of a literary work you studied in class." },
   { course: "Math: Analysis & Approaches SL", task: "Mathematical exploration", format: "A 12–20 page report exploring a piece of maths that interests you, in your own voice." },
 ];
 
