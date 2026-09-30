@@ -113,8 +113,8 @@ export function Footer() {
 
       <div className="mt-12 flex flex-col gap-3 rounded-2xl border border-ink/25 p-5 text-sm sm:flex-row sm:items-center sm:justify-between">
         <p>
-          <span className="font-medium">Something broken on this website?</span> Contact site support —{" "}
-          {SUPPORT.name}.
+          Website maintained by <span className="font-medium">{SUPPORT.name}</span>. Something broken or out of
+          date? Get in touch.
         </p>
         <a
           href={`mailto:${SUPPORT.email}?subject=${encodeURIComponent("LHS Commons website")}`}

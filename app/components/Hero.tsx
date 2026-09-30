@@ -143,6 +143,21 @@ export function Hero() {
         </div>
 
         <div className="relative">
+          <div className="mb-6 flex justify-end pr-[4vw]">
+            <div className="hero-badge relative grid h-24 w-24 shrink-0 place-items-center rounded-full bg-accent text-paper sm:h-32 sm:w-32 lg:h-40 lg:w-40">
+              <svg viewBox="0 0 100 100" className="hero-badge-text absolute inset-0 h-full w-full">
+                <defs>
+                  <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+                </defs>
+                <text className="fill-current text-[9px] font-medium uppercase">
+                  <textPath href="#badge-circle" textLength="236" lengthAdjust="spacing">
+                    Read • Research • Create •
+                  </textPath>
+                </text>
+              </svg>
+              <span className="font-display text-3xl sm:text-4xl">✦</span>
+            </div>
+          </div>
           <div className="hero-fade mb-4 flex flex-wrap items-end justify-between gap-4 text-xs tracking-widest text-muted uppercase">
             <span className="flex items-center gap-2">
               <span className={`h-2 w-2 rounded-full ${status?.open ? "bg-accent" : "bg-muted"}`} />
@@ -158,19 +173,6 @@ export function Hero() {
             text={SITE.wordmark}
           />
 
-          <div className="hero-badge absolute -top-40 right-[4vw] grid h-28 w-28 place-items-center rounded-full bg-accent text-paper sm:-top-24 sm:h-40 sm:w-40">
-            <svg viewBox="0 0 100 100" className="hero-badge-text absolute inset-0 h-full w-full">
-              <defs>
-                <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
-              </defs>
-              <text className="fill-current text-[9px] font-medium uppercase">
-                <textPath href="#badge-circle" textLength="236" lengthAdjust="spacing">
-                  Read • Research • Create •
-                </textPath>
-              </text>
-            </svg>
-            <span className="font-display text-3xl sm:text-4xl">✦</span>
-          </div>
         </div>
       </div>
     </section>
