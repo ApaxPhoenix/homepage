@@ -287,7 +287,6 @@ export const IB_COURSES = [
   { name: "Chemistry", level: "HL", group: "Sciences", use: "Science Online, EBSCOhost" },
   { name: "Biology", level: "SL", group: "Sciences", use: "Science Online, Health Reference Center" },
   { name: "Physics", level: "SL", group: "Sciences", use: "Science Online, Google Scholar" },
-  { name: "Design Technology", level: "SL", group: "Sciences", use: "Science Online, EBSCOhost" },
   { name: "Mathematics: Analysis & Approaches", level: "SL", group: "Mathematics", use: "US Census data, Google Scholar" },
   { name: "French B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in French" },
   { name: "Spanish B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Spanish" },
@@ -310,7 +309,6 @@ export const IA_BY_COURSE = [
   { course: "Chemistry HL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
   { course: "Biology SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
   { course: "Physics SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
-  { course: "Design Technology SL", task: "Design project", format: "Identify a real problem, then research, develop, prototype and evaluate a solution, documented in a portfolio." },
   { course: "French, Spanish, Mandarin & Italian B HL", task: "Individual oral", format: "A conversation in the language with your teacher, starting from an extract of a literary work you studied in class." },
   { course: "Math: Analysis & Approaches SL", task: "Mathematical exploration", format: "A 12–20 page report exploring a piece of maths that interests you, in your own voice." },
 ];
