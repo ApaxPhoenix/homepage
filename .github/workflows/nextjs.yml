@@ -59,7 +59,7 @@ jobs:
         # next.config.ts sets output: "export" itself and reads the base path
         # from PAGES_BASE_PATH (passed to the build step below).
       - name: Restore cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .next/cache
