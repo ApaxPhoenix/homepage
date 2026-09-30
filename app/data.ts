@@ -287,6 +287,25 @@ export const IB_COURSES = [
   { name: "Mathematics: Analysis & Approaches", level: "SL", group: "Mathematics", use: "US Census data, Google Scholar" },
 ]
 
+// Internal Assessment by course. Formats follow the current IB subject guides;
+// check deadlines and details with each teacher.
+export const IA_STEPS = [
+  { title: "Pick a focused question", body: "Narrow enough to answer well in the space you have. Run it past your teacher early." },
+  { title: "Research & plan", body: "Gather sources and data. Keep every source and note in NoodleTools from day one." },
+  { title: "Draft", body: "Write or record a full draft. Your teacher can give feedback on one draft." },
+  { title: "Revise & submit", body: "Act on the feedback, check your citations and hand in the final version." },
+];
+
+export const IA_BY_COURSE = [
+  { course: "English A HL", task: "Individual oral", format: "About 15 minutes: a prepared talk connecting a literary and a non-literary text to a global issue, then questions from your teacher." },
+  { course: "History HL", task: "Historical investigation", format: "A written investigation of up to 2,200 words, including source evaluation and a reflection." },
+  { course: "Chemistry HL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
+  { course: "Biology SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
+  { course: "Physics SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
+  { course: "Design Technology SL", task: "Design project", format: "Identify a real problem, then research, develop, prototype and evaluate a solution, documented in a portfolio." },
+  { course: "Math: Analysis & Approaches SL", task: "Mathematical exploration", format: "A 12–20 page report exploring a piece of maths that interests you, in your own voice." },
+];
+
 export const IB_CORE = [
   { title: "Theory of Knowledge", short: "TOK", body: "A course on how we know what we claim to know, ending in an exhibition and an essay." },
   { title: "Extended Essay", short: "EE", body: "An independent 4,000-word research paper on a topic you choose." },

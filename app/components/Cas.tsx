@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
 import { Ext } from "./Ext";
-import { CAS_LINKS, CAS_OUTCOMES, CAS_STAGES, CAS_STRANDS, IB_CORE, IB_COURSES, IB_HELP } from "../data";
+import { CAS_LINKS, CAS_OUTCOMES, CAS_STAGES, CAS_STRANDS, IA_BY_COURSE, IA_STEPS, IB_CORE, IB_COURSES, IB_HELP } from "../data";
 
 const STRAND_STYLE = ["bg-accent text-ink", "bg-ink text-paper", "bg-soft text-ink"];
 
@@ -82,6 +82,21 @@ export function Cas() {
         ease: "power3.out",
         scrollTrigger: { trigger: ".ib-tiles", start: "top 88%" },
       });
+
+      gsap.from(".ia-step", {
+        y: 40,
+        autoAlpha: 0,
+        stagger: 0.08,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".ia-steps", start: "top 85%" },
+      });
+      gsap.utils.toArray<HTMLElement>(".ia-row").forEach((row) => {
+        gsap
+          .timeline({ scrollTrigger: { trigger: row, start: "top 92%" } })
+          .from(row.querySelector(".row-line"), { scaleX: 0, duration: 1.2, ease: "expo.out" })
+          .from(row.querySelectorAll(".row-cell"), { yPercent: 60, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" }, 0.1);
+      });
     },
     { scope: root },
   );
@@ -115,13 +130,7 @@ export function Cas() {
       </div>
 
       <div className="ib-courses mt-16">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <h3 className="font-display text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
-          <p className="max-w-md text-sm text-muted">
-            Every course includes an <span className="font-medium text-ink">Internal Assessment (IA)</span> — a piece of
-            independent work marked by your teacher that counts toward your final grade.
-          </p>
-        </div>
+        <h3 className="font-display mb-6 text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
         <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {IB_COURSES.map((c) => (
             <li key={c.name + c.level} className="ib-course flex flex-col justify-between gap-8 bg-paper p-6">
@@ -136,7 +145,6 @@ export function Cas() {
               <div>
                 <p className="font-display text-2xl leading-tight font-semibold tracking-tight">{c.name}</p>
                 <p className="mt-2 text-sm text-muted">Start with: {c.use}</p>
-                <p className="mt-3 inline-flex rounded-full border border-line px-3 py-1 text-xs">Includes an IA</p>
               </div>
             </li>
           ))}
@@ -266,6 +274,55 @@ export function Cas() {
             <span className="text-2xl transition-transform duration-300 group-hover:rotate-45">↗</span>
           </Ext>
         ))}
+      </div>
+      <div id="ia" className="mt-28">
+        <div className="grid gap-6 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-7">
+            <span className="text-xs tracking-widest text-muted uppercase">(Internal Assessment)</span>
+            <h3 className="font-display mt-3 text-4xl leading-[0.95] font-semibold tracking-tighter sm:text-6xl">
+              The IA<span className="text-accent">.</span>
+            </h3>
+          </div>
+          <p className="text-muted md:col-span-5">
+            Every IB course has one. It&apos;s a piece of independent work — an investigation, a project or an oral —
+            done during the year, marked by your teacher and checked by the IB. It counts toward your final grade in
+            that subject.
+          </p>
+        </div>
+
+        <ol className="ia-steps mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {IA_STEPS.map((st, i) => (
+            <li key={st.title} className="ia-step rounded-2xl bg-soft p-6">
+              <span className="font-display text-4xl font-semibold text-accent">0{i + 1}</span>
+              <p className="font-display mt-6 text-xl font-semibold">{st.title}</p>
+              <p className="mt-2 text-sm text-muted">{st.body}</p>
+            </li>
+          ))}
+        </ol>
+
+        <h4 className="font-display mt-16 mb-4 text-2xl font-semibold tracking-tight">What&apos;s expected in each course</h4>
+        <ul>
+          {IA_BY_COURSE.map((r) => (
+            <li
+              key={r.course}
+              className="ia-row relative overflow-hidden"
+              onMouseEnter={(e) => sweep(e, true)}
+              onMouseLeave={(e) => sweep(e, false)}
+            >
+              <div className="row-line absolute inset-x-0 top-0 h-px origin-left bg-ink" />
+              <div className="row-fill absolute inset-0 scale-y-0 bg-accent" />
+              <div className="relative grid gap-2 py-5 md:grid-cols-12 md:gap-6">
+                <span className="row-cell font-display text-lg font-semibold md:col-span-3">{r.course}</span>
+                <span className="row-cell text-sm font-medium md:col-span-3 md:text-base">{r.task}</span>
+                <span className="row-cell text-sm text-muted md:col-span-6">{r.format}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-sm text-muted">
+          Formats follow the current IB subject guides — your teacher sets the deadlines and has the final word on
+          details.
+        </p>
       </div>
     </section>
   );
