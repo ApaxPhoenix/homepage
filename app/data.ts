@@ -278,12 +278,11 @@ export const IB_HELP = [
 
 // IB Diploma courses offered at Linden High. Edit this list as offerings change.
 export const IB_COURSES = [
-  { name: "Biology", level: "HL", group: "Sciences", use: "Science Online, Health Reference Center" },
-  { name: "Biology", level: "SL", group: "Sciences", use: "Science Online, Health Reference Center" },
   { name: "Chemistry", level: "HL", group: "Sciences", use: "Science Online, EBSCOhost" },
-  { name: "Physics", level: "", group: "Sciences", use: "Science Online, Google Scholar" },
-  { name: "Engineering & Systems Design", level: "", group: "Sciences", use: "Science Online, EBSCOhost" },
-  { name: "Mathematics: Analysis & Approaches", level: "", group: "Mathematics", use: "US Census data, Google Scholar" },
+  { name: "Biology", level: "SL", group: "Sciences", use: "Science Online, Health Reference Center" },
+  { name: "Physics", level: "SL", group: "Sciences", use: "Science Online, Google Scholar" },
+  { name: "Design Technology", level: "SL", group: "Sciences", use: "Science Online, EBSCOhost" },
+  { name: "Mathematics: Analysis & Approaches", level: "SL", group: "Mathematics", use: "US Census data, Google Scholar" },
 ]
 
 export const IB_CORE = [
