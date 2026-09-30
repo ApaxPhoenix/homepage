@@ -55,7 +55,7 @@ jobs:
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         # next.config.ts sets output: "export" itself and reads the base path
         # from PAGES_BASE_PATH (passed to the build step below).
       - name: Restore cache
