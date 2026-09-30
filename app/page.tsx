@@ -15,6 +15,7 @@ import { SmoothScroll } from "./components/SmoothScroll";
 import { BookFinder } from "./components/BookFinder";
 import { Help } from "./components/Help";
 import { CiteDrawer } from "./components/CiteDrawer";
+import { BackToTop } from "./components/BackToTop";
 
 export default function Home() {
   return (
@@ -36,6 +37,7 @@ export default function Home() {
         <Help />
       </main>
       <Footer />
+      <BackToTop />
       <CiteDrawer />
       <ExitModal />
     </>

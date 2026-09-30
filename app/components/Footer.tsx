@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
 import { Ext } from "./Ext";
-import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE } from "../data";
+import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE, SUPPORT } from "../data";
 
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -109,6 +109,19 @@ export function Footer() {
             </a>
           ))}
         </div>
+      </div>
+
+      <div className="mt-12 flex flex-col gap-3 rounded-2xl border border-ink/25 p-5 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          <span className="font-medium">Something broken on this website?</span> Contact site support —{" "}
+          {SUPPORT.name}.
+        </p>
+        <a
+          href={`mailto:${SUPPORT.email}?subject=${encodeURIComponent("LHS Commons website")}`}
+          className="shrink-0 rounded-full bg-ink px-5 py-3 font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
+        >
+          {SUPPORT.email}
+        </a>
       </div>
 
       <div className="mt-16 flex justify-between gap-4 text-xs">

@@ -16,6 +16,9 @@ export const SITE = {
   learnhouse: "https://www.learnhouse.app",
 };
 
+// Website maintenance contact (not the library).
+export const SUPPORT = { name: "P. Andres Hernandez", email: "andromedeyz@hotmail.com" };
+
 export const NAV = [
   { label: "Books", href: "#books" },
   { label: "Find a book", href: "#find" },

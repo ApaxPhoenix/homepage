@@ -8,6 +8,15 @@ import { NOODLETOOLS, RESOURCE_GROUPS } from "../data";
 export function Resources() {
   const root = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(0);
+  const [filter, setFilter] = useState("");
+  const q = filter.trim().toLowerCase();
+  const matches = q
+    ? RESOURCE_GROUPS.flatMap((g) =>
+        g.links
+          .filter((l) => `${l.label} ${l.note ?? ""} ${g.title}`.toLowerCase().includes(q))
+          .map((l) => ({ ...l, group: g.title })),
+      )
+    : [];
 
   const { contextSafe } = useGSAP(
     () => {
@@ -62,7 +71,7 @@ export function Resources() {
   });
 
   return (
-    <section id="resources" ref={root} className="bg-ink px-4 py-28 text-paper sm:px-8 sm:py-40">
+    <section id="resources" ref={root} className="overflow-x-clip bg-ink px-4 py-28 text-paper sm:px-8 sm:py-40">
       <div className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-4">
           <div className="md:sticky md:top-28">
@@ -105,7 +114,47 @@ export function Resources() {
               </div>
             </div>
           </div>
-          <ul className="res-list">
+          <label className="mb-8 flex items-center gap-3 rounded-full border border-white/20 px-5 py-3 focus-within:border-accent">
+            <span aria-hidden className="text-white/50">⌕</span>
+            <span className="sr-only">Filter resources</span>
+            <input
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder="Filter resources — try “history”, “citation” or “college”"
+              className="min-w-0 flex-1 bg-transparent text-paper outline-none placeholder:text-white/40"
+            />
+            {filter && (
+              <button onClick={() => setFilter("")} aria-label="Clear filter" className="-my-2 px-2 py-2 text-white/60 hover:text-paper">
+                ×
+              </button>
+            )}
+          </label>
+
+          {q && (
+            <div aria-live="polite" className="mb-12">
+              <p className="mb-4 text-sm text-white/50">
+                {matches.length} {matches.length === 1 ? "match" : "matches"}
+              </p>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {matches.map((l) => (
+                  <Ext
+                    key={l.group + l.label}
+                    href={l.href}
+                    className="group/link flex items-center justify-between gap-4 rounded-xl bg-white/5 px-4 py-3 transition-colors hover:bg-accent"
+                  >
+                    <span>
+                      <span className="block font-medium">{l.label}</span>
+                      <span className="block text-xs text-white/50 group-hover/link:text-white/80">{l.group}</span>
+                    </span>
+                    <span className="transition-transform duration-300 group-hover/link:rotate-45">↗</span>
+                  </Ext>
+                ))}
+              </div>
+              {matches.length === 0 && <p className="text-white/70">Nothing matches — ask Ms. Colish, she&apos;ll know where to look.</p>}
+            </div>
+          )}
+
+          <ul className={`res-list ${q ? "hidden" : ""}`}>
             {RESOURCE_GROUPS.map((g, i) => (
               <li key={g.title} className="res-item border-t border-white/20 last:border-b">
                 <button
@@ -113,7 +162,7 @@ export function Resources() {
                   aria-expanded={open === i}
                   className="group flex w-full items-center justify-between gap-6 py-6 text-left sm:py-8"
                 >
-                  <span className="flex items-baseline gap-4 sm:gap-8">
+                  <span className="flex min-w-0 items-baseline gap-4 sm:gap-8">
                     <span className="text-sm text-white/40 tabular-nums">0{i + 1}</span>
                     <span className="font-display text-2xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-4xl">
                       {g.title}
