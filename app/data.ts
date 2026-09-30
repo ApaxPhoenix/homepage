@@ -311,9 +311,10 @@ export const IA_BY_COURSE = [
 ];
 
 export const IB_CORE = [
-  { title: "Theory of Knowledge", short: "TOK", body: "A course on how we know what we claim to know, ending in an exhibition and an essay." },
-  { title: "Extended Essay", short: "EE", body: "An independent 4,000-word research paper on a topic you choose." },
-  { title: "Creativity, Activity, Service", short: "CAS", body: "Experiences outside the classroom, planned and reflected on across the programme." },
+  { title: "Theory of Knowledge", short: "TOK", body: "A course on how we know what we claim to know, ending in an exhibition and an essay.", href: "#resources" },
+  { title: "Extended Essay", short: "EE", body: "An independent 4,000-word research paper on a topic you choose.", href: "#resources" },
+  { title: "Internal Assessment", short: "IA", body: "Independent work in every IB course, marked by your teacher and counted toward your grade.", href: "#ia" },
+  { title: "Creativity, Activity, Service", short: "CAS", body: "Experiences outside the classroom, planned and reflected on across the programme.", href: "#cas" },
 ]
 
 // What's actually in the space: games, reading and hands-on creative supplies.

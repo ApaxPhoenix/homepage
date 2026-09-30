@@ -125,15 +125,15 @@ export function Cas() {
         </div>
         <p className="text-muted md:col-span-4">
           A two-year diploma for juniors and seniors. You take six subjects — three at Higher Level (HL) and three at
-          Standard Level (SL) — plus a core of Theory of Knowledge, the Extended Essay and CAS.
+          Standard Level (SL) — plus Theory of Knowledge, the Extended Essay, an Internal Assessment in every course, and CAS.
         </p>
       </div>
 
       <div className="ib-courses mt-16">
         <h3 className="font-display mb-6 text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
-        <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {IB_COURSES.map((c) => (
-            <li key={c.name + c.level} className="ib-course flex flex-col justify-between gap-8 bg-paper p-6">
+            <li key={c.name + c.level} className="ib-course flex flex-col justify-between gap-8 rounded-2xl border border-line bg-paper p-6 transition-colors hover:border-ink">
               <div className="flex items-start justify-between gap-4">
                 <span className="text-xs tracking-widest text-muted uppercase">{c.group}</span>
                 {c.level && (
@@ -151,13 +151,24 @@ export function Cas() {
         </ul>
       </div>
 
-      <div className="ib-cores mt-6 grid gap-4 md:grid-cols-3">
+      <div className="ib-cores mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {IB_CORE.map((c, i) => (
-          <div key={c.short} className={`ib-core rounded-3xl p-6 sm:p-8 ${["bg-ink text-paper", "bg-accent text-ink", "bg-soft"][i]}`}>
-            <span className="text-xs tracking-widest uppercase opacity-60">({c.short})</span>
-            <p className="font-display mt-6 text-3xl leading-tight font-semibold tracking-tight">{c.title}</p>
-            <p className="mt-2 text-sm opacity-75">{c.body}</p>
-          </div>
+          <a
+            key={c.short}
+            href={c.href}
+            className={`ib-core group flex flex-col justify-between gap-10 rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1 sm:p-8 ${
+              ["bg-ink text-paper", "bg-accent text-ink", "bg-soft text-ink", "border border-line bg-paper text-ink"][i % 4]
+            }`}
+          >
+            <div className="flex items-start justify-between">
+              <span className="text-xs tracking-widest uppercase opacity-60">({c.short})</span>
+              <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </div>
+            <div>
+              <p className="font-display text-3xl leading-tight font-semibold tracking-tight">{c.title}</p>
+              <p className="mt-2 text-sm opacity-75">{c.body}</p>
+            </div>
+          </a>
         ))}
       </div>
 
