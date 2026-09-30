@@ -133,7 +133,7 @@ export function Hero() {
                   key={q.label}
                   href={q.href}
                   {...(q.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="rounded-full border border-line px-3 py-2 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                  className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
                 >
                   {q.label}
                 </a>
