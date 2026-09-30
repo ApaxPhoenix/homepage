@@ -115,7 +115,13 @@ export function Cas() {
       </div>
 
       <div className="ib-courses mt-16">
-        <h3 className="font-display mb-6 text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <h3 className="font-display text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
+          <p className="max-w-md text-sm text-muted">
+            Every course includes an <span className="font-medium text-ink">Internal Assessment (IA)</span> — a piece of
+            independent work marked by your teacher that counts toward your final grade.
+          </p>
+        </div>
         <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {IB_COURSES.map((c) => (
             <li key={c.name + c.level} className="ib-course flex flex-col justify-between gap-8 bg-paper p-6">
@@ -130,6 +136,7 @@ export function Cas() {
               <div>
                 <p className="font-display text-2xl leading-tight font-semibold tracking-tight">{c.name}</p>
                 <p className="mt-2 text-sm text-muted">Start with: {c.use}</p>
+                <p className="mt-3 inline-flex rounded-full border border-line px-3 py-1 text-xs">Includes an IA</p>
               </div>
             </li>
           ))}
