@@ -278,6 +278,8 @@ export const IB_HELP = [
 
 // IB Diploma courses offered at Linden High. Edit this list as offerings change.
 export const IB_COURSES = [
+  { name: "English A", level: "HL", group: "Language & literature", use: "Bloom's Literature, Purdue OWL" },
+  { name: "History", level: "HL", group: "Individuals & societies", use: "Library of Congress, Modern World History" },
   { name: "Chemistry", level: "HL", group: "Sciences", use: "Science Online, EBSCOhost" },
   { name: "Biology", level: "SL", group: "Sciences", use: "Science Online, Health Reference Center" },
   { name: "Physics", level: "SL", group: "Sciences", use: "Science Online, Google Scholar" },
