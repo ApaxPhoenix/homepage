@@ -67,7 +67,7 @@ export function Nav() {
     <>
       <header ref={bar} className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6">
         <div className="flex items-center justify-between rounded-full border border-line bg-paper px-5 py-3 text-ink">
-          <a href="#top" className="font-display text-lg font-semibold tracking-tight" onClick={() => open && toggle(false)}>
+          <a href="#top" className="font-display -my-2 py-2 text-lg font-semibold tracking-tight" onClick={() => open && toggle(false)}>
             {SITE.name}
           </a>
           <nav className="hidden gap-7 text-sm lg:flex">
@@ -90,7 +90,7 @@ export function Nav() {
             onClick={() => toggle()}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="text-sm lg:hidden"
+            className="-my-2 -mr-3 px-3 py-3 text-sm lg:hidden"
           >
             {open ? "Close" : "Menu"}
           </button>

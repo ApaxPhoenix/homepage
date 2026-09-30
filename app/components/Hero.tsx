@@ -87,7 +87,7 @@ export function Hero() {
   return (
     <section id="top" ref={root} className="relative min-h-svh overflow-hidden bg-paper">
       <div className="hero-inner flex min-h-svh flex-col justify-between px-4 pt-28 pb-6 sm:px-8">
-        <div className="grid gap-8 md:grid-cols-12">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 md:grid-cols-12">
           <Split
             as="h1"
             className="hero-copy font-display text-3xl leading-[1.05] font-medium tracking-tight sm:text-5xl md:col-span-8 lg:text-6xl"

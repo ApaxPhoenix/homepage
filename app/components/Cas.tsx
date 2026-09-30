@@ -253,7 +253,7 @@ export function Cas() {
           <div key={t.title} className="ib-tile rounded-2xl bg-soft p-6 sm:p-8">
             <h4 className="font-display text-2xl font-semibold tracking-tight">{t.title}</h4>
             <p className="mt-3 text-sm text-muted">{t.body}</p>
-            <a href="#resources" className="mt-6 inline-block text-sm font-medium underline-offset-4 hover:underline">
+            <a href="#resources" className="mt-4 inline-block py-2 text-sm font-medium underline-offset-4 hover:underline">
               Open resources →
             </a>
           </div>
