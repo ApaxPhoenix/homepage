@@ -1,36 +1,52 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap, useGSAP, ScrollTrigger, onIntroDone } from "./gsap";
-import { BRAND, NAV } from "../data";
+import { NAV, SITE } from "../data";
 
 export function Nav() {
-  const root = useRef<HTMLElement>(null);
+  const bar = useRef<HTMLElement>(null);
+  const menu = useRef<HTMLDivElement>(null);
+  const menuTl = useRef<gsap.core.Timeline | null>(null);
+  const [open, setOpen] = useState(false);
 
-  useGSAP(
-    () => {
-      gsap.set(root.current, { yPercent: -100 });
-      const off = onIntroDone(() => {
-        gsap.to(root.current, { yPercent: 0, duration: 1, ease: "expo.out", delay: 0.6 });
+  useGSAP(() => {
+    gsap.set(bar.current, { yPercent: -100 });
 
-        // Hide when scrolling down, reveal when scrolling up.
-        ScrollTrigger.create({
-          start: 200,
-          end: "max",
-          onUpdate: (self) => {
-            gsap.to(root.current, {
-              yPercent: self.direction === 1 ? -100 : 0,
-              duration: 0.5,
-              ease: "power3.out",
-              overwrite: true,
-            });
-          },
-        });
+    // Full-screen mobile menu: panel wipes down, links rise in.
+    menuTl.current = gsap
+      .timeline({ paused: true })
+      .set(menu.current, { autoAlpha: 1, immediateRender: false })
+      .fromTo(menu.current, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.8, ease: "expo.inOut" })
+      .from(".menu-link", { yPercent: 110, stagger: 0.06, duration: 0.8, ease: "expo.out" }, "-=0.35")
+      .from(".menu-foot", { autoAlpha: 0, y: 20, duration: 0.5 }, "-=0.5");
+
+    const off = onIntroDone(() => {
+      gsap.to(bar.current, { yPercent: 0, duration: 1, ease: "expo.out", delay: 0.6 });
+
+      // Hide when scrolling down, reveal when scrolling up.
+      ScrollTrigger.create({
+        start: 200,
+        end: "max",
+        onUpdate: (self) => {
+          gsap.to(bar.current, {
+            yPercent: self.direction === 1 ? -100 : 0,
+            duration: 0.5,
+            ease: "power3.out",
+            overwrite: true,
+          });
+        },
       });
-      return off;
-    },
-    { scope: root },
-  );
+    });
+    return off;
+  });
+
+  const toggle = (next = !open) => {
+    setOpen(next);
+    if (next) menuTl.current?.timeScale(1).play();
+    else menuTl.current?.timeScale(1.6).reverse();
+    document.documentElement.style.overflow = next ? "hidden" : "";
+  };
 
   const hover = (e: React.MouseEvent<HTMLAnchorElement>, enter: boolean) => {
     gsap.to(e.currentTarget.querySelectorAll(".roll"), {
@@ -41,30 +57,63 @@ export function Nav() {
   };
 
   return (
-    <header
-      ref={root}
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-5 text-white mix-blend-difference sm:px-8"
-    >
-      <a href="#top" className="font-display text-lg font-semibold tracking-tight">
-        {BRAND}
-        <sup className="text-[0.6em]">®</sup>
-      </a>
-      <nav className="flex gap-4 text-sm sm:gap-8">
-        {NAV.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            onMouseEnter={(e) => hover(e, true)}
-            onMouseLeave={(e) => hover(e, false)}
-            className="relative block h-[1.25em] overflow-hidden leading-[1.25em]"
-          >
-            <span className="roll block">{item.label}</span>
-            <span className="roll block" aria-hidden>
-              {item.label}
-            </span>
+    <>
+      <header ref={bar} className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6">
+        <div className="flex items-center justify-between rounded-full border border-line bg-paper px-5 py-3 text-ink">
+          <a href="#top" className="font-display text-lg font-semibold tracking-tight" onClick={() => open && toggle(false)}>
+            {SITE.name}
           </a>
-        ))}
-      </nav>
-    </header>
+          <nav className="hidden gap-8 text-sm md:flex">
+            {NAV.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onMouseEnter={(e) => hover(e, true)}
+                onMouseLeave={(e) => hover(e, false)}
+                className="relative block h-[1.25em] overflow-hidden leading-[1.25em]"
+              >
+                <span className="roll block">{item.label}</span>
+                <span className="roll block" aria-hidden>
+                  {item.label}
+                </span>
+              </a>
+            ))}
+          </nav>
+          <button
+            onClick={() => toggle()}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="text-sm md:hidden"
+          >
+            {open ? "Close" : "Menu"}
+          </button>
+        </div>
+      </header>
+
+      <div
+        id="mobile-menu"
+        ref={menu}
+        className="invisible fixed inset-0 z-40 flex flex-col justify-between bg-ink px-4 pt-24 pb-8 text-paper md:hidden"
+      >
+        <nav className="flex flex-col">
+          {NAV.map((item, i) => (
+            <span key={item.href} className="overflow-hidden border-b border-white/15">
+              <a
+                href={item.href}
+                onClick={() => toggle(false)}
+                className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+              >
+                {item.label}
+                <span className="text-sm font-normal text-white/40">0{i + 1}</span>
+              </a>
+            </span>
+          ))}
+        </nav>
+        <div className="menu-foot text-sm text-white/60">
+          <p>{SITE.school} Library Learning Commons</p>
+          <p>{SITE.location}</p>
+        </div>
+      </div>
+    </>
   );
 }

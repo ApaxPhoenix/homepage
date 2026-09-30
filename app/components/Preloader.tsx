@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { gsap, useGSAP, INTRO_EVENT } from "./gsap";
-import { BRAND } from "../data";
+import { SITE } from "../data";
 
 export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
@@ -60,11 +60,11 @@ export function Preloader() {
     >
       <div className="flex justify-between text-xs uppercase tracking-widest text-white/60">
         <span>Loading</span>
-        <span>Studio &copy; {new Date().getFullYear()}</span>
+        <span>{SITE.school}</span>
       </div>
-      <div className="font-display text-[18vw] leading-none font-semibold tracking-tighter">
+      <div className="font-display text-[17vw] leading-none font-semibold tracking-tighter">
         <span className="split-mask">
-          {[...BRAND].map((ch, i) => (
+          {[...SITE.wordmark].map((ch, i) => (
             <span key={i} className="pl-letter inline-block">
               {ch}
             </span>
@@ -73,7 +73,7 @@ export function Preloader() {
       </div>
       <div>
         <div className="mb-3 flex items-end justify-between">
-          <span className="text-xs uppercase tracking-widest text-white/60">Digital design studio</span>
+          <span className="text-xs uppercase tracking-widest text-white/60">Library Learning Commons</span>
           <span ref={count} className="font-display text-5xl font-medium tabular-nums sm:text-7xl">
             000
           </span>

@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export { gsap, ScrollTrigger, useGSAP };
 
-export const INTRO_EVENT = "overtone:intro-done";
+export const INTRO_EVENT = "commons:intro-done";
 
 // Runs `fn` once the preloader has finished (or immediately if it already has).
 export function onIntroDone(fn: () => void) {

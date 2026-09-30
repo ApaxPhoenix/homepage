@@ -6,6 +6,7 @@
   --accent: #ff3c00;
   --muted: #6b6b6b;
   --line: #e6e6e6;
+  --soft: #f3f3f3;
 }
 
 @theme inline {
@@ -14,6 +15,7 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-soft: var(--soft);
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-inter), system-ui, sans-serif;
 }

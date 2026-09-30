@@ -1,0 +1,64 @@
+"use client";
+
+import { useRef } from "react";
+import { gsap, useGSAP } from "./gsap";
+import { MAKERSPACE } from "../data";
+
+export function Makerspace() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(".mk-head > *", {
+        yPercent: 60,
+        autoAlpha: 0,
+        stagger: 0.1,
+        duration: 1.1,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".mk-head", start: "top 85%" },
+      });
+
+      // Chips drop in from scattered positions and settle into the grid.
+      gsap.from(".mk-chip", {
+        y: () => gsap.utils.random(-120, 120),
+        x: () => gsap.utils.random(-60, 60),
+        rotate: () => gsap.utils.random(-30, 30),
+        autoAlpha: 0,
+        stagger: { each: 0.04, from: "random" },
+        duration: 1.2,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".mk-chips", start: "top 85%" },
+      });
+    },
+    { scope: root },
+  );
+
+  const wobble = (e: React.MouseEvent<HTMLElement>) => {
+    gsap.fromTo(e.currentTarget, { rotate: 0 }, { rotate: gsap.utils.random(-8, 8), duration: 0.4, ease: "back.out(3)" });
+  };
+
+  return (
+    <section ref={root} className="bg-soft px-4 py-28 sm:px-8 sm:py-40">
+      <div className="mk-head grid gap-6 md:grid-cols-12">
+        <h2 className="font-display text-5xl font-semibold tracking-tighter sm:text-7xl md:col-span-7">
+          Makerspace<span className="text-accent">.</span>
+        </h2>
+        <p className="text-muted md:col-span-5 md:pt-4">
+          A shared space for making, learning, exploring and sharing — with high-tech and no-tech tools. Build something,
+          fix something, or just unwind between classes.
+        </p>
+      </div>
+      <ul className="mk-chips mt-16 flex flex-wrap gap-3">
+        {MAKERSPACE.map((item) => (
+          <li
+            key={item}
+            onMouseEnter={wobble}
+            className="mk-chip font-display rounded-full border border-ink bg-paper px-5 py-3 text-lg font-medium transition-colors hover:border-accent hover:bg-accent sm:text-2xl"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}

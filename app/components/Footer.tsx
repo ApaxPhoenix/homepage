@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
-import { BRAND, NAV, SOCIALS } from "../data";
+import { Ext } from "./Ext";
+import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE, VISIT_RULES } from "../data";
 
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -16,6 +17,15 @@ export function Footer() {
         duration: 1.2,
         ease: "expo.out",
         scrollTrigger: { trigger: ".cta-line", start: "top 85%" },
+      });
+
+      gsap.from(".visit-rule", {
+        y: 40,
+        autoAlpha: 0,
+        stagger: 0.08,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".visit-rules", start: "top 88%" },
       });
 
       gsap.from(".foot-brand .split-inner", {
@@ -43,64 +53,81 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" ref={root} className="overflow-hidden bg-accent px-4 pt-28 text-ink sm:px-8 sm:pt-40">
+    <footer id="visit" ref={root} className="overflow-hidden bg-accent px-4 pt-28 text-ink sm:px-8 sm:pt-40">
       <div className="flex flex-col items-start justify-between gap-12 md:flex-row md:items-end">
         <div>
-          <span className="text-xs tracking-widest uppercase">(Have an idea?)</span>
+          <span className="text-xs tracking-widest uppercase">(Visit the Commons)</span>
           <Split
             as="h2"
             className="cta-line font-display mt-4 block text-[14vw] leading-[0.85] font-semibold tracking-[-0.05em] md:text-[9vw]"
-            text="Let's make it real"
+            text="Come find us"
           />
         </div>
         <a
-          href="mailto:hello@overtone.studio"
+          href={`mailto:${SITE.email}`}
           onMouseMove={onMove}
           onMouseLeave={onLeave}
           className="grid h-40 w-40 shrink-0 place-items-center rounded-full bg-ink text-paper sm:h-48 sm:w-48"
         >
-          <span className="magnet-label text-center text-sm font-medium">
-            Get in
+          <span className="text-center text-sm font-medium">
+            Email the
             <br />
-            touch →
+            library →
           </span>
         </a>
       </div>
 
-      <div className="mt-24 grid gap-10 border-t border-ink/30 pt-10 text-sm sm:grid-cols-2 md:grid-cols-4">
+      <div className="visit-rules mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {VISIT_RULES.map((r) => (
+          <div key={r.title} className="visit-rule rounded-2xl border border-ink/25 p-6">
+            <h3 className="font-display text-xl font-semibold">{r.title}</h3>
+            <p className="mt-2 text-sm text-ink/80">{r.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-16 grid gap-10 border-t border-ink/30 pt-10 text-sm sm:grid-cols-2 md:grid-cols-4">
         <div>
-          <p className="mb-3 text-ink/60">Contact</p>
-          <a href="mailto:hello@overtone.studio" className="block hover:underline">
-            hello@overtone.studio
+          <p className="mb-3 text-ink/60">Hours</p>
+          {HOURS_TABLE.map((h) => (
+            <p key={h.day} className="mb-2">
+              <span className="block font-medium">{h.day}</span>
+              {h.time}
+            </p>
+          ))}
+        </div>
+        <div>
+          <p className="mb-3 text-ink/60">Where</p>
+          <p>{SITE.school}</p>
+          <p>{SITE.location}</p>
+        </div>
+        <div>
+          <p className="mb-3 text-ink/60">Get in touch</p>
+          <a href={`mailto:${SITE.email}`} className="block break-all hover:underline">
+            {SITE.email}
           </a>
-          <p>+351 210 000 000</p>
+          <a href={`mailto:${SITE.email}?subject=Book%20request`} className="block hover:underline">
+            Request a book
+          </a>
+          <Ext href={SCHEDULE_FORM} className="block hover:underline">
+            Book the classroom (teachers) ↗
+          </Ext>
         </div>
         <div>
-          <p className="mb-3 text-ink/60">Studio</p>
-          <p>Rua das Flores 28</p>
-          <p>Lisbon, Portugal</p>
-        </div>
-        <div>
-          <p className="mb-3 text-ink/60">Menu</p>
+          <p className="mb-3 text-ink/60">On this page</p>
           {NAV.map((n) => (
             <a key={n.href} href={n.href} className="block hover:underline">
               {n.label}
             </a>
           ))}
         </div>
-        <div>
-          <p className="mb-3 text-ink/60">Social</p>
-          {SOCIALS.map((s) => (
-            <a key={s} href="#" className="block hover:underline">
-              {s}
-            </a>
-          ))}
-        </div>
       </div>
 
-      <div className="mt-16 flex justify-between text-xs">
-        <span>© {new Date().getFullYear()} {BRAND}. All rights reserved.</span>
-        <a href="#top" className="hover:underline">
+      <div className="mt-16 flex justify-between gap-4 text-xs">
+        <span>
+          © {new Date().getFullYear()} {SITE.school} Library Learning Commons
+        </span>
+        <a href="#top" className="shrink-0 hover:underline">
           Back to top ↑
         </a>
       </div>
@@ -108,8 +135,8 @@ export function Footer() {
       <Split
         as="p"
         by="chars"
-        className="foot-brand font-display -mb-[3vw] block text-center text-[18.5vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
-        text={BRAND}
+        className="foot-brand font-display -mb-[3vw] block text-center text-[17vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
+        text={SITE.wordmark}
       />
     </footer>
   );

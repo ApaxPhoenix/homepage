@@ -3,12 +3,14 @@ import { Cursor } from "./components/Cursor";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { Marquee } from "./components/Marquee";
-import { Work } from "./components/Work";
-import { About } from "./components/About";
-import { Team } from "./components/Team";
-import { Awards } from "./components/Awards";
-import { Services } from "./components/Services";
+import { Mission } from "./components/Mission";
+import { Books } from "./components/Books";
+import { Resources } from "./components/Resources";
+import { Cas } from "./components/Cas";
+import { LearnHouse } from "./components/LearnHouse";
+import { Makerspace } from "./components/Makerspace";
 import { Footer } from "./components/Footer";
+import { ExitModal } from "./components/ExitModal";
 
 export default function Home() {
   return (
@@ -19,13 +21,15 @@ export default function Home() {
       <main>
         <Hero />
         <Marquee />
-        <Work />
-        <About />
-        <Team />
-        <Awards />
-        <Services />
+        <Mission />
+        <Books />
+        <Resources />
+        <Cas />
+        <LearnHouse />
+        <Makerspace />
       </main>
       <Footer />
+      <ExitModal />
     </>
   );
 }

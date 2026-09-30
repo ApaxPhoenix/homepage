@@ -13,9 +13,9 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "Overtone® — Digital Design Studio",
+  title: "LHS Commons — Linden High School Library Learning Commons",
   description:
-    "Overtone is an independent studio for web design, development, product and brand.",
+    "Books, research databases, IB CAS support, LearnHouse courses and makerspace at the Linden High School Library Learning Commons.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

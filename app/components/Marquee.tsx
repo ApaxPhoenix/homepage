@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP, ScrollTrigger } from "./gsap";
 
-const ITEMS = ["Web Design", "Development", "UI / UX", "Product", "Branding", "Motion"];
+const ITEMS = ["Read", "Research", "Create", "Make", "Reflect", "Connect"];
 
 // Infinite ticker whose speed and direction follow scroll velocity.
 export function Marquee() {
