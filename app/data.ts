@@ -78,7 +78,7 @@ export const TOP_BOOKS = [
     author: "Ransom Riggs",
     genre: "Fantasy / mystery",
     blurb: "An island, an abandoned orphanage and a stack of strange vintage photographs.",
-    isbn: "9781594744761",
+    isbn: "9781594746031",
     publisher: "Quirk Books",
     year: "2011",
     review: "https://www.goodreads.com/review/show/2688770664",

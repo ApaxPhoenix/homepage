@@ -12,7 +12,7 @@ type Status = "idle" | "loading" | "done" | "error";
 
 function ResultCover({ book }: { book: Book }) {
   const [state, setState] = useState<"loading" | "ok" | "none">(book.coverId ? "loading" : "none");
-  const src = coverUrl(book, "M");
+  const src = coverUrl(book, "L");
   return (
     <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-line">
       {state === "loading" && <div className="shimmer absolute inset-0" />}
@@ -23,6 +23,8 @@ function ResultCover({ book }: { book: Book }) {
           alt={`Cover of ${book.title}`}
           loading="lazy"
           onLoad={(e) => {
+            // Some Open Library covers are tiny scans; a clean text cover beats a blurry one.
+            if (e.currentTarget.naturalWidth < 150) return setState("none");
             setState("ok");
             gsap.fromTo(e.currentTarget, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" });
           }}
@@ -247,7 +249,7 @@ export function BookFinder() {
                       authors: b.authors.slice(0, 3),
                       publisher: b.publisher,
                       year: b.year,
-                      cover: coverUrl(b, "M"),
+                      cover: coverUrl(b, "L"),
                     })
                   }
                   className="rounded-full border border-ink/20 bg-paper px-3 py-1.5 font-medium transition-colors hover:border-ink"

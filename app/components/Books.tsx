@@ -15,6 +15,7 @@ type Pick = (typeof TOP_BOOKS)[number];
 
 function Cover({ book }: { book: Pick }) {
   const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   if (failed) {
     // Typographic stand-in if Open Library has no cover for this ISBN.
     return (
@@ -28,10 +29,11 @@ function Cover({ book }: { book: Pick }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element -- remote cover, static export
     <img
-      src={coverUrl({ isbn: book.isbn }, "L")!}
+      src={coverUrl({ isbn: book.isbn }, "L")! + (attempt ? `&retry=${attempt}` : "")}
       alt={`Cover of ${book.title} by ${book.author}`}
       loading="lazy"
-      onError={() => setFailed(true)}
+      // Open Library occasionally drops a request; retry once before the text cover.
+      onError={() => (attempt < 1 ? setAttempt(attempt + 1) : setFailed(true))}
       className="book-img aspect-[2/3] w-[58%] rounded-md object-cover shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]"
     />
   );
@@ -188,7 +190,7 @@ export function Books() {
                       authors: [b.author],
                       publisher: b.publisher,
                       year: b.year,
-                      cover: coverUrl({ isbn: b.isbn }, "M"),
+                      cover: coverUrl({ isbn: b.isbn }, "L"),
                     })
                   }
                   className="rounded-full border border-line px-4 py-2 font-medium transition-colors hover:border-ink"
