@@ -15,9 +15,11 @@ export function Split({ text, by = "words", as: Tag = "span", className, innerCl
   return (
     <Tag className={className} aria-label={text}>
       {words.map((word, wi) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
         <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
           {by === "chars" ? (
             [...word].map((ch, ci) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
               <span key={ci} className="split-mask">
                 <span className={`split-inner ${innerClassName}`}>{ch}</span>
               </span>

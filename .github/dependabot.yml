@@ -6,13 +6,18 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     groups:
-      # Next's packages must move together or the build breaks.
       next:
-        patterns: ["next", "eslint-config-next"]
+        patterns: ["next"]
       react:
         patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
       gsap:
         patterns: ["gsap", "@gsap/react"]
+      tailwind:
+        patterns: ["tailwindcss", "@tailwindcss/*"]
+    ignore:
+      # Keep Node's types on the LTS line the Pages build runs (Node 24).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"

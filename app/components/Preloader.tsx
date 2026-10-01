@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP, INTRO_EVENT } from "./gsap";
 import { SITE } from "../data";
+import { gsap, INTRO_EVENT, useGSAP } from "./gsap";
 import { lockScroll } from "./SmoothScroll";
 
 export function Preloader() {
@@ -66,6 +66,7 @@ export function Preloader() {
       <div className="font-display text-[17vw] leading-none font-semibold tracking-tighter">
         <span className="split-mask">
           {[...SITE.wordmark].map((ch, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
             <span key={i} className="pl-letter inline-block">
               {ch}
             </span>

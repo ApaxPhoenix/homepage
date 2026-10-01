@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP, ScrollTrigger } from "./gsap";
+import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 
 const ITEMS = ["Read", "Research", "Create", "Make", "Reflect", "Connect"];
 
@@ -11,7 +11,8 @@ export function Marquee() {
 
   useGSAP(
     () => {
-      const track = root.current!.querySelector<HTMLElement>(".mq-track")!;
+      const track = root.current?.querySelector<HTMLElement>(".mq-track");
+      if (!track) return;
       const loop = gsap.to(track, { xPercent: -50, duration: 22, ease: "none", repeat: -1 });
 
       ScrollTrigger.create({
@@ -30,15 +31,15 @@ export function Marquee() {
     { scope: root },
   );
 
-  const row = [...ITEMS, ...ITEMS];
+  const row = ["a", "b"].flatMap((pass) => ITEMS.map((item) => ({ key: `${pass}-${item}`, item })));
   return (
     <div ref={root} className="overflow-hidden border-y border-ink bg-accent py-5 text-ink">
       <div className="mq-track flex w-max">
         {[0, 1].map((dup) => (
           <div key={dup} className="flex shrink-0" aria-hidden={dup === 1}>
-            {row.map((item, i) => (
+            {row.map(({ key, item }) => (
               <span
-                key={i}
+                key={key}
                 className="font-display flex items-center gap-8 pr-8 text-4xl font-medium tracking-tight sm:text-6xl"
               >
                 {item}

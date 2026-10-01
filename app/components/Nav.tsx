@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap, useGSAP, ScrollTrigger, onIntroDone } from "./gsap";
 import { NAV, SITE } from "../data";
+import { gsap, onIntroDone, ScrollTrigger, useGSAP } from "./gsap";
 import { lockScroll, scrollToHash } from "./SmoothScroll";
 
 export function Nav() {
@@ -19,7 +19,11 @@ export function Nav() {
     menuTl.current = gsap
       .timeline({ paused: true })
       .set(menu.current, { autoAlpha: 1, immediateRender: false })
-      .fromTo(menu.current, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.8, ease: "expo.inOut" })
+      .fromTo(
+        menu.current,
+        { clipPath: "inset(0 0 100% 0)" },
+        { clipPath: "inset(0 0 0% 0)", duration: 0.8, ease: "expo.inOut" },
+      )
       .from(".menu-link", { yPercent: 110, stagger: 0.06, duration: 0.8, ease: "expo.out" }, "-=0.35")
       .from(".menu-foot", { autoAlpha: 0, y: 20, duration: 0.5 }, "-=0.5");
 
@@ -82,7 +86,12 @@ export function Nav() {
     <>
       <header ref={bar} className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6">
         <div className="flex items-center justify-between rounded-full border border-line bg-paper px-5 py-3 text-ink">
-          <a href="#top" className="font-display -my-2 py-2 text-lg font-semibold tracking-tight" onClick={() => open && toggle(false)}>
+          {/* biome-ignore lint/a11y/useValidAnchor: real link to #top that also closes the mobile menu */}
+          <a
+            href="#top"
+            className="font-display -my-2 py-2 text-lg font-semibold tracking-tight"
+            onClick={() => open && toggle(false)}
+          >
             {SITE.name}
           </a>
           <nav className="hidden gap-7 text-sm lg:flex">
@@ -103,6 +112,7 @@ export function Nav() {
             ))}
           </nav>
           <button
+            type="button"
             onClick={() => toggle()}
             aria-expanded={open}
             aria-controls="mobile-menu"

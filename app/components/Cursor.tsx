@@ -12,7 +12,8 @@ export function Cursor() {
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     document.body.classList.add("has-cursor");
 
-    const el = dot.current!;
+    const el = dot.current;
+    if (!el) return;
     gsap.set(el, { xPercent: -50, yPercent: -50 });
     const x = gsap.quickTo(el, "x", { duration: 0.35, ease: "power3" });
     const y = gsap.quickTo(el, "y", { duration: 0.35, ease: "power3" });

@@ -1,15 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "./gsap";
-import { Ext } from "./Ext";
-import { lockScroll } from "./SmoothScroll";
-import { cite, plain, type CiteFields, type Style } from "../lib/cite";
 import { NOODLETOOLS } from "../data";
+import { type CiteFields, cite, plain, type Style } from "../lib/cite";
+import { Ext } from "./Ext";
+import { gsap } from "./gsap";
+import { lockScroll } from "./SmoothScroll";
 
 const CITE_EVENT = "commons:cite";
 
-export type CiteInput = { title: string; authors: string[]; publisher?: string; year?: string | number; cover?: string | null };
+export type CiteInput = {
+  title: string;
+  authors: string[];
+  publisher?: string;
+  year?: string | number;
+  cover?: string | null;
+};
 
 // Open the citation drawer for a book (from the top picks or the book finder).
 export function openCite(book: CiteInput) {
@@ -40,7 +46,12 @@ export function CiteDrawer() {
       const b = (e as CustomEvent<CiteInput>).detail;
       returnFocus.current = document.activeElement as HTMLElement | null;
       setCover(b.cover ?? null);
-      setFields({ authors: b.authors, title: b.title, publisher: b.publisher ?? "", year: b.year ? String(b.year) : "" });
+      setFields({
+        authors: b.authors,
+        title: b.title,
+        publisher: b.publisher ?? "",
+        year: b.year ? String(b.year) : "",
+      });
       setAuthorsText(b.authors.join(", "));
       setCopied(false);
       lockScroll("cite", true);
@@ -60,7 +71,12 @@ export function CiteDrawer() {
         .set(root.current, { autoAlpha: 1 })
         .fromTo(".cite-backdrop", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0)
         .fromTo(panel.current, from, { xPercent: 0, yPercent: 0, duration: 0.8, ease: "expo.out" }, 0)
-        .fromTo(".cite-rise", { y: 24, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.6, ease: "power3.out" }, 0.2);
+        .fromTo(
+          ".cite-rise",
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.05, duration: 0.6, ease: "power3.out" },
+          0.2,
+        );
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && tl.current && !tl.current.reversed() && tl.current.progress() > 0) {
@@ -75,7 +91,13 @@ export function CiteDrawer() {
     };
   }, []);
 
-  const runs = cite(style, { ...fields, authors: authorsText.split(",").map((a) => a.trim()).filter(Boolean) });
+  const runs = cite(style, {
+    ...fields,
+    authors: authorsText
+      .split(",")
+      .map((a) => a.trim())
+      .filter(Boolean),
+  });
 
   const copy = async () => {
     const text = plain(runs);
@@ -118,6 +140,7 @@ export function CiteDrawer() {
 
   return (
     <div ref={root} className="invisible fixed inset-0 z-[70]">
+      {/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: pointer shortcut; Escape and the close button handle keyboard */}
       <div className="cite-backdrop absolute inset-0 bg-ink/60" onClick={close} />
       <div
         ref={panel}
@@ -135,6 +158,7 @@ export function CiteDrawer() {
             </h2>
           </div>
           <button
+            type="button"
             ref={closeBtn}
             onClick={close}
             aria-label="Close citation"
@@ -145,13 +169,14 @@ export function CiteDrawer() {
         </div>
 
         {cover && (
-          // eslint-disable-next-line @next/next/no-img-element -- remote cover, static export
+          // biome-ignore lint/performance/noImgElement: remote cover, static export
           <img src={cover} alt="" className="cite-rise mt-6 h-40 w-auto rounded-md shadow-xl" />
         )}
 
         <div className="cite-rise mt-8 inline-flex rounded-full bg-soft p-1" role="tablist" aria-label="Citation style">
           {STYLES.map((s) => (
             <button
+              type="button"
               key={s.id}
               role="tab"
               aria-selected={style === s.id}
@@ -163,12 +188,19 @@ export function CiteDrawer() {
           ))}
         </div>
 
-        <p className="cite-output cite-rise mt-6 rounded-2xl bg-soft p-5 pl-12 -indent-7 leading-relaxed" aria-live="polite">
-          {runs.map((r, i) => (r.italic ? <i key={i}>{r.text}</i> : <span key={i}>{r.text}</span>))}
+        <p
+          className="cite-output cite-rise mt-6 rounded-2xl bg-soft p-5 pl-12 -indent-7 leading-relaxed"
+          aria-live="polite"
+        >
+          {runs.map((r, i) =>
+            // biome-ignore lint/suspicious/noArrayIndexKey: runs are rebuilt as a whole, never reordered
+            r.italic ? <i key={i}>{r.text}</i> : <span key={i}>{r.text}</span>,
+          )}
         </p>
 
         <div className="cite-rise mt-4 flex flex-wrap gap-2">
           <button
+            type="button"
             onClick={copy}
             className="rounded-full bg-accent px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-ink"
           >
@@ -198,8 +230,8 @@ export function CiteDrawer() {
           </div>
         </div>
         <p className="cite-rise mt-6 text-xs text-muted">
-          Details come from Open Library and can differ from your copy. Check them against the book&apos;s title page and
-          your teacher&apos;s required style.
+          Details come from Open Library and can differ from your copy. Check them against the book&apos;s title page
+          and your teacher&apos;s required style.
         </p>
       </div>
     </div>

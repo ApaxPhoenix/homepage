@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP } from "./gsap";
-import { Ext } from "./Ext";
 import { SITE } from "../data";
+import { Ext } from "./Ext";
+import { gsap, useGSAP } from "./gsap";
 
 export function LearnHouse() {
   const root = useRef<HTMLElement>(null);

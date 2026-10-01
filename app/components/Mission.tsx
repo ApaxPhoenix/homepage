@@ -9,7 +9,10 @@ const STATEMENT =
 const PILLARS = [
   { title: "Information literacy", body: "Lessons that build real research skills: searching, evaluating and citing." },
   { title: "Open access", body: "Print, eBooks, audiobooks, databases and video — in whatever format works for you." },
-  { title: "Lifelong readers", body: "Recommendations, book clubs and a collection shaped by what students actually read." },
+  {
+    title: "Lifelong readers",
+    body: "Recommendations, book clubs and a collection shaped by what students actually read.",
+  },
   { title: "Room to make", body: "A makerspace for building, tinkering, crafting and taking a breather from the day." },
 ];
 
@@ -57,6 +60,7 @@ export function Mission() {
         <span className="text-xs tracking-widest text-muted uppercase md:col-span-3">(Our mission)</span>
         <p className="mission-text font-display text-3xl leading-[1.1] font-medium tracking-tight sm:text-5xl md:col-span-9">
           {STATEMENT.split(" ").map((w, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
             <span key={i} className="mission-word">
               {w}{" "}
             </span>
@@ -66,8 +70,8 @@ export function Mission() {
 
       <figure className="mission-quote mt-20 grid gap-4 overflow-hidden md:grid-cols-12">
         <blockquote className="font-display text-xl leading-snug md:col-span-6 md:col-start-4">
-          <span className="text-accent">“</span>Google can bring you back 100,000 answers. A librarian can bring you back
-          the right one.<span className="text-accent">”</span>
+          <span className="text-accent">“</span>Google can bring you back 100,000 answers. A librarian can bring you
+          back the right one.<span className="text-accent">”</span>
         </blockquote>
         <figcaption className="text-sm text-muted md:col-span-3 md:text-right">— Neil Gaiman</figcaption>
       </figure>

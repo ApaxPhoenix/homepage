@@ -1,10 +1,20 @@
 "use client";
 
 import { useRef } from "react";
+import {
+  CAS_LINKS,
+  CAS_OUTCOMES,
+  CAS_STAGES,
+  CAS_STRANDS,
+  IA_BY_COURSE,
+  IA_STEPS,
+  IB_CORE,
+  IB_COURSES,
+  IB_HELP,
+} from "../data";
+import { Ext } from "./Ext";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
-import { Ext } from "./Ext";
-import { CAS_LINKS, CAS_OUTCOMES, CAS_STAGES, CAS_STRANDS, IA_BY_COURSE, IA_STEPS, IB_CORE, IB_COURSES, IB_HELP } from "../data";
 
 const STRAND_STYLE = ["bg-accent text-ink", "bg-ink text-paper", "bg-soft text-ink"];
 
@@ -71,7 +81,11 @@ export function Cas() {
         gsap
           .timeline({ scrollTrigger: { trigger: row, start: "top 92%" } })
           .from(row.querySelector(".row-line"), { scaleX: 0, duration: 1.2, ease: "expo.out" })
-          .from(row.querySelectorAll(".row-cell"), { yPercent: 100, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" }, 0.1);
+          .from(
+            row.querySelectorAll(".row-cell"),
+            { yPercent: 100, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" },
+            0.1,
+          );
       });
 
       gsap.from(".ib-tile", {
@@ -95,7 +109,11 @@ export function Cas() {
         gsap
           .timeline({ scrollTrigger: { trigger: row, start: "top 92%" } })
           .from(row.querySelector(".row-line"), { scaleX: 0, duration: 1.2, ease: "expo.out" })
-          .from(row.querySelectorAll(".row-cell"), { yPercent: 60, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" }, 0.1);
+          .from(
+            row.querySelectorAll(".row-cell"),
+            { yPercent: 60, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" },
+            0.1,
+          );
       });
     },
     { scope: root },
@@ -125,7 +143,8 @@ export function Cas() {
         </div>
         <p className="text-muted md:col-span-4">
           A two-year diploma for juniors and seniors. You take six subjects — three at Higher Level (HL) and three at
-          Standard Level (SL) — plus Theory of Knowledge, the Extended Essay, an Internal Assessment in every course, and CAS.
+          Standard Level (SL) — plus Theory of Knowledge, the Extended Essay, an Internal Assessment in every course,
+          and CAS.
         </p>
       </div>
 
@@ -133,11 +152,16 @@ export function Cas() {
         <h3 className="font-display mb-6 text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {IB_COURSES.map((c) => (
-            <li key={c.name + c.level} className="ib-course flex flex-col justify-between gap-8 rounded-2xl border border-line bg-paper p-6 transition-colors hover:border-ink">
+            <li
+              key={c.name + c.level}
+              className="ib-course flex flex-col justify-between gap-8 rounded-2xl border border-line bg-paper p-6 transition-colors hover:border-ink"
+            >
               <div className="flex items-start justify-between gap-4">
                 <span className="text-xs tracking-widest text-muted uppercase">{c.group}</span>
                 {c.level && (
-                  <span className={`rounded-full px-3 py-1 text-xs font-medium ${c.level === "HL" ? "bg-accent text-paper" : "bg-soft"}`}>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${c.level === "HL" ? "bg-accent text-paper" : "bg-soft"}`}
+                  >
                     {c.level === "HL" ? "Higher Level" : "Standard Level"}
                   </span>
                 )}
@@ -157,7 +181,9 @@ export function Cas() {
             key={c.short}
             href={c.href}
             className={`ib-core group flex flex-col justify-between gap-10 rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1 sm:p-8 ${
-              ["bg-ink text-paper", "bg-accent text-ink", "bg-soft text-ink", "border border-line bg-paper text-ink"][i % 4]
+              ["bg-ink text-paper", "bg-accent text-ink", "bg-soft text-ink", "border border-line bg-paper text-ink"][
+                i % 4
+              ]
             }`}
           >
             <div className="flex items-start justify-between">
@@ -182,8 +208,8 @@ export function Cas() {
           />
         </div>
         <p className="max-w-sm text-muted">
-          Eighteen months of experiences outside the classroom — planned, lived and
-          reflected on. Here&apos;s how the library can help you get it done.
+          Eighteen months of experiences outside the classroom — planned, lived and reflected on. Here&apos;s how the
+          library can help you get it done.
         </p>
       </div>
 
@@ -246,7 +272,12 @@ export function Cas() {
         </div>
         <ol className="md:col-span-8">
           {CAS_OUTCOMES.map((o, i) => (
-            <li key={o} className="outcome relative overflow-hidden" onMouseEnter={(e) => sweep(e, true)} onMouseLeave={(e) => sweep(e, false)}>
+            <li
+              key={o}
+              className="outcome relative overflow-hidden"
+              onMouseEnter={(e) => sweep(e, true)}
+              onMouseLeave={(e) => sweep(e, false)}
+            >
               <div className="row-line absolute inset-x-0 top-0 h-px origin-left bg-ink" />
               <div className="row-fill absolute inset-0 scale-y-0 bg-accent" />
               <div className="relative flex items-baseline gap-6 overflow-hidden py-5">
@@ -263,7 +294,10 @@ export function Cas() {
           <div key={t.title} className="ib-tile rounded-2xl bg-soft p-6 sm:p-8">
             <h4 className="font-display text-2xl font-semibold tracking-tight">{t.title}</h4>
             <p className="mt-3 text-sm text-muted">{t.body}</p>
-            <a href="#resources" className="mt-4 inline-block py-2 text-sm font-medium underline-offset-4 hover:underline">
+            <a
+              href="#resources"
+              className="mt-4 inline-block py-2 text-sm font-medium underline-offset-4 hover:underline"
+            >
               Open resources →
             </a>
           </div>
@@ -310,7 +344,9 @@ export function Cas() {
           ))}
         </ol>
 
-        <h4 className="font-display mt-16 mb-4 text-2xl font-semibold tracking-tight">What&apos;s expected in each course</h4>
+        <h4 className="font-display mt-16 mb-4 text-2xl font-semibold tracking-tight">
+          What&apos;s expected in each course
+        </h4>
         <ul>
           {IA_BY_COURSE.map((r) => (
             <li

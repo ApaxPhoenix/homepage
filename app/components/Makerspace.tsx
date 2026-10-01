@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP } from "./gsap";
 import { MAKERSPACE } from "../data";
+import { gsap, useGSAP } from "./gsap";
 
 export function Makerspace() {
   const root = useRef<HTMLElement>(null);
@@ -34,7 +34,11 @@ export function Makerspace() {
   );
 
   const wobble = (e: React.MouseEvent<HTMLElement>) => {
-    gsap.fromTo(e.currentTarget, { rotate: 0 }, { rotate: gsap.utils.random(-8, 8), duration: 0.4, ease: "back.out(3)" });
+    gsap.fromTo(
+      e.currentTarget,
+      { rotate: 0 },
+      { rotate: gsap.utils.random(-8, 8), duration: 0.4, ease: "back.out(3)" },
+    );
   };
 
   return (
@@ -44,8 +48,8 @@ export function Makerspace() {
           Makerspace<span className="text-accent">.</span>
         </h2>
         <p className="text-muted md:col-span-5 md:pt-4">
-          Board games, something to read and supplies to make things with. Grab a chess board at lunch, add a few pieces to
-          the community puzzle, or just unwind between classes.
+          Board games, something to read and supplies to make things with. Grab a chess board at lunch, add a few pieces
+          to the community puzzle, or just unwind between classes.
         </p>
       </div>
       <div className="mk-chips mt-16 grid gap-10 lg:grid-cols-3">

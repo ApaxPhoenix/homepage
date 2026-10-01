@@ -20,10 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${interTight.variable} antialiased`}
-    >
+    <html lang="en" className={`${inter.variable} ${interTight.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

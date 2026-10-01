@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap, useGSAP } from "./gsap";
-import { Ext } from "./Ext";
-import { openCite } from "./CiteDrawer";
-import { coverUrl } from "../lib/openlibrary";
-import { catalogUrl } from "../lib/links";
 import { FREE_BOOKS, READING_LINKS, TOP_BOOKS } from "../data";
+import { catalogUrl } from "../lib/links";
+import { coverUrl } from "../lib/openlibrary";
+import { openCite } from "./CiteDrawer";
+import { Ext } from "./Ext";
+import { gsap, useGSAP } from "./gsap";
 
 // Backdrops for the covers, from the site palette only.
 const STAGES = ["bg-accent text-ink", "bg-ink text-paper", "bg-soft text-ink"];
@@ -27,9 +27,9 @@ function Cover({ book }: { book: Pick }) {
     );
   }
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- remote cover, static export
+    // biome-ignore lint/performance/noImgElement: remote cover, static export
     <img
-      src={coverUrl({ isbn: book.isbn }, "L")! + (attempt ? `&retry=${attempt}` : "")}
+      src={`${coverUrl({ isbn: book.isbn }, "L")}${attempt ? `&retry=${attempt}` : ""}`}
       alt={`Cover of ${book.title} by ${book.author}`}
       loading="lazy"
       // Open Library occasionally drops a request; retry once before the text cover.
@@ -72,8 +72,9 @@ export function Books() {
 
       const mm = gsap.matchMedia();
       mm.add("(min-width: 768px)", () => {
-        const pin = root.current!.querySelector<HTMLElement>(".books-pin")!;
-        const track = root.current!.querySelector<HTMLElement>(".books-track")!;
+        const pin = root.current?.querySelector<HTMLElement>(".books-pin");
+        const track = root.current?.querySelector<HTMLElement>(".books-track");
+        if (!pin || !track) return;
         const distance = () => track.scrollWidth - window.innerWidth;
 
         gsap.to(track, {
@@ -86,8 +87,7 @@ export function Books() {
             pin: true,
             scrub: 1,
             invalidateOnRefresh: true,
-            onUpdate: (self) =>
-              setActive(Math.min(TOP_BOOKS.length, Math.floor(self.progress * TOP_BOOKS.length) + 1)),
+            onUpdate: (self) => setActive(Math.min(TOP_BOOKS.length, Math.floor(self.progress * TOP_BOOKS.length) + 1)),
           },
         });
       });
@@ -96,7 +96,11 @@ export function Books() {
         gsap
           .timeline({ scrollTrigger: { trigger: row, start: "top 94%" } })
           .from(row.querySelector(".row-line"), { scaleX: 0, duration: 1.2, ease: "expo.out" })
-          .from(row.querySelectorAll(".row-cell"), { yPercent: 100, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" }, 0.1);
+          .from(
+            row.querySelectorAll(".row-cell"),
+            { yPercent: 100, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" },
+            0.1,
+          );
       });
     },
     { scope: root },
@@ -118,7 +122,13 @@ export function Books() {
     });
   };
   const untilt = (e: React.MouseEvent<HTMLElement>) => {
-    gsap.to(e.currentTarget.querySelector(".book-img"), { rotateY: 0, rotateX: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.5)" });
+    gsap.to(e.currentTarget.querySelector(".book-img"), {
+      rotateY: 0,
+      rotateX: 0,
+      y: 0,
+      duration: 0.8,
+      ease: "elastic.out(1, 0.5)",
+    });
   };
 
   const sweep = (e: React.MouseEvent<HTMLElement>, enter: boolean) => {
@@ -161,6 +171,7 @@ export function Books() {
         <div className="books-track flex gap-5 overflow-x-auto px-4 pb-4 sm:px-8 md:w-max md:overflow-visible md:pb-0">
           {TOP_BOOKS.map((b, i) => (
             <article key={b.title} className="book-card flex w-[72vw] shrink-0 flex-col sm:w-[40vw] md:w-[23vw]">
+              {/* biome-ignore lint/a11y/noStaticElementInteractions: decorative hover tilt only */}
               <div
                 onMouseMove={tilt}
                 onMouseLeave={untilt}
@@ -184,6 +195,7 @@ export function Books() {
                   Find at LHS ↗
                 </Ext>
                 <button
+                  type="button"
                   onClick={() =>
                     openCite({
                       title: b.title,
@@ -197,7 +209,10 @@ export function Books() {
                 >
                   Cite
                 </button>
-                <Ext href={b.review} className="rounded-full px-2 py-2 text-muted underline-offset-4 hover:text-ink hover:underline">
+                <Ext
+                  href={b.review}
+                  className="rounded-full px-2 py-2 text-muted underline-offset-4 hover:text-ink hover:underline"
+                >
                   Goodreads ↗
                 </Ext>
               </div>

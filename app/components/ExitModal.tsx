@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap, useGSAP } from "./gsap";
 import { SITE } from "../data";
+import { gsap, useGSAP } from "./gsap";
 import { lockScroll } from "./SmoothScroll";
 
 const LEAVE_EVENT = "commons:leave";
@@ -96,6 +96,7 @@ export function ExitModal() {
 
   return (
     <div ref={root} className="invisible fixed inset-0 z-[80] flex items-end justify-center p-4 sm:items-center">
+      {/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: pointer shortcut; Escape and the close button handle keyboard */}
       <div className="exit-backdrop absolute inset-0 bg-ink/70 backdrop-blur-sm" onClick={close} />
       <div
         role="dialog"
@@ -107,21 +108,29 @@ export function ExitModal() {
           <p className="exit-line text-xs tracking-widest text-muted uppercase">(Heads up)</p>
         </div>
         <div className="mt-3 overflow-hidden">
-          <h2 id="exit-title" className="exit-line font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
+          <h2
+            id="exit-title"
+            className="exit-line font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl"
+          >
             You&apos;re leaving {SITE.name}
           </h2>
         </div>
         <div className="mt-4 overflow-hidden">
           <p className="exit-line text-muted">
-            This link opens <span className="font-medium break-all text-ink">{host}</span> in a new tab. Sites outside the
-            school have their own rules and privacy policies.
+            This link opens <span className="font-medium break-all text-ink">{host}</span> in a new tab. Sites outside
+            the school have their own rules and privacy policies.
           </p>
         </div>
         <div className="exit-line mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-          <button onClick={close} className="rounded-full border border-line px-6 py-3 text-sm transition-colors hover:bg-soft">
+          <button
+            type="button"
+            onClick={close}
+            className="rounded-full border border-line px-6 py-3 text-sm transition-colors hover:bg-soft"
+          >
             Stay here
           </button>
           <button
+            type="button"
             ref={confirmBtn}
             onClick={go}
             className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-ink"

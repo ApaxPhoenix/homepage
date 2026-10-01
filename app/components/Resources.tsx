@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap, useGSAP, ScrollTrigger } from "./gsap";
-import { Ext } from "./Ext";
 import { NOODLETOOLS, RESOURCE_GROUPS } from "../data";
+import { Ext } from "./Ext";
+import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 
 export function Resources() {
   const root = useRef<HTMLElement>(null);
@@ -20,7 +20,7 @@ export function Resources() {
 
   const { contextSafe } = useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>(".res-body").forEach((el, i) => gsap.set(el, { height: i === 0 ? "auto" : 0 }));
+      gsap.set(".res-body", { height: (i: number) => (i === 0 ? "auto" : "0px") });
       gsap.set(".res-icon", { rotate: (i: number) => (i === 0 ? 45 : 0) });
 
       gsap.from(".noodle > *", {
@@ -64,9 +64,7 @@ export function Resources() {
         );
       }
     });
-    gsap.utils.toArray<HTMLElement>(".res-icon").forEach((el, j) =>
-      gsap.to(el, { rotate: j === next ? 45 : 0, duration: 0.5, ease: "power3.out" }),
-    );
+    gsap.to(".res-icon", { rotate: (j: number) => (j === next ? 45 : 0), duration: 0.5, ease: "power3.out" });
     setOpen(next);
   });
 
@@ -105,17 +103,25 @@ export function Resources() {
                 ))}
               </ul>
               <div className="flex flex-wrap gap-2">
-                <Ext href={NOODLETOOLS.student} className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-paper hover:text-ink">
+                <Ext
+                  href={NOODLETOOLS.student}
+                  className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
+                >
                   Student login ↗
                 </Ext>
-                <Ext href={NOODLETOOLS.teacher} className="rounded-full border border-ink px-5 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-paper">
+                <Ext
+                  href={NOODLETOOLS.teacher}
+                  className="rounded-full border border-ink px-5 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-paper"
+                >
                   Teacher login ↗
                 </Ext>
               </div>
             </div>
           </div>
           <label className="mb-8 flex items-center gap-3 rounded-full border border-white/20 px-5 py-3 focus-within:border-accent">
-            <span aria-hidden className="text-white/50">⌕</span>
+            <span aria-hidden className="text-white/50">
+              ⌕
+            </span>
             <span className="sr-only">Filter resources</span>
             <input
               value={filter}
@@ -124,7 +130,12 @@ export function Resources() {
               className="min-w-0 flex-1 bg-transparent text-paper outline-none placeholder:text-white/40"
             />
             {filter && (
-              <button onClick={() => setFilter("")} aria-label="Clear filter" className="-my-2 px-2 py-2 text-white/60 hover:text-paper">
+              <button
+                type="button"
+                onClick={() => setFilter("")}
+                aria-label="Clear filter"
+                className="-my-2 px-2 py-2 text-white/60 hover:text-paper"
+              >
                 ×
               </button>
             )}
@@ -150,7 +161,9 @@ export function Resources() {
                   </Ext>
                 ))}
               </div>
-              {matches.length === 0 && <p className="text-white/70">Nothing matches — ask Ms. Colish, she&apos;ll know where to look.</p>}
+              {matches.length === 0 && (
+                <p className="text-white/70">Nothing matches — ask Ms. Colish, she&apos;ll know where to look.</p>
+              )}
             </div>
           )}
 
@@ -158,6 +171,7 @@ export function Resources() {
             {RESOURCE_GROUPS.map((g, i) => (
               <li key={g.title} className="res-item border-t border-white/20 last:border-b">
                 <button
+                  type="button"
                   onClick={() => toggle(i)}
                   aria-expanded={open === i}
                   className="group flex w-full items-center justify-between gap-6 py-6 text-left sm:py-8"
@@ -184,7 +198,11 @@ export function Resources() {
                         >
                           <span>
                             <span className="block font-medium">{l.label}</span>
-                            {l.note && <span className="block text-xs text-white/50 group-hover/link:text-white/80">{l.note}</span>}
+                            {l.note && (
+                              <span className="block text-xs text-white/50 group-hover/link:text-white/80">
+                                {l.note}
+                              </span>
+                            )}
                           </span>
                           <span className="transition-transform duration-300 group-hover/link:rotate-45">↗</span>
                         </Ext>

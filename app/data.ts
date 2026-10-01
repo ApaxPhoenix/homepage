@@ -112,7 +112,11 @@ export const GENRES = [
 ] as const;
 
 export const READING_LINKS = [
-  { label: "The library's book list", note: "LHS Media Center on Goodreads", href: "https://www.goodreads.com/review/list/65339918-lindenhs-mediacenter?shelf=read" },
+  {
+    label: "The library's book list",
+    note: "LHS Media Center on Goodreads",
+    href: "https://www.goodreads.com/review/list/65339918-lindenhs-mediacenter?shelf=read",
+  },
   { label: "eBooks & audiobooks", note: "Sora / OverDrive", href: "https://soraapp.com/" },
   {
     label: "Cameron's Collection eBooks",
@@ -125,10 +129,22 @@ export const READING_LINKS = [
 export const FREE_BOOKS = [
   { label: "Project Gutenberg", note: "Tens of thousands of free classics", href: "https://www.gutenberg.org/" },
   { label: "HathiTrust", note: "Millions of digitised library titles", href: "https://www.hathitrust.org/" },
-  { label: "Complete Works of Shakespeare", note: "MIT's plays and poems", href: "http://shakespeare.mit.edu/works.html" },
+  {
+    label: "Complete Works of Shakespeare",
+    note: "MIT's plays and poems",
+    href: "http://shakespeare.mit.edu/works.html",
+  },
   { label: "Bartleby", note: "Classic literature and reference", href: "https://www.bartleby.com/" },
-  { label: "The Online Books Page", note: "Index of free books online", href: "https://onlinebooks.library.upenn.edu/" },
-  { label: "Internet Archive — Texts", note: "Fiction, history and academic books", href: "https://archive.org/details/texts" },
+  {
+    label: "The Online Books Page",
+    note: "Index of free books online",
+    href: "https://onlinebooks.library.upenn.edu/",
+  },
+  {
+    label: "Internet Archive — Texts",
+    note: "Fiction, history and academic books",
+    href: "https://archive.org/details/texts",
+  },
 ];
 
 export type ResourceLink = { label: string; note?: string; href: string };
@@ -143,14 +159,39 @@ export const NOODLETOOLS = {
 export const RESOURCE_GROUPS: ResourceGroup[] = [
   {
     title: "Research databases",
-    intro: "Research papers, academic journals and reference material — every database here exports citations to NoodleTools. Ask Ms. Colish for passwords.",
+    intro:
+      "Research papers, academic journals and reference material — every database here exports citations to NoodleTools. Ask Ms. Colish for passwords.",
     links: [
-      { label: "EBSCOhost", note: "Research papers, peer-reviewed journals and articles", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
-      { label: "EBSCO Image Collection", note: "Inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
-      { label: "GreenFILE", note: "Environment research — inside EBSCOhost", href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y" },
-      { label: "Gale eBooks", note: "Gale Cengage reference", href: "https://infotrac.galegroup.com/itweb/lin7273?db=GVRL" },
-      { label: "Learn360", note: "Infobase streaming video", href: "http://learn360.infobase.com/PortalPlayLists.aspx?wid=18096" },
-      { label: "JerseyClicks", note: "NJ State Library — works from New Jersey locations", href: "https://www.njstatelib.org/services_for_libraries/statewide_services/jerseyclicks/jerseyclicks-urls-libraries/" },
+      {
+        label: "EBSCOhost",
+        note: "Research papers, peer-reviewed journals and articles",
+        href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y",
+      },
+      {
+        label: "EBSCO Image Collection",
+        note: "Inside EBSCOhost",
+        href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y",
+      },
+      {
+        label: "GreenFILE",
+        note: "Environment research — inside EBSCOhost",
+        href: "https://search.ebscohost.com/login.aspx?authtype=ip,uid&custid=s9780133&groupid=main&site=mhlibed&return=y",
+      },
+      {
+        label: "Gale eBooks",
+        note: "Gale Cengage reference",
+        href: "https://infotrac.galegroup.com/itweb/lin7273?db=GVRL",
+      },
+      {
+        label: "Learn360",
+        note: "Infobase streaming video",
+        href: "http://learn360.infobase.com/PortalPlayLists.aspx?wid=18096",
+      },
+      {
+        label: "JerseyClicks",
+        note: "NJ State Library — works from New Jersey locations",
+        href: "https://www.njstatelib.org/services_for_libraries/statewide_services/jerseyclicks/jerseyclicks-urls-libraries/",
+      },
     ],
   },
   {
@@ -160,22 +201,42 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
       { label: "American History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE52" },
       { label: "African-American History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE01" },
       { label: "American Indian History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE43" },
-      { label: "Ancient & Medieval History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE49" },
+      {
+        label: "Ancient & Medieval History",
+        href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE49",
+      },
       { label: "Modern World History", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE53" },
-      { label: "World Geography & Culture", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE39" },
+      {
+        label: "World Geography & Culture",
+        href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE39",
+      },
       { label: "Bloom's Literature", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE54" },
       { label: "Science Online", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE40" },
       { label: "Health Reference Center", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE48" },
-      { label: "Ferguson's Career Guidance", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE34" },
-      { label: "Curriculum Resource Center", href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE51" },
+      {
+        label: "Ferguson's Career Guidance",
+        href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE34",
+      },
+      {
+        label: "Curriculum Resource Center",
+        href: "https://online.infobaselearning.com/Direct.aspx?aid=18096&pid=WE51",
+      },
     ],
   },
   {
     title: "Primary sources & facts",
     intro: "Original documents, historic newspapers, data and both sides of the argument.",
     links: [
-      { label: "Library of Congress", note: "Digital collections & primary sources", href: "https://www.loc.gov/collections/" },
-      { label: "NJ Digital Newspaper Project", note: "Historic New Jersey papers — Rutgers", href: "https://blogs.libraries.rutgers.edu/njdnp/available-newspaper-titles/" },
+      {
+        label: "Library of Congress",
+        note: "Digital collections & primary sources",
+        href: "https://www.loc.gov/collections/",
+      },
+      {
+        label: "NJ Digital Newspaper Project",
+        note: "Historic New Jersey papers — Rutgers",
+        href: "https://blogs.libraries.rutgers.edu/njdnp/available-newspaper-titles/",
+      },
       { label: "US Census data", note: "Statistics", href: "https://data.census.gov/" },
       { label: "ProCon", note: "Pros and cons of controversial issues", href: "https://www.procon.org/" },
       { label: "Dictionary", href: "https://www.dictionary.com/" },
@@ -188,14 +249,22 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     links: [
       { label: "SweetSearch", note: "Search engine for students", href: "https://www.sweetsearch.com/" },
       { label: "Google Scholar", note: "Scholarly articles and papers", href: "https://scholar.google.com/" },
-      { label: "Search tips & tricks", note: "Google for Education PDF", href: "https://static.googleusercontent.com/media/www.google.com/en//educators/downloads/Tips_Tricks_17x22.pdf" },
+      {
+        label: "Search tips & tricks",
+        note: "Google for Education PDF",
+        href: "https://static.googleusercontent.com/media/www.google.com/en//educators/downloads/Tips_Tricks_17x22.pdf",
+      },
     ],
   },
   {
     title: "Writing help",
     intro: "Get the format right and keep your work your own.",
     links: [
-      { label: "Purdue OWL", note: "MLA, APA, in-text citations and general writing help", href: "https://owl.purdue.edu/owl/purdue_owl.html" },
+      {
+        label: "Purdue OWL",
+        note: "MLA, APA, in-text citations and general writing help",
+        href: "https://owl.purdue.edu/owl/purdue_owl.html",
+      },
       { label: "In-text citations guide", href: "https://monroecollege.libguides.com/c.php?g=589208&p=4073045" },
       { label: "Avoiding plagiarism", href: "https://monroecollege.libguides.com/c.php?g=589208&p=4072931" },
     ],
@@ -205,9 +274,20 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     intro: "Before you cite it, check who made it, when and why.",
     links: [
       { label: "The CRAAP test", href: "https://libguides.cmich.edu/web_research/craap" },
-      { label: "5 W's evaluation checklist", href: "https://www.schrockguide.net/uploads/3/9/2/2/392267/schrock_5ws.pdf" },
-      { label: "Finding scholarly sources", note: "University of Illinois Library", href: "https://www.library.illinois.edu/ugl/howdoi/scholarly/" },
-      { label: "Academic vs. peer-reviewed journals", note: "EBSCO", href: "https://connect.ebsco.com/s/article/What-is-the-difference-between-Academic-Journals-and-Scholarly-Peer-Reviewed-Journals?language=en_US" },
+      {
+        label: "5 W's evaluation checklist",
+        href: "https://www.schrockguide.net/uploads/3/9/2/2/392267/schrock_5ws.pdf",
+      },
+      {
+        label: "Finding scholarly sources",
+        note: "University of Illinois Library",
+        href: "https://www.library.illinois.edu/ugl/howdoi/scholarly/",
+      },
+      {
+        label: "Academic vs. peer-reviewed journals",
+        note: "EBSCO",
+        href: "https://connect.ebsco.com/s/article/What-is-the-difference-between-Academic-Journals-and-Scholarly-Peer-Reviewed-Journals?language=en_US",
+      },
     ],
   },
   {
@@ -227,8 +307,16 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     intro: "Support for your head and your health. Wellness books are also on the shelf in the Commons.",
     links: [
       { label: "988 Suicide & Crisis Lifeline", note: "Call or text 988", href: "https://988lifeline.org/" },
-      { label: "Wellness collection", note: "Wakelet — mental health sites and apps", href: "https://wakelet.com/wake/Xnc3RhioDjiBT-4oRVD44" },
-      { label: "Wellness eBooks", note: "Browse and borrow anonymously", href: "https://collections.follettsoftware.com/collection/5e2affecc4050e0012d5216c?h=9bcfef44e29749b57609f258d16b074af3a343f6095ce100c5e5fcc854214b4e" },
+      {
+        label: "Wellness collection",
+        note: "Wakelet — mental health sites and apps",
+        href: "https://wakelet.com/wake/Xnc3RhioDjiBT-4oRVD44",
+      },
+      {
+        label: "Wellness eBooks",
+        note: "Browse and borrow anonymously",
+        href: "https://collections.follettsoftware.com/collection/5e2affecc4050e0012d5216c?h=9bcfef44e29749b57609f258d16b074af3a343f6095ce100c5e5fcc854214b4e",
+      },
       { label: "TeensHealth", note: "Body, mind and relationships", href: "https://kidshealth.org/en/teens/" },
       { label: "MyPlate", note: "Nutrition basics", href: "https://www.myplate.gov/" },
     ],
@@ -269,13 +357,24 @@ export const CAS_OUTCOMES = [
 export const CAS_STAGES = ["Investigation", "Preparation", "Action", "Reflection", "Demonstration"];
 
 export const CAS_LINKS = [
-  { label: "CAS presentation", note: "Google Slides", href: "https://docs.google.com/presentation/d/e/2PACX-1vSy5KM1rURUFKzTqxpIxTQrzLpv5BVxG30GkkXpMPCWvCvGSGPQ-qCvE7ytX10AJaWZe9RWAvfznPtA/pub?start=false&loop=false&delayms=10000" },
+  {
+    label: "CAS presentation",
+    note: "Google Slides",
+    href: "https://docs.google.com/presentation/d/e/2PACX-1vSy5KM1rURUFKzTqxpIxTQrzLpv5BVxG30GkkXpMPCWvCvGSGPQ-qCvE7ytX10AJaWZe9RWAvfznPtA/pub?start=false&loop=false&delayms=10000",
+  },
   { label: "CAS collection", note: "Wakelet", href: "https://wakelet.com/wake/rzd0rJxntmjppbp-_eS2f" },
-  { label: "CAS on the IB website", note: "Official guide — ibo.org", href: "https://www.ibo.org/programmes/diploma-programme/curriculum/creativity-activity-and-service/" },
+  {
+    label: "CAS on the IB website",
+    note: "Official guide — ibo.org",
+    href: "https://www.ibo.org/programmes/diploma-programme/curriculum/creativity-activity-and-service/",
+  },
 ];
 
 export const IB_HELP = [
-  { title: "Extended Essay", body: "Book a research consult with Ms. Colish and start your source list in NoodleTools." },
+  {
+    title: "Extended Essay",
+    body: "Book a research consult with Ms. Colish and start your source list in NoodleTools.",
+  },
   { title: "Theory of Knowledge", body: "Find real-world examples in ProCon, newspapers and primary sources." },
   { title: "Internal Assessments", body: "Use the subject databases for data, articles and background reading." },
 ];
@@ -287,38 +386,104 @@ export const IB_COURSES = [
   { name: "Chemistry", level: "HL", group: "Sciences", use: "Science Online, EBSCOhost" },
   { name: "Biology", level: "SL", group: "Sciences", use: "Science Online, Health Reference Center" },
   { name: "Physics", level: "SL", group: "Sciences", use: "Science Online, Google Scholar" },
-  { name: "Mathematics: Analysis & Approaches", level: "SL", group: "Mathematics", use: "US Census data, Google Scholar" },
+  {
+    name: "Mathematics: Analysis & Approaches",
+    level: "SL",
+    group: "Mathematics",
+    use: "US Census data, Google Scholar",
+  },
   { name: "French B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in French" },
   { name: "Spanish B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Spanish" },
-  { name: "Mandarin Chinese B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Chinese" },
+  {
+    name: "Mandarin Chinese B",
+    level: "HL",
+    group: "Language acquisition",
+    use: "Sora eBooks, EBSCOhost articles in Chinese",
+  },
   { name: "Italian B", level: "HL", group: "Language acquisition", use: "Sora eBooks, EBSCOhost articles in Italian" },
-]
+];
 
 // Internal Assessment by course. Formats follow the current IB subject guides;
 // check deadlines and details with each teacher.
 export const IA_STEPS = [
-  { title: "Pick a focused question", body: "Narrow enough to answer well in the space you have. Run it past your teacher early." },
-  { title: "Research & plan", body: "Gather sources and data. Keep every source and note in NoodleTools from day one." },
+  {
+    title: "Pick a focused question",
+    body: "Narrow enough to answer well in the space you have. Run it past your teacher early.",
+  },
+  {
+    title: "Research & plan",
+    body: "Gather sources and data. Keep every source and note in NoodleTools from day one.",
+  },
   { title: "Draft", body: "Write or record a full draft. Your teacher can give feedback on one draft." },
   { title: "Revise & submit", body: "Act on the feedback, check your citations and hand in the final version." },
 ];
 
 export const IA_BY_COURSE = [
-  { course: "English A HL", task: "Individual oral", format: "About 15 minutes: a prepared talk connecting a literary and a non-literary text to a global issue, then questions from your teacher." },
-  { course: "History HL", task: "Historical investigation", format: "A written investigation of up to 2,200 words, including source evaluation and a reflection." },
-  { course: "Chemistry HL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
-  { course: "Biology SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
-  { course: "Physics SL", task: "Scientific investigation", format: "An experiment or data investigation you design yourself, written up in up to 3,000 words." },
-  { course: "French, Spanish, Mandarin & Italian B HL", task: "Individual oral", format: "A conversation in the language with your teacher, starting from an extract of a literary work you studied in class." },
-  { course: "Math: Analysis & Approaches SL", task: "Mathematical exploration", format: "A 12–20 page report exploring a piece of maths that interests you, in your own voice." },
+  {
+    course: "English A HL",
+    task: "Individual oral",
+    format:
+      "About 15 minutes: a prepared talk connecting a literary and a non-literary text to a global issue, then questions from your teacher.",
+  },
+  {
+    course: "History HL",
+    task: "Historical investigation",
+    format: "A written investigation of up to 2,200 words, including source evaluation and a reflection.",
+  },
+  {
+    course: "Chemistry HL",
+    task: "Scientific investigation",
+    format: "An experiment or data investigation you design yourself, written up in up to 3,000 words.",
+  },
+  {
+    course: "Biology SL",
+    task: "Scientific investigation",
+    format: "An experiment or data investigation you design yourself, written up in up to 3,000 words.",
+  },
+  {
+    course: "Physics SL",
+    task: "Scientific investigation",
+    format: "An experiment or data investigation you design yourself, written up in up to 3,000 words.",
+  },
+  {
+    course: "French, Spanish, Mandarin & Italian B HL",
+    task: "Individual oral",
+    format:
+      "A conversation in the language with your teacher, starting from an extract of a literary work you studied in class.",
+  },
+  {
+    course: "Math: Analysis & Approaches SL",
+    task: "Mathematical exploration",
+    format: "A 12–20 page report exploring a piece of maths that interests you, in your own voice.",
+  },
 ];
 
 export const IB_CORE = [
-  { title: "Theory of Knowledge", short: "TOK", body: "A course on how we know what we claim to know, ending in an exhibition and an essay.", href: "#resources" },
-  { title: "Extended Essay", short: "EE", body: "An independent 4,000-word research paper on a topic you choose.", href: "#resources" },
-  { title: "Internal Assessment", short: "IA", body: "Independent work in every IB course, marked by your teacher and counted toward your grade.", href: "#ia" },
-  { title: "Creativity, Activity, Service", short: "CAS", body: "Experiences outside the classroom, planned and reflected on across the programme.", href: "#cas" },
-]
+  {
+    title: "Theory of Knowledge",
+    short: "TOK",
+    body: "A course on how we know what we claim to know, ending in an exhibition and an essay.",
+    href: "#resources",
+  },
+  {
+    title: "Extended Essay",
+    short: "EE",
+    body: "An independent 4,000-word research paper on a topic you choose.",
+    href: "#resources",
+  },
+  {
+    title: "Internal Assessment",
+    short: "IA",
+    body: "Independent work in every IB course, marked by your teacher and counted toward your grade.",
+    href: "#ia",
+  },
+  {
+    title: "Creativity, Activity, Service",
+    short: "CAS",
+    body: "Experiences outside the classroom, planned and reflected on across the programme.",
+    href: "#cas",
+  },
+];
 
 // What's actually in the space: games, reading and hands-on creative supplies.
 export const MAKERSPACE = [
@@ -326,9 +491,17 @@ export const MAKERSPACE = [
   { group: "Read", items: ["Books", "Graphic novels", "Magazines", "Newspapers & articles"] },
   {
     group: "Create",
-    items: ["Community coloring", "Community puzzle", "Origami", "Drawing & sketching", "Knitting & crochet", "Looms", "Sewing"],
+    items: [
+      "Community coloring",
+      "Community puzzle",
+      "Origami",
+      "Drawing & sketching",
+      "Knitting & crochet",
+      "Looms",
+      "Sewing",
+    ],
   },
-]
+];
 
 export const LIBRARIAN_HELPS = [
   "Research consults for essays, the EE and IAs",

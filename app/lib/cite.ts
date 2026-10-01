@@ -17,8 +17,8 @@ function mlaAuthors([firstAuthor, ...rest]: string[]) {
   if (firstAuthor === undefined) return "";
   const { first, last } = split(firstAuthor);
   const lead = first ? `${last}, ${first}` : last;
-  if (rest.length === 0) return end(lead) + " ";
-  if (rest.length === 1) return end(`${lead}, and ${rest[0]}`) + " ";
+  if (rest.length === 0) return `${end(lead)} `;
+  if (rest.length === 1) return `${end(`${lead}, and ${rest[0]}`)} `;
   return `${lead}, et al. `;
 }
 
@@ -71,4 +71,8 @@ export function cite(style: Style, f: CiteFields): Run[] {
   ];
 }
 
-export const plain = (runs: Run[]) => runs.map((r) => r.text).join("").trim();
+export const plain = (runs: Run[]) =>
+  runs
+    .map((r) => r.text)
+    .join("")
+    .trim();

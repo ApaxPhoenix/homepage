@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap, useGSAP, onIntroDone } from "./gsap";
-import { Split } from "./Split";
-import { confirmLeave } from "./ExitModal";
 import { HOURS, NOODLETOOLS, SITE } from "../data";
+import { confirmLeave } from "./ExitModal";
+import { gsap, onIntroDone, useGSAP } from "./gsap";
+import { Split } from "./Split";
 
 const QUICK = [
   { label: "Find a book", href: "#find" },
@@ -30,7 +30,7 @@ function libraryStatus(now = new Date()) {
     minute: "2-digit",
     hourCycle: "h23",
   }).formatToParts(now);
-  const get = (t: string) => parts.find((p) => p.type === t)!.value;
+  const get = (t: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === t)?.value ?? "";
   const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
   const time = `${get("hour")}:${get("minute")}`;
   const clock = fmt(time);
@@ -103,30 +103,32 @@ export function Hero() {
           />
           <div className="flex flex-col gap-4 text-sm text-muted md:col-span-4 md:col-start-9 md:pt-3">
             <p className="hero-fade">
-              The {SITE.fullName} — books, research databases, International Baccalaureate support and a makerspace, all in
-              one place.
+              The {SITE.fullName} — books, research databases, International Baccalaureate support and a makerspace, all
+              in one place.
             </p>
-            <form onSubmit={search} role="search" className="hero-fade flex items-center gap-2 rounded-full bg-soft p-1.5 pl-5">
-              <label htmlFor="catalog-q" className="sr-only">
-                Search the library catalog
-              </label>
-              <input
-                id="catalog-q"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search the catalog…"
-                className="min-w-0 flex-1 bg-transparent text-ink outline-none placeholder:text-muted"
-              />
-              <button
-                type="submit"
-                className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-ink py-2.5 pr-2.5 pl-4 text-paper"
-              >
-                Search
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-accent transition-transform duration-500 group-hover:rotate-[-45deg]">
-                  →
-                </span>
-              </button>
-            </form>
+            <search>
+              <form onSubmit={search} className="hero-fade flex items-center gap-2 rounded-full bg-soft p-1.5 pl-5">
+                <label htmlFor="catalog-q" className="sr-only">
+                  Search the library catalog
+                </label>
+                <input
+                  id="catalog-q"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search the catalog…"
+                  className="min-w-0 flex-1 bg-transparent text-ink outline-none placeholder:text-muted"
+                />
+                <button
+                  type="submit"
+                  className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-ink py-2.5 pr-2.5 pl-4 text-paper"
+                >
+                  Search
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-accent transition-transform duration-500 group-hover:rotate-[-45deg]">
+                    →
+                  </span>
+                </button>
+              </form>
+            </search>
             <nav aria-label="Quick links" className="hero-fade flex flex-wrap gap-2">
               {QUICK.map((q) => (
                 <a
@@ -145,7 +147,7 @@ export function Hero() {
         <div className="relative">
           <div className="mb-6 flex justify-end pr-[4vw]">
             <div className="hero-badge relative grid h-24 w-24 shrink-0 place-items-center rounded-full bg-accent text-paper sm:h-32 sm:w-32 lg:h-40 lg:w-40">
-              <svg viewBox="0 0 100 100" className="hero-badge-text absolute inset-0 h-full w-full">
+              <svg viewBox="0 0 100 100" className="hero-badge-text absolute inset-0 h-full w-full" aria-hidden="true">
                 <defs>
                   <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
                 </defs>
@@ -172,7 +174,6 @@ export function Hero() {
             className="hero-brand font-display block text-[18.5vw] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap"
             text={SITE.wordmark}
           />
-
         </div>
       </div>
     </section>

@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { gsap, useGSAP, ScrollTrigger } from "./gsap";
-import { Ext } from "./Ext";
-import { openCite } from "./CiteDrawer";
-import { searchBooks, coverUrl, workUrl, type Book } from "../lib/openlibrary";
-import { catalogUrl } from "../lib/links";
 import { GENRES } from "../data";
+import { catalogUrl } from "../lib/links";
+import { type Book, coverUrl, searchBooks, workUrl } from "../lib/openlibrary";
+import { openCite } from "./CiteDrawer";
+import { Ext } from "./Ext";
+import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 
 type Status = "idle" | "loading" | "done" | "error";
 
@@ -17,7 +17,7 @@ function ResultCover({ book }: { book: Book }) {
     <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-line">
       {state === "loading" && <div className="shimmer absolute inset-0" />}
       {src && state !== "none" && (
-        // eslint-disable-next-line @next/next/no-img-element -- remote cover, static export
+        // biome-ignore lint/performance/noImgElement: remote cover, static export
         <img
           src={src}
           alt={`Cover of ${book.title}`}
@@ -26,7 +26,11 @@ function ResultCover({ book }: { book: Book }) {
             // Some Open Library covers are tiny scans; a clean text cover beats a blurry one.
             if (e.currentTarget.naturalWidth < 150) return setState("none");
             setState("ok");
-            gsap.fromTo(e.currentTarget, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" });
+            gsap.fromTo(
+              e.currentTarget,
+              { opacity: 0, scale: 1.08 },
+              { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" },
+            );
           }}
           onError={() => setState("none")}
           className="absolute inset-0 h-full w-full object-cover opacity-0"
@@ -145,36 +149,39 @@ export function BookFinder() {
           </h2>
         </div>
         <p className="text-muted md:col-span-5">
-          Search millions of titles or browse a genre. Every result links straight to the LHS catalog to see if it&apos;s
-          on our shelves — and can be cited in MLA or APA in one click.
+          Search millions of titles or browse a genre. Every result links straight to the LHS catalog to see if
+          it&apos;s on our shelves — and can be cited in MLA or APA in one click.
         </p>
       </div>
 
       <div className="finder-controls mt-12 flex flex-col gap-5">
-        <form onSubmit={submit} role="search" className="flex items-center gap-2 rounded-full bg-paper p-1.5 pl-6 shadow-sm">
-          <label htmlFor="finder-q" className="sr-only">
-            Search for a book by title, author or subject
-          </label>
-          <input
-            id="finder-q"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Title, author or subject…"
-            className="min-w-0 flex-1 bg-transparent py-2 text-lg outline-none placeholder:text-muted"
-          />
-          <button
-            type="submit"
-            className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-ink py-3 pr-3 pl-5 text-paper"
-          >
-            Search
-            <span className="grid h-7 w-7 place-items-center rounded-full bg-accent transition-transform duration-500 group-hover:rotate-[-45deg]">
-              →
-            </span>
-          </button>
-        </form>
-        <div className="flex flex-wrap gap-2" aria-label="Browse by genre">
+        <search>
+          <form onSubmit={submit} className="flex items-center gap-2 rounded-full bg-paper p-1.5 pl-6 shadow-sm">
+            <label htmlFor="finder-q" className="sr-only">
+              Search for a book by title, author or subject
+            </label>
+            <input
+              id="finder-q"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Title, author or subject…"
+              className="min-w-0 flex-1 bg-transparent py-2 text-lg outline-none placeholder:text-muted"
+            />
+            <button
+              type="submit"
+              className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-ink py-3 pr-3 pl-5 text-paper"
+            >
+              Search
+              <span className="grid h-7 w-7 place-items-center rounded-full bg-accent transition-transform duration-500 group-hover:rotate-[-45deg]">
+                →
+              </span>
+            </button>
+          </form>
+        </search>
+        <fieldset className="flex flex-wrap gap-2" aria-label="Browse by genre">
           {GENRES.map((g) => (
             <button
+              type="button"
               key={g.label}
               onClick={() => pickGenre(g)}
               aria-pressed={active === g.label}
@@ -185,7 +192,7 @@ export function BookFinder() {
               {g.label}
             </button>
           ))}
-        </div>
+        </fieldset>
       </div>
 
       <div className="mt-12 flex items-baseline justify-between gap-4" aria-live="polite">
@@ -197,6 +204,7 @@ export function BookFinder() {
         <div className="mt-6 flex flex-wrap items-center gap-4 rounded-2xl bg-paper p-6">
           <p>Open Library isn&apos;t responding right now.</p>
           <button
+            type="button"
             onClick={() => lastRun && run(lastRun.q, lastRun.sort, lastRun.label)}
             className="rounded-full bg-ink px-4 py-2 text-sm text-paper"
           >
@@ -218,6 +226,7 @@ export function BookFinder() {
       <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {(status === "loading" || status === "idle") &&
           Array.from({ length: 12 }, (_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: fixed set of loading placeholders
             <li key={i} aria-hidden>
               <div className="shimmer aspect-[2/3] rounded-xl" />
               <div className="shimmer mt-3 h-4 w-4/5 rounded" />
@@ -243,6 +252,7 @@ export function BookFinder() {
                   Find at LHS ↗
                 </Ext>
                 <button
+                  type="button"
                   onClick={() =>
                     openCite({
                       title: b.title,

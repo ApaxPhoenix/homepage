@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap, useGSAP, ScrollTrigger } from "./gsap";
 import { FAQ, LIBRARIAN_HELPS, SITE } from "../data";
+import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 
 export function Help() {
   const root = useRef<HTMLElement>(null);
@@ -39,18 +39,16 @@ export function Help() {
 
   const toggle = contextSafe((i: number) => {
     const next = open === i ? -1 : i;
-    gsap.utils.toArray<HTMLElement>(".faq-body").forEach((el, j) =>
+    for (const [j, el] of gsap.utils.toArray<HTMLElement>(".faq-body").entries()) {
       gsap.to(el, {
         height: j === next ? "auto" : 0,
         duration: 0.6,
         ease: "expo.inOut",
         overwrite: true,
         onComplete: j === i ? () => ScrollTrigger.refresh() : undefined,
-      }),
-    );
-    gsap.utils.toArray<HTMLElement>(".faq-icon").forEach((el, j) =>
-      gsap.to(el, { rotate: j === next ? 45 : 0, duration: 0.5, ease: "power3.out" }),
-    );
+      });
+    }
+    gsap.to(".faq-icon", { rotate: (j: number) => (j === next ? 45 : 0), duration: 0.5, ease: "power3.out" });
     setOpen(next);
   });
 
@@ -108,6 +106,7 @@ export function Help() {
           {FAQ.map((f, i) => (
             <li key={f.q} className="faq-item border-t border-line last:border-b">
               <button
+                type="button"
                 onClick={() => toggle(i)}
                 aria-expanded={open === i}
                 aria-controls={`faq-${i}`}

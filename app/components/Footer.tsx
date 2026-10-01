@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE, SUPPORT } from "../data";
+import { Ext } from "./Ext";
 import { gsap, useGSAP } from "./gsap";
 import { Split } from "./Split";
-import { Ext } from "./Ext";
-import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE, SUPPORT } from "../data";
 
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -113,8 +113,8 @@ export function Footer() {
 
       <div className="mt-12 flex flex-col gap-3 rounded-2xl border border-ink/25 p-5 text-sm sm:flex-row sm:items-center sm:justify-between">
         <p>
-          Website maintained by <span className="font-medium">{SUPPORT.name}</span>. Something broken or out of
-          date? Get in touch.
+          Website maintained by <span className="font-medium">{SUPPORT.name}</span>. Something broken or out of date?
+          Get in touch.
         </p>
         <a
           href={`mailto:${SUPPORT.email}?subject=${encodeURIComponent("LHS Commons website")}`}

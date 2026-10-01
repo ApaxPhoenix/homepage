@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP, ScrollTrigger } from "./gsap";
+import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 import { scrollToHash } from "./SmoothScroll";
 
 // Floating button that pops in once you're a screen or two down the page.
@@ -26,6 +26,7 @@ export function BackToTop() {
 
   return (
     <button
+      type="button"
       ref={btn}
       onClick={() => scrollToHash("#top")}
       aria-label="Back to top"
