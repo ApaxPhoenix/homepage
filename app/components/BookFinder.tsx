@@ -89,7 +89,7 @@ export function BookFinder() {
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
+        if (entry?.isIntersecting && !started.current) {
           started.current = true;
           const g = GENRES[0];
           run(g.q, "rating", `Popular ${g.label.toLowerCase()} for teens`);

@@ -109,7 +109,7 @@ export const GENRES = [
   { label: "Romance", q: 'subject:"young adult fiction" subject:romance' },
   { label: "Novels in verse", q: 'subject:"novels in verse"' },
   { label: "Graphic novels", q: 'subject:"young adult fiction" subject:"graphic novels"' },
-];
+] as const;
 
 export const READING_LINKS = [
   { label: "The library's book list", note: "LHS Media Center on Goodreads", href: "https://www.goodreads.com/review/list/65339918-lindenhs-mediacenter?shelf=read" },

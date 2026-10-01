@@ -13,12 +13,12 @@ function split(name: string) {
 
 const end = (s: string) => (/[.?!]$/.test(s) ? s : `${s}.`);
 
-function mlaAuthors(authors: string[]) {
-  if (authors.length === 0) return "";
-  const { first, last } = split(authors[0]);
+function mlaAuthors([firstAuthor, ...rest]: string[]) {
+  if (firstAuthor === undefined) return "";
+  const { first, last } = split(firstAuthor);
   const lead = first ? `${last}, ${first}` : last;
-  if (authors.length === 1) return end(lead) + " ";
-  if (authors.length === 2) return end(`${lead}, and ${authors[1]}`) + " ";
+  if (rest.length === 0) return end(lead) + " ";
+  if (rest.length === 1) return end(`${lead}, and ${rest[0]}`) + " ";
   return `${lead}, et al. `;
 }
 
@@ -27,7 +27,7 @@ function apaName(name: string) {
   const initials = first
     .split(/[\s-]+/)
     .filter(Boolean)
-    .map((p) => `${p[0].toUpperCase()}.`)
+    .map((p) => `${p.charAt(0).toUpperCase()}.`)
     .join(" ");
   return initials ? `${last}, ${initials}` : last;
 }
@@ -35,8 +35,8 @@ function apaName(name: string) {
 function apaAuthors(authors: string[]) {
   if (authors.length === 0) return "";
   const names = authors.slice(0, 20).map(apaName);
-  if (names.length === 1) return names[0] + " ";
-  return `${names.slice(0, -1).join(", ")}, & ${names[names.length - 1]} `;
+  if (names.length === 1) return `${names[0]} `;
+  return `${names.slice(0, -1).join(", ")}, & ${names.at(-1)} `;
 }
 
 // APA uses sentence case for book titles; keep the first word, the word after
