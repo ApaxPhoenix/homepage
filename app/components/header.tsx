@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
-import { SECTIONS, SITE } from "../data";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -31,15 +30,15 @@ export function Header() {
       .from(".menu-foot", { autoAlpha: 0, y: 20, duration: 0.5 }, "-=0.5");
 
     // Highlight the nav link for the section in the middle of the screen.
-    for (const section of SECTIONS) {
-      if (!document.querySelector(section.href)) continue;
+    for (const link of gsap.utils.toArray<HTMLAnchorElement>(".nav-link")) {
+      if (!document.querySelector(link.hash)) continue;
       ScrollTrigger.create({
-        trigger: section.href,
+        trigger: link.hash,
         start: "top center",
         end: "bottom center",
         onToggle: (self) => {
-          if (self.isActive) setCurrent(section.href);
-          else setCurrent((active) => (active === section.href ? "" : active));
+          if (self.isActive) setCurrent(link.hash);
+          else setCurrent((active) => (active === link.hash ? "" : active));
         },
       });
     }
@@ -73,6 +72,23 @@ export function Header() {
     window.dispatchEvent(new CustomEvent(next ? "commons:lock" : "commons:unlock", { detail: "menu" }));
   };
 
+  // Desktop links roll their label up on hover.
+  const roll = (event: React.MouseEvent<HTMLAnchorElement>) =>
+    gsap.to(event.currentTarget.querySelectorAll(".roll"), {
+      yPercent: event.type === "mouseenter" ? -100 : 0,
+      duration: 0.45,
+      ease: "power3.out",
+    });
+
+  // Mobile links close the menu, then glide to their section.
+  const jump = (event: React.MouseEvent<HTMLElement>) => {
+    const link = (event.target as Element).closest("a");
+    if (!link) return;
+    event.preventDefault();
+    toggle(false);
+    window.dispatchEvent(new CustomEvent("commons:scroll", { detail: link.hash }));
+  };
+
   return (
     <>
       <header ref={bar} className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6">
@@ -83,36 +99,93 @@ export function Header() {
             className="font-display -my-2 py-2 text-lg font-semibold tracking-tight"
             onClick={() => open && toggle(false)}
           >
-            {SITE.name}
+            LHS Commons
           </a>
           <nav className="hidden gap-7 text-sm lg:flex">
-            {SECTIONS.map((section) => (
-              <a
-                key={section.href}
-                href={section.href}
-                onMouseEnter={(event) =>
-                  gsap.to(event.currentTarget.querySelectorAll(".roll"), {
-                    yPercent: -100,
-                    duration: 0.45,
-                    ease: "power3.out",
-                  })
-                }
-                onMouseLeave={(event) =>
-                  gsap.to(event.currentTarget.querySelectorAll(".roll"), {
-                    yPercent: 0,
-                    duration: 0.45,
-                    ease: "power3.out",
-                  })
-                }
-                aria-current={current === section.href ? "location" : undefined}
-                className={`relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === section.href ? "text-accent" : ""}`}
-              >
-                <span className="roll block">{section.label}</span>
-                <span className="roll block" aria-hidden>
-                  {section.label}
-                </span>
-              </a>
-            ))}
+            <a
+              href="#books"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#books" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#books" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">Books</span>
+              <span className="roll block" aria-hidden>
+                Books
+              </span>
+            </a>
+            <a
+              href="#find"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#find" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#find" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">Find a book</span>
+              <span className="roll block" aria-hidden>
+                Find a book
+              </span>
+            </a>
+            <a
+              href="#resources"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#resources" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#resources" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">Resources</span>
+              <span className="roll block" aria-hidden>
+                Resources
+              </span>
+            </a>
+            <a
+              href="#ib"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#ib" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#ib" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">International Baccalaureate</span>
+              <span className="roll block" aria-hidden>
+                International Baccalaureate
+              </span>
+            </a>
+            <a
+              href="#courses"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#courses" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#courses" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">Courses</span>
+              <span className="roll block" aria-hidden>
+                Courses
+              </span>
+            </a>
+            <a
+              href="#help"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#help" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#help" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">Help</span>
+              <span className="roll block" aria-hidden>
+                Help
+              </span>
+            </a>
+            <a
+              href="#visit"
+              onMouseEnter={roll}
+              onMouseLeave={roll}
+              aria-current={current === "#visit" ? "location" : undefined}
+              className={`nav-link relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === "#visit" ? "text-accent" : ""}`}
+            >
+              <span className="roll block">Visit</span>
+              <span className="roll block" aria-hidden>
+                Visit
+              </span>
+            </a>
           </nav>
           <button
             type="button"
@@ -132,27 +205,75 @@ export function Header() {
         data-lenis-prevent
         className="invisible fixed inset-0 z-40 flex flex-col justify-between overflow-y-auto bg-ink px-4 pt-24 pb-8 text-paper lg:hidden"
       >
-        <nav className="flex flex-col">
-          {SECTIONS.map((section, index) => (
-            <span key={section.href} className="overflow-hidden border-b border-white/15">
-              <a
-                href={section.href}
-                onClick={(event) => {
-                  event.preventDefault();
-                  toggle(false);
-                  window.dispatchEvent(new CustomEvent("commons:scroll", { detail: section.href }));
-                }}
-                className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
-              >
-                {section.label}
-                <span className="text-sm font-normal text-white/40">0{index + 1}</span>
-              </a>
-            </span>
-          ))}
+        {/* biome-ignore lint/a11y/useKeyWithClickEvents: Enter on a link fires a click that bubbles up here */}
+        <nav onClick={jump} className="flex flex-col">
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#books"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              Books
+              <span className="text-sm font-normal text-white/40">01</span>
+            </a>
+          </span>
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#find"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              Find a book
+              <span className="text-sm font-normal text-white/40">02</span>
+            </a>
+          </span>
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#resources"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              Resources
+              <span className="text-sm font-normal text-white/40">03</span>
+            </a>
+          </span>
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#ib"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              International Baccalaureate
+              <span className="text-sm font-normal text-white/40">04</span>
+            </a>
+          </span>
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#courses"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              Courses
+              <span className="text-sm font-normal text-white/40">05</span>
+            </a>
+          </span>
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#help"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              Help
+              <span className="text-sm font-normal text-white/40">06</span>
+            </a>
+          </span>
+          <span className="overflow-hidden border-b border-white/15">
+            <a
+              href="#visit"
+              className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
+            >
+              Visit
+              <span className="text-sm font-normal text-white/40">07</span>
+            </a>
+          </span>
         </nav>
         <div className="menu-foot text-sm text-white/60">
-          <p>{SITE.title}</p>
-          <p>{SITE.location}</p>
+          <p>Linden High School Library Commons</p>
+          <p>2nd floor, Social Studies wing — across from Room 214</p>
         </div>
       </div>
     </>

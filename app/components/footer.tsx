@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import { BOOKING, SECTIONS, SITE, SUPPORT, TIMETABLE } from "../data";
 import { Split } from "./split";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -44,7 +43,7 @@ export function Footer() {
           />
         </div>
         <a
-          href={SITE.email ? `mailto:${SITE.email}` : "#help"}
+          href="mailto:mcolish@lindenps.org"
           // Button drifts toward the pointer and springs back on leave.
           onMouseMove={(event) => {
             const button = event.currentTarget;
@@ -67,7 +66,7 @@ export function Footer() {
           <span className="text-center text-sm font-medium">
             Ask
             <br />
-            {SITE.librarian} →
+            Ms. Colish →
           </span>
         </a>
       </div>
@@ -75,63 +74,84 @@ export function Footer() {
       <div className="mt-20 grid gap-10 border-t border-ink/30 pt-10 text-sm sm:grid-cols-2 md:grid-cols-4">
         <div>
           <p className="mb-3 text-ink/60">Hours</p>
-          {TIMETABLE.map((row) => (
-            <p key={row.day} className="mb-2">
-              <span className="block font-medium">{row.day}</span>
-              {row.time}
-            </p>
-          ))}
+
+          <p className="mb-2">
+            <span className="block font-medium">Monday – Friday</span>
+            7:35am – 2:45pm
+          </p>
+          <p className="mb-2">
+            <span className="block font-medium">Tuesday, Wednesday, Friday</span>
+            After school until 4:00pm
+          </p>
+          <p className="mb-2">
+            <span className="block font-medium">Thursday</span>
+            After school until 7:00pm
+          </p>
         </div>
         <div>
           <p className="mb-3 text-ink/60">Where</p>
-          <p>{SITE.school}</p>
-          <p>{SITE.location}</p>
+          <p>Linden High School</p>
+          <p>2nd floor, Social Studies wing — across from Room 214</p>
         </div>
         <div>
           <p className="mb-3 text-ink/60">Get in touch</p>
-          {SITE.email ? (
-            <>
-              <a href={`mailto:${SITE.email}`} className="block break-all hover:underline">
-                {SITE.email}
-              </a>
-              <a href={`mailto:${SITE.email}?subject=Book%20request`} className="block hover:underline">
-                Request a book
-              </a>
-            </>
-          ) : (
-            <p>{SITE.librarian}, School Librarian — at the circulation desk</p>
-          )}
-          <a href={BOOKING} target="_blank" rel="noopener noreferrer" className="block hover:underline">
+          <a href="mailto:mcolish@lindenps.org" className="block break-all hover:underline">
+            mcolish@lindenps.org
+          </a>
+          <a href="mailto:mcolish@lindenps.org?subject=Book%20request" className="block hover:underline">
+            Request a book
+          </a>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLScrLQwoIJGkqy5KFdZ_KPgy37p5XMV89fxz7X2Z3zG2zquewA/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block hover:underline"
+          >
             Book the classroom (teachers) ↗
           </a>
         </div>
         <div>
           <p className="mb-3 text-ink/60">On this page</p>
-          {SECTIONS.map((section) => (
-            <a key={section.href} href={section.href} className="block hover:underline">
-              {section.label}
-            </a>
-          ))}
+
+          <a href="#books" className="block hover:underline">
+            Books
+          </a>
+          <a href="#find" className="block hover:underline">
+            Find a book
+          </a>
+          <a href="#resources" className="block hover:underline">
+            Resources
+          </a>
+          <a href="#ib" className="block hover:underline">
+            International Baccalaureate
+          </a>
+          <a href="#courses" className="block hover:underline">
+            Courses
+          </a>
+          <a href="#help" className="block hover:underline">
+            Help
+          </a>
+          <a href="#visit" className="block hover:underline">
+            Visit
+          </a>
         </div>
       </div>
 
       <div className="mt-12 flex flex-col gap-3 rounded-2xl border border-ink/25 p-5 text-sm sm:flex-row sm:items-center sm:justify-between">
         <p>
-          Website maintained by <span className="font-medium">{SUPPORT.name}</span>. Something broken or out of date?
-          Get in touch.
+          Website maintained by <span className="font-medium">P. Andres Hernandez</span>. Something broken or out of
+          date? Get in touch.
         </p>
         <a
-          href={`mailto:${SUPPORT.email}?subject=${encodeURIComponent("LHS Commons website")}`}
+          href="mailto:andromedeyz@hotmail.com?subject=LHS%20Commons%20website"
           className="shrink-0 rounded-full bg-ink px-5 py-3 font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
         >
-          {SUPPORT.email}
+          andromedeyz@hotmail.com
         </a>
       </div>
 
       <div className="mt-16 flex justify-between gap-4 text-xs">
-        <span>
-          © {new Date().getFullYear()} {SITE.title}
-        </span>
+        <span>© {new Date().getFullYear()} Linden High School Library Commons</span>
         <a href="#top" className="shrink-0 hover:underline">
           Back to top ↑
         </a>
@@ -141,7 +161,7 @@ export function Footer() {
         as="p"
         by="chars"
         className="foot-brand font-display -mb-[3vw] block text-center text-[17vw] leading-[0.9] font-semibold tracking-[-0.06em] whitespace-nowrap"
-        text={SITE.wordmark}
+        text="COMMONS"
       />
     </footer>
   );

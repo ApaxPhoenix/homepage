@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
-import { GENRES, SITE } from "../data";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -14,7 +13,7 @@ export function Finder() {
   const root = useRef<HTMLElement>(null);
   const controller = useRef<AbortController | null>(null);
   const [query, setQuery] = useState("");
-  const [active, setActive] = useState<string>(GENRES[0].label);
+  const [active, setActive] = useState("Fantasy");
   const [label, setLabel] = useState("");
   const [books, setBooks] = useState<
     { key: string; title: string; authors: string[]; year?: number; publisher?: string; cover?: number }[]
@@ -98,7 +97,7 @@ export function Finder() {
         start: "top bottom+=600",
         end: "bottom top-=600",
         once: true,
-        onToggle: () => search(GENRES[0].query, "rating", `Popular ${GENRES[0].label.toLowerCase()} for teens`),
+        onToggle: () => search('subject:"young adult fiction" subject:fantasy', "rating", "Popular fantasy for teens"),
       });
     },
     { scope: root },
@@ -164,23 +163,116 @@ export function Finder() {
           </form>
         </search>
         <fieldset className="flex flex-wrap gap-2" aria-label="Browse by genre">
-          {GENRES.map((genre) => (
-            <button
-              type="button"
-              key={genre.label}
-              onClick={() => {
-                setActive(genre.label);
-                setQuery("");
-                search(genre.query, "rating", `Popular ${genre.label.toLowerCase()} for teens`);
-              }}
-              aria-pressed={active === genre.label}
-              className={`rounded-full border px-4 py-2 text-sm transition-colors ${
-                active === genre.label ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
-              }`}
-            >
-              {genre.label}
-            </button>
-          ))}
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Fantasy");
+              setQuery("");
+              search('subject:"young adult fiction" subject:fantasy', "rating", "Popular fantasy for teens");
+            }}
+            aria-pressed={active === "Fantasy"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Fantasy" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Fantasy
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Mystery");
+              setQuery("");
+              search('subject:"young adult fiction" subject:mystery', "rating", "Popular mystery for teens");
+            }}
+            aria-pressed={active === "Mystery"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Mystery" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Mystery
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Science fiction");
+              setQuery("");
+              search(
+                'subject:"young adult fiction" subject:"science fiction"',
+                "rating",
+                "Popular science fiction for teens",
+              );
+            }}
+            aria-pressed={active === "Science fiction"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Science fiction" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Science fiction
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Historical");
+              setQuery("");
+              search(
+                'subject:"young adult fiction" subject:"historical fiction"',
+                "rating",
+                "Popular historical for teens",
+              );
+            }}
+            aria-pressed={active === "Historical"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Historical" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Historical
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Romance");
+              setQuery("");
+              search('subject:"young adult fiction" subject:romance', "rating", "Popular romance for teens");
+            }}
+            aria-pressed={active === "Romance"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Romance" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Romance
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Novels in verse");
+              setQuery("");
+              search('subject:"novels in verse"', "rating", "Popular novels in verse for teens");
+            }}
+            aria-pressed={active === "Novels in verse"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Novels in verse" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Novels in verse
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setActive("Graphic novels");
+              setQuery("");
+              search(
+                'subject:"young adult fiction" subject:"graphic novels"',
+                "rating",
+                "Popular graphic novels for teens",
+              );
+            }}
+            aria-pressed={active === "Graphic novels"}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              active === "Graphic novels" ? "border-ink bg-ink text-paper" : "border-ink/20 bg-paper hover:border-ink"
+            }`}
+          >
+            Graphic novels
+          </button>
         </fieldset>
       </div>
 
@@ -206,7 +298,10 @@ export function Finder() {
         <p className="mt-6 rounded-2xl bg-paper p-6">
           No matches. Try a shorter title, just the author&apos;s last name, or{" "}
           <a
-            href={SITE.search + encodeURIComponent(query.trim())}
+            href={
+              "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=" +
+              encodeURIComponent(query.trim())
+            }
             target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-4"
@@ -278,7 +373,10 @@ export function Finder() {
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
                   <a
-                    href={SITE.search + encodeURIComponent(`${book.title} ${book.authors[0] ?? ""}`.trim())}
+                    href={
+                      "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=" +
+                      encodeURIComponent(`${book.title} ${book.authors[0] ?? ""}`.trim())
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-full bg-ink px-3 py-1.5 font-medium text-paper transition-colors hover:bg-accent"

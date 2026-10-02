@@ -2,19 +2,6 @@
 
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
-import { NOODLETOOLS } from "../data";
-
-const STYLES = [
-  { id: "MLA", label: "MLA 9" },
-  { id: "APA", label: "APA 7" },
-] as const;
-
-const FIELDS = [
-  { key: "authors", label: "Author(s), separated by commas", wide: true },
-  { key: "title", label: "Title", wide: true },
-  { key: "publisher", label: "Publisher", wide: false },
-  { key: "year", label: "Year", wide: false },
-] as const;
 
 // Book citations in MLA 9 and APA 7, in a drawer opened by "commons:cite"
 // events from the favorites shelf and the book finder.
@@ -200,25 +187,38 @@ export function Citation() {
         )}
 
         <div className="cite-rise mt-8 inline-flex rounded-full bg-soft p-1" role="tablist" aria-label="Citation style">
-          {STYLES.map((option) => (
-            <button
-              type="button"
-              key={option.id}
-              role="tab"
-              aria-selected={style === option.id}
-              onClick={() => {
-                setStyle(option.id);
-                gsap.fromTo(
-                  ".cite-output",
-                  { opacity: 0.3, y: 6 },
-                  { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
-                );
-              }}
-              className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${style === option.id ? "bg-ink text-paper" : "text-muted hover:text-ink"}`}
-            >
-              {option.label}
-            </button>
-          ))}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={style === "MLA"}
+            onClick={() => {
+              setStyle("MLA");
+              gsap.fromTo(
+                ".cite-output",
+                { opacity: 0.3, y: 6 },
+                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+              );
+            }}
+            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${style === "MLA" ? "bg-ink text-paper" : "text-muted hover:text-ink"}`}
+          >
+            MLA 9
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={style === "APA"}
+            onClick={() => {
+              setStyle("APA");
+              gsap.fromTo(
+                ".cite-output",
+                { opacity: 0.3, y: 6 },
+                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+              );
+            }}
+            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${style === "APA" ? "bg-ink text-paper" : "text-muted hover:text-ink"}`}
+          >
+            APA 7
+          </button>
         </div>
 
         <p
@@ -268,7 +268,7 @@ export function Citation() {
             {copied ? "Copied ✓" : "Copy citation"}
           </button>
           <a
-            href={NOODLETOOLS.student}
+            href="https://my.noodletools.com/logon/signin?domain=students.lindenps.org"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-line px-5 py-3 text-sm font-medium transition-colors hover:bg-soft"
@@ -278,16 +278,38 @@ export function Citation() {
         </div>
 
         <div className="mt-10 grid grid-cols-[1fr_7rem] gap-x-4 gap-y-5">
-          {FIELDS.map((field) => (
-            <label key={field.key} className={`cite-rise block ${field.wide ? "col-span-2" : ""}`}>
-              <span className="text-xs tracking-widest text-muted uppercase">{field.label}</span>
-              <input
-                value={fields[field.key]}
-                onChange={(event) => setFields((current) => ({ ...current, [field.key]: event.target.value }))}
-                className="mt-1 w-full border-b border-line bg-transparent py-2 outline-none focus:border-accent"
-              />
-            </label>
-          ))}
+          <label className="cite-rise block col-span-2">
+            <span className="text-xs tracking-widest text-muted uppercase">Author(s), separated by commas</span>
+            <input
+              value={fields.authors}
+              onChange={(event) => setFields({ ...fields, authors: event.target.value })}
+              className="mt-1 w-full border-b border-line bg-transparent py-2 outline-none focus:border-accent"
+            />
+          </label>
+          <label className="cite-rise block col-span-2">
+            <span className="text-xs tracking-widest text-muted uppercase">Title</span>
+            <input
+              value={fields.title}
+              onChange={(event) => setFields({ ...fields, title: event.target.value })}
+              className="mt-1 w-full border-b border-line bg-transparent py-2 outline-none focus:border-accent"
+            />
+          </label>
+          <label className="cite-rise block">
+            <span className="text-xs tracking-widest text-muted uppercase">Publisher</span>
+            <input
+              value={fields.publisher}
+              onChange={(event) => setFields({ ...fields, publisher: event.target.value })}
+              className="mt-1 w-full border-b border-line bg-transparent py-2 outline-none focus:border-accent"
+            />
+          </label>
+          <label className="cite-rise block">
+            <span className="text-xs tracking-widest text-muted uppercase">Year</span>
+            <input
+              value={fields.year}
+              onChange={(event) => setFields({ ...fields, year: event.target.value })}
+              className="mt-1 w-full border-b border-line bg-transparent py-2 outline-none focus:border-accent"
+            />
+          </label>
         </div>
         <p className="cite-rise mt-6 text-xs text-muted">
           Details come from Open Library and can differ from your copy. Check them against the book&apos;s title page

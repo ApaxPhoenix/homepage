@@ -7,19 +7,6 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const STATEMENT =
-  "We help every student and teacher at Linden High find, question and use information well — and we keep a space where reading, making and thinking for yourself come naturally.";
-
-const PILLARS = [
-  { title: "Information literacy", body: "Lessons that build real research skills: searching, evaluating and citing." },
-  { title: "Open access", body: "Print, eBooks, audiobooks, databases and video — in whatever format works for you." },
-  {
-    title: "Lifelong readers",
-    body: "Recommendations, book clubs and a collection shaped by what students actually read.",
-  },
-  { title: "Room to make", body: "A makerspace for building, tinkering, crafting and taking a breather from the day." },
-];
-
 export function Mission() {
   const root = useRef<HTMLElement>(null);
 
@@ -63,12 +50,14 @@ export function Mission() {
       <div className="grid gap-10 md:grid-cols-12">
         <span className="text-xs tracking-widest text-muted uppercase md:col-span-3">(Our mission)</span>
         <p className="mission-text font-display text-3xl leading-[1.1] font-medium tracking-tight sm:text-5xl md:col-span-9">
-          {STATEMENT.split(" ").map((word, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
-            <span key={index} className="mission-word">
-              {word}{" "}
-            </span>
-          ))}
+          {"We help every student and teacher at Linden High find, question and use information well — and we keep a space where reading, making and thinking for yourself come naturally."
+            .split(" ")
+            .map((word, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
+              <span key={index} className="mission-word">
+                {word}{" "}
+              </span>
+            ))}
         </p>
       </div>
 
@@ -81,18 +70,54 @@ export function Mission() {
       </figure>
 
       <div className="pillars mt-20 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {PILLARS.map((pillar, index) => (
-          <div key={pillar.title} className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
-            <span className="font-display text-5xl font-semibold tracking-tighter">
-              0{index + 1}
-              <span className="text-accent">.</span>
-            </span>
-            <div>
-              <h3 className="font-display text-xl font-medium">{pillar.title}</h3>
-              <p className="mt-2 text-sm text-muted">{pillar.body}</p>
-            </div>
+        <div className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
+          <span className="font-display text-5xl font-semibold tracking-tighter">
+            01
+            <span className="text-accent">.</span>
+          </span>
+          <div>
+            <h3 className="font-display text-xl font-medium">Information literacy</h3>
+            <p className="mt-2 text-sm text-muted">
+              Lessons that build real research skills: searching, evaluating and citing.
+            </p>
           </div>
-        ))}
+        </div>
+        <div className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
+          <span className="font-display text-5xl font-semibold tracking-tighter">
+            02
+            <span className="text-accent">.</span>
+          </span>
+          <div>
+            <h3 className="font-display text-xl font-medium">Open access</h3>
+            <p className="mt-2 text-sm text-muted">
+              Print, eBooks, audiobooks, databases and video — in whatever format works for you.
+            </p>
+          </div>
+        </div>
+        <div className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
+          <span className="font-display text-5xl font-semibold tracking-tighter">
+            03
+            <span className="text-accent">.</span>
+          </span>
+          <div>
+            <h3 className="font-display text-xl font-medium">Lifelong readers</h3>
+            <p className="mt-2 text-sm text-muted">
+              Recommendations, book clubs and a collection shaped by what students actually read.
+            </p>
+          </div>
+        </div>
+        <div className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
+          <span className="font-display text-5xl font-semibold tracking-tighter">
+            04
+            <span className="text-accent">.</span>
+          </span>
+          <div>
+            <h3 className="font-display text-xl font-medium">Room to make</h3>
+            <p className="mt-2 text-sm text-muted">
+              A makerspace for building, tinkering, crafting and taking a breather from the day.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

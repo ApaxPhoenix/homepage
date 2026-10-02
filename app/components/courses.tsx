@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import { SITE } from "../data";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -40,14 +39,12 @@ export function Courses() {
         </div>
         <div className="flex flex-col items-start gap-4 overflow-hidden md:col-span-5 md:items-end">
           <ul className="lh-rise flex flex-wrap gap-2 text-sm md:justify-end">
-            {["Courses", "Lessons", "Progress"].map((tag) => (
-              <li key={tag} className="rounded-full border border-white/20 px-3 py-1">
-                {tag}
-              </li>
-            ))}
+            <li className="rounded-full border border-white/20 px-3 py-1">Courses</li>
+            <li className="rounded-full border border-white/20 px-3 py-1">Lessons</li>
+            <li className="rounded-full border border-white/20 px-3 py-1">Progress</li>
           </ul>
           <a
-            href={SITE.learnhouse}
+            href="https://www.learnhouse.app"
             target="_blank"
             rel="noopener noreferrer"
             className="lh-rise group inline-flex items-center gap-3 rounded-full bg-accent py-3 pr-3 pl-6 font-medium"

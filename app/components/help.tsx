@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
-import { QUESTIONS, SERVICES, SITE } from "../data";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -74,10 +73,10 @@ export function Help() {
           <div>
             <div className="lib-rise flex items-center gap-4">
               <span className="font-display grid h-16 w-16 place-items-center rounded-full bg-accent text-2xl font-semibold text-ink">
-                {SITE.librarian.split(" ").pop()?.[0]}
+                C
               </span>
               <div>
-                <p className="font-display text-3xl font-semibold tracking-tight">{SITE.librarian}</p>
+                <p className="font-display text-3xl font-semibold tracking-tight">Ms. Colish</p>
                 <p className="text-sm text-white/60">School Librarian</p>
               </div>
             </div>
@@ -86,52 +85,217 @@ export function Help() {
               lunch.
             </p>
             <ul className="mt-6">
-              {SERVICES.map((service) => (
-                <li key={service} className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
-                  <span className="text-accent">✦</span>
-                  {service}
-                </li>
-              ))}
+              <li className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+                <span className="text-accent">✦</span>
+                Research consults for essays, the EE and IAs
+              </li>
+              <li className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+                <span className="text-accent">✦</span>
+                Database passwords and logins
+              </li>
+              <li className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+                <span className="text-accent">✦</span>
+                Lunch passes
+              </li>
+              <li className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+                <span className="text-accent">✦</span>
+                Book requests and recommendations
+              </li>
+              <li className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+                <span className="text-accent">✦</span>
+                Citations and NoodleTools
+              </li>
+              <li className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+                <span className="text-accent">✦</span>
+                Booking the conference room
+              </li>
             </ul>
           </div>
           <div className="lib-rise">
-            {SITE.email ? (
-              <a
-                href={`mailto:${SITE.email}`}
-                className="inline-flex rounded-full bg-accent px-6 py-3 font-medium text-ink transition-colors hover:bg-paper"
-              >
-                Email {SITE.librarian} →
-              </a>
-            ) : (
-              <p className="text-sm text-white/70">
-                Find {SITE.librarian} at the circulation desk — {SITE.location}.
-              </p>
-            )}
+            <a
+              href="mailto:mcolish@lindenps.org"
+              className="inline-flex rounded-full bg-accent px-6 py-3 font-medium text-ink transition-colors hover:bg-paper"
+            >
+              Email Ms. Colish →
+            </a>
           </div>
         </aside>
 
         <ul className="faq-list lg:col-span-7">
-          {QUESTIONS.map((item, index) => (
-            <li key={item.question} className="faq-item border-t border-line last:border-b">
-              <button
-                type="button"
-                onClick={() => toggle(index)}
-                aria-expanded={open === index}
-                aria-controls={`faq-${index}`}
-                className="group flex w-full items-center justify-between gap-6 py-6 text-left"
-              >
-                <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
-                  {item.question}
-                </span>
-                <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
-                  +
-                </span>
-              </button>
-              <div id={`faq-${index}`} className="faq-body overflow-hidden">
-                <p className="max-w-2xl pb-6 text-muted">{item.answer}</p>
-              </div>
-            </li>
-          ))}
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(0)}
+              aria-expanded={open === 0}
+              aria-controls="faq-0"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                How do I get into the library during class?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-0" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Come with your teacher or bring a pass from class, and wear your student ID. Scan in at the front door,
+                hand in your pass, and scan out when you leave.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(1)}
+              aria-expanded={open === 1}
+              aria-controls="faq-1"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                Can I come to the library at lunch?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-1" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Yes — pick up a lunch pass from Ms. Colish in the library in the morning. The cafeteria does not give
+                out library passes.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(2)}
+              aria-expanded={open === 2}
+              aria-controls="faq-2"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                Where do I get database passwords?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-2" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Ask Ms. Colish. Cameron&apos;s Collection eBooks use the Gale password.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(3)}
+              aria-expanded={open === 3}
+              aria-controls="faq-3"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                Can I print or make copies?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-3" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Yes. Colour printing and copying are self-service for single copies. Bulk and class-set jobs go through
+                the main office.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(4)}
+              aria-expanded={open === 4}
+              aria-controls="faq-4"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                How do I borrow eBooks and audiobooks?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-4" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Use Sora (OverDrive) for eBooks and audiobooks, or Cameron&apos;s Collection on Gale for more eBooks.
+                Ms. Colish can help you sign in.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(5)}
+              aria-expanded={open === 5}
+              aria-controls="faq-5"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                How do I cite a book?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-5" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Find it in the book finder and press Cite for MLA or APA, then keep your sources organised in
+                NoodleTools.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(6)}
+              aria-expanded={open === 6}
+              aria-controls="faq-6"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                Can I book a room for group work?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-6" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Students can see Ms. Colish to book the conference room. Teachers can request the library classroom or
+                conference room with the online form.
+              </p>
+            </div>
+          </li>
+          <li className="faq-item border-t border-line last:border-b">
+            <button
+              type="button"
+              onClick={() => toggle(7)}
+              aria-expanded={open === 7}
+              aria-controls="faq-7"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+            >
+              <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+                Is the library open after school?
+              </span>
+              <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
+                +
+              </span>
+            </button>
+            <div id="faq-7" className="faq-body overflow-hidden">
+              <p className="max-w-2xl pb-6 text-muted">
+                Yes — until 4:00pm on Tuesday, Wednesday and Friday, and until 7:00pm on Thursday.
+              </p>
+            </div>
+          </li>
         </ul>
       </div>
     </section>
