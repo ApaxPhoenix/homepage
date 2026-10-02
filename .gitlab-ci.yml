@@ -1,0 +1,25 @@
+# Builds the static Next.js export and publishes it with GitLab Pages.
+image: node:24
+
+pages:
+  stage: deploy
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+      - .next/cache/
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npx biome ci
+    # next.config.ts reads CI_PAGES_URL to serve from the right folder.
+    - npm run build
+    # GitLab Pages publishes the public folder.
+    - rm -rf public
+    - mv out public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

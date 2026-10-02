@@ -42,10 +42,8 @@ jobs:
       - name: Lint and format check
         run: npx biome ci
       - name: Build
+        # Served at the root of lhscommons.org, so no /<repo> prefix is passed.
         run: npm run build
-        env:
-          # next.config.ts reads the /<repo> prefix for project pages from here.
-          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
