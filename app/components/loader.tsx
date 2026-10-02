@@ -3,7 +3,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
-import { SITE } from "../data";
 
 gsap.registerPlugin(useGSAP);
 
@@ -64,16 +63,17 @@ export function Loader() {
     >
       <div className="flex justify-between text-xs uppercase tracking-widest text-white/60">
         <span>Loading</span>
-        <span>{SITE.title}</span>
+        <span>Linden High School Library Commons</span>
       </div>
       <div className="font-display text-[17vw] leading-none font-semibold tracking-tighter">
         <span className="split-mask">
-          {[...SITE.wordmark].map((letter, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
-            <span key={index} className="pl-letter inline-block">
-              {letter}
-            </span>
-          ))}
+          <span className="pl-letter inline-block">C</span>
+          <span className="pl-letter inline-block">O</span>
+          <span className="pl-letter inline-block">M</span>
+          <span className="pl-letter inline-block">M</span>
+          <span className="pl-letter inline-block">O</span>
+          <span className="pl-letter inline-block">N</span>
+          <span className="pl-letter inline-block">S</span>
         </span>
       </div>
       <div>

@@ -3,7 +3,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
-import { SITE } from "../data";
 
 gsap.registerPlugin(useGSAP);
 
@@ -114,7 +113,7 @@ export function Exit() {
             id="exit-title"
             className="exit-line font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl"
           >
-            You&apos;re leaving {SITE.name}
+            You&apos;re leaving LHS Commons
           </h2>
         </div>
         <div className="mt-4 overflow-hidden">

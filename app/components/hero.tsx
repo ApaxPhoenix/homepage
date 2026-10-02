@@ -4,18 +4,20 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
-import { HOURS, NOODLETOOLS, SITE } from "../data";
 import { Split } from "./split";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const SHORTCUTS = [
-  { label: "Find a book", href: "#find" },
-  { label: "Research databases", href: "#resources" },
-  { label: "NoodleTools ↗", href: NOODLETOOLS.student },
-  { label: "Internal Assessment", href: "#ia" },
-  { label: "Ask Ms. Colish", href: "#help" },
-];
+// Regular hours, in school time (America/New_York). Day 0 = Sunday.
+const HOURS: Record<number, { open: string; close: string } | null> = {
+  0: null,
+  1: { open: "07:35", close: "14:45" },
+  2: { open: "07:35", close: "16:00" },
+  3: { open: "07:35", close: "16:00" },
+  4: { open: "07:35", close: "19:00" },
+  5: { open: "07:35", close: "16:00" },
+  6: null,
+};
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -108,8 +110,8 @@ export function Hero() {
           />
           <div className="flex flex-col gap-4 text-sm text-muted md:col-span-4 md:col-start-9 md:pt-3">
             <p className="hero-fade">
-              The {SITE.title} — books, research databases, International Baccalaureate support and a makerspace, all in
-              one place.
+              The Linden High School Library Commons — books, research databases, International Baccalaureate support
+              and a makerspace, all in one place.
             </p>
             <search>
               <form
@@ -119,7 +121,10 @@ export function Hero() {
                   // Ask before leaving for the catalog.
                   window.dispatchEvent(
                     new CustomEvent("commons:leave", {
-                      detail: text ? SITE.search + encodeURIComponent(text) : SITE.catalog,
+                      detail: text
+                        ? "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=" +
+                          encodeURIComponent(text)
+                        : "https://search.follettsoftware.com/metasearch/rest/v2/go/102772",
                     }),
                   );
                 }}
@@ -147,16 +152,38 @@ export function Hero() {
               </form>
             </search>
             <nav aria-label="Quick links" className="hero-fade flex flex-wrap gap-2">
-              {SHORTCUTS.map((shortcut) => (
-                <a
-                  key={shortcut.label}
-                  href={shortcut.href}
-                  {...(shortcut.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
-                >
-                  {shortcut.label}
-                </a>
-              ))}
+              <a
+                href="#find"
+                className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+              >
+                Find a book
+              </a>
+              <a
+                href="#resources"
+                className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+              >
+                Research databases
+              </a>
+              <a
+                href="https://my.noodletools.com/logon/signin?domain=students.lindenps.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+              >
+                NoodleTools ↗
+              </a>
+              <a
+                href="#ia"
+                className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+              >
+                Internal Assessment
+              </a>
+              <a
+                href="#help"
+                className="rounded-full border border-line px-4 py-2.5 text-xs font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+              >
+                Ask Ms. Colish
+              </a>
             </nav>
           </div>
         </div>
@@ -182,14 +209,14 @@ export function Hero() {
               <span className={`h-2 w-2 rounded-full ${status?.open ? "bg-accent" : "bg-muted"}`} />
               {status ? status.text : "Checking hours…"}
             </span>
-            <span className="hidden sm:inline">{SITE.location}</span>
+            <span className="hidden sm:inline">2nd floor, Social Studies wing — across from Room 214</span>
             <span>Linden, NJ — {status?.clock ?? "--:--"}</span>
           </div>
           <Split
             as="p"
             by="chars"
             className="hero-brand font-display block text-[18.5vw] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap"
-            text={SITE.wordmark}
+            text="COMMONS"
           />
         </div>
       </div>
