@@ -38,8 +38,9 @@ body {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  /* Room below the baseline so g, y and commas aren't clipped. */
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 
 .split-inner {
