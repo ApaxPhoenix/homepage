@@ -1,10 +1,13 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import { HOURS_TABLE, NAV, SCHEDULE_FORM, SITE, SUPPORT } from "../data";
-import { Ext } from "./Ext";
-import { gsap, useGSAP } from "./gsap";
-import { Split } from "./Split";
+import { BOOKING, SECTIONS, SITE, SUPPORT, TIMETABLE } from "../data";
+import { Split } from "./split";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function Footer() {
   const root = useRef<HTMLElement>(null);
@@ -29,20 +32,6 @@ export function Footer() {
     { scope: root },
   );
 
-  // Button drifts toward the pointer and springs back on leave.
-  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const btn = e.currentTarget;
-    const r = btn.getBoundingClientRect();
-    const x = e.clientX - (r.left + r.width / 2);
-    const y = e.clientY - (r.top + r.height / 2);
-    gsap.to(btn, { x: x * 0.35, y: y * 0.35, duration: 0.6, ease: "power3.out" });
-    gsap.to(btn.firstElementChild, { x: x * 0.15, y: y * 0.15, duration: 0.6, ease: "power3.out" });
-  };
-  const onLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const btn = e.currentTarget;
-    gsap.to([btn, btn.firstElementChild], { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.35)" });
-  };
-
   return (
     <footer id="visit" ref={root} className="overflow-hidden bg-accent px-4 pt-28 text-ink sm:px-8 sm:pt-40">
       <div className="flex flex-col items-start justify-between gap-12 md:flex-row md:items-end">
@@ -56,8 +45,23 @@ export function Footer() {
         </div>
         <a
           href={SITE.email ? `mailto:${SITE.email}` : "#help"}
-          onMouseMove={onMove}
-          onMouseLeave={onLeave}
+          // Button drifts toward the pointer and springs back on leave.
+          onMouseMove={(event) => {
+            const button = event.currentTarget;
+            const box = button.getBoundingClientRect();
+            const across = event.clientX - (box.left + box.width / 2);
+            const down = event.clientY - (box.top + box.height / 2);
+            gsap.to(button, { x: across * 0.35, y: down * 0.35, duration: 0.6, ease: "power3.out" });
+            gsap.to(button.firstElementChild, { x: across * 0.15, y: down * 0.15, duration: 0.6, ease: "power3.out" });
+          }}
+          onMouseLeave={(event) =>
+            gsap.to([event.currentTarget, event.currentTarget.firstElementChild], {
+              x: 0,
+              y: 0,
+              duration: 1,
+              ease: "elastic.out(1, 0.35)",
+            })
+          }
           className="grid h-40 w-40 shrink-0 place-items-center rounded-full bg-ink text-paper sm:h-48 sm:w-48"
         >
           <span className="text-center text-sm font-medium">
@@ -71,10 +75,10 @@ export function Footer() {
       <div className="mt-20 grid gap-10 border-t border-ink/30 pt-10 text-sm sm:grid-cols-2 md:grid-cols-4">
         <div>
           <p className="mb-3 text-ink/60">Hours</p>
-          {HOURS_TABLE.map((h) => (
-            <p key={h.day} className="mb-2">
-              <span className="block font-medium">{h.day}</span>
-              {h.time}
+          {TIMETABLE.map((row) => (
+            <p key={row.day} className="mb-2">
+              <span className="block font-medium">{row.day}</span>
+              {row.time}
             </p>
           ))}
         </div>
@@ -97,15 +101,15 @@ export function Footer() {
           ) : (
             <p>{SITE.librarian}, School Librarian — at the circulation desk</p>
           )}
-          <Ext href={SCHEDULE_FORM} className="block hover:underline">
+          <a href={BOOKING} target="_blank" rel="noopener noreferrer" className="block hover:underline">
             Book the classroom (teachers) ↗
-          </Ext>
+          </a>
         </div>
         <div>
           <p className="mb-3 text-ink/60">On this page</p>
-          {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="block hover:underline">
-              {n.label}
+          {SECTIONS.map((section) => (
+            <a key={section.href} href={section.href} className="block hover:underline">
+              {section.label}
             </a>
           ))}
         </div>
@@ -126,7 +130,7 @@ export function Footer() {
 
       <div className="mt-16 flex justify-between gap-4 text-xs">
         <span>
-          © {new Date().getFullYear()} {SITE.fullName}
+          © {new Date().getFullYear()} {SITE.title}
         </span>
         <a href="#top" className="shrink-0 hover:underline">
           Back to top ↑

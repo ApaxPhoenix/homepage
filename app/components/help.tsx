@@ -1,8 +1,12 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
-import { FAQ, LIBRARIAN_HELPS, SITE } from "../data";
-import { gsap, ScrollTrigger, useGSAP } from "./gsap";
+import { QUESTIONS, SERVICES, SITE } from "../data";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function Help() {
   const root = useRef<HTMLElement>(null);
@@ -37,18 +41,22 @@ export function Help() {
     { scope: root },
   );
 
-  const toggle = contextSafe((i: number) => {
-    const next = open === i ? -1 : i;
-    for (const [j, el] of gsap.utils.toArray<HTMLElement>(".faq-body").entries()) {
-      gsap.to(el, {
-        height: j === next ? "auto" : 0,
+  const toggle = contextSafe((index: number) => {
+    const next = open === index ? -1 : index;
+    for (const [position, body] of gsap.utils.toArray<HTMLElement>(".faq-body").entries()) {
+      gsap.to(body, {
+        height: position === next ? "auto" : 0,
         duration: 0.6,
         ease: "expo.inOut",
         overwrite: true,
-        onComplete: j === i ? () => ScrollTrigger.refresh() : undefined,
+        onComplete: position === index ? () => ScrollTrigger.refresh() : undefined,
       });
     }
-    gsap.to(".faq-icon", { rotate: (j: number) => (j === next ? 45 : 0), duration: 0.5, ease: "power3.out" });
+    gsap.to(".faq-icon", {
+      rotate: (position: number) => (position === next ? 45 : 0),
+      duration: 0.5,
+      ease: "power3.out",
+    });
     setOpen(next);
   });
 
@@ -78,10 +86,10 @@ export function Help() {
               lunch.
             </p>
             <ul className="mt-6">
-              {LIBRARIAN_HELPS.map((h) => (
-                <li key={h} className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
+              {SERVICES.map((service) => (
+                <li key={service} className="lib-rise flex gap-3 border-t border-white/15 py-3 text-sm">
                   <span className="text-accent">✦</span>
-                  {h}
+                  {service}
                 </li>
               ))}
             </ul>
@@ -103,24 +111,24 @@ export function Help() {
         </aside>
 
         <ul className="faq-list lg:col-span-7">
-          {FAQ.map((f, i) => (
-            <li key={f.q} className="faq-item border-t border-line last:border-b">
+          {QUESTIONS.map((item, index) => (
+            <li key={item.question} className="faq-item border-t border-line last:border-b">
               <button
                 type="button"
-                onClick={() => toggle(i)}
-                aria-expanded={open === i}
-                aria-controls={`faq-${i}`}
+                onClick={() => toggle(index)}
+                aria-expanded={open === index}
+                aria-controls={`faq-${index}`}
                 className="group flex w-full items-center justify-between gap-6 py-6 text-left"
               >
                 <span className="font-display text-xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
-                  {f.q}
+                  {item.question}
                 </span>
                 <span className="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-lg">
                   +
                 </span>
               </button>
-              <div id={`faq-${i}`} className="faq-body overflow-hidden">
-                <p className="max-w-2xl pb-6 text-muted">{f.a}</p>
+              <div id={`faq-${index}`} className="faq-body overflow-hidden">
+                <p className="max-w-2xl pb-6 text-muted">{item.answer}</p>
               </div>
             </li>
           ))}

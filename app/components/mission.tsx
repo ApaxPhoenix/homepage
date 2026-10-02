@@ -1,7 +1,11 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import { gsap, useGSAP } from "./gsap";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const STATEMENT =
   "We help every student and teacher at Linden High find, question and use information well — and we keep a space where reading, making and thinking for yourself come naturally.";
@@ -59,10 +63,10 @@ export function Mission() {
       <div className="grid gap-10 md:grid-cols-12">
         <span className="text-xs tracking-widest text-muted uppercase md:col-span-3">(Our mission)</span>
         <p className="mission-text font-display text-3xl leading-[1.1] font-medium tracking-tight sm:text-5xl md:col-span-9">
-          {STATEMENT.split(" ").map((w, i) => (
+          {STATEMENT.split(" ").map((word, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
-            <span key={i} className="mission-word">
-              {w}{" "}
+            <span key={index} className="mission-word">
+              {word}{" "}
             </span>
           ))}
         </p>
@@ -77,15 +81,15 @@ export function Mission() {
       </figure>
 
       <div className="pillars mt-20 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {PILLARS.map((p, i) => (
-          <div key={p.title} className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
+        {PILLARS.map((pillar, index) => (
+          <div key={pillar.title} className="pillar flex flex-col justify-between gap-12 bg-paper p-6 sm:p-8">
             <span className="font-display text-5xl font-semibold tracking-tighter">
-              0{i + 1}
+              0{index + 1}
               <span className="text-accent">.</span>
             </span>
             <div>
-              <h3 className="font-display text-xl font-medium">{p.title}</h3>
-              <p className="mt-2 text-sm text-muted">{p.body}</p>
+              <h3 className="font-display text-xl font-medium">{pillar.title}</h3>
+              <p className="mt-2 text-sm text-muted">{pillar.body}</p>
             </div>
           </div>
         ))}

@@ -7,7 +7,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const interTight = Inter_Tight({
+const tight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
 });
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     "Books, research databases, International Baccalaureate support, courses and a game and create space at the Linden High School Library Commons.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function Layout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${tight.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

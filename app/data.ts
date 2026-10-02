@@ -2,7 +2,7 @@
 
 export const SITE = {
   name: "LHS Commons",
-  fullName: "Linden High School Library Commons",
+  title: "Linden High School Library Commons",
   wordmark: "COMMONS",
   school: "Linden High School",
   librarian: "Ms. Colish",
@@ -10,8 +10,8 @@ export const SITE = {
   email: "mcolish@lindenps.org",
   location: "2nd floor, Social Studies wing — across from Room 214",
   // Follett Destiny Discover search; the query is appended to this URL.
-  catalogSearch: "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=",
-  catalogHome: "https://search.follettsoftware.com/metasearch/rest/v2/go/102772",
+  search: "https://search.follettsoftware.com/metasearch/rest/v2/go/102772/search?col=all&q=",
+  catalog: "https://search.follettsoftware.com/metasearch/rest/v2/go/102772",
   // Replace with the school's LearnHouse organisation URL once it is set up.
   learnhouse: "https://www.learnhouse.app",
 };
@@ -19,7 +19,7 @@ export const SITE = {
 // Website maintenance contact (not the library).
 export const SUPPORT = { name: "P. Andres Hernandez", email: "andromedeyz@hotmail.com" };
 
-export const NAV = [
+export const SECTIONS = [
   { label: "Books", href: "#books" },
   { label: "Find a book", href: "#find" },
   { label: "Resources", href: "#resources" },
@@ -40,14 +40,14 @@ export const HOURS: Record<number, { open: string; close: string } | null> = {
   6: null,
 };
 
-export const HOURS_TABLE = [
+export const TIMETABLE = [
   { day: "Monday – Friday", time: "7:35am – 2:45pm" },
   { day: "Tuesday, Wednesday, Friday", time: "After school until 4:00pm" },
   { day: "Thursday", time: "After school until 7:00pm" },
 ];
 
 // Covers come from Open Library by ISBN; publisher and year feed the citation tool.
-export const TOP_BOOKS = [
+export const FAVORITES = [
   {
     title: "The Book Thief",
     author: "Markus Zusak",
@@ -102,16 +102,16 @@ export const TOP_BOOKS = [
 
 // Genre shelves for the book finder: Open Library searches limited to teen fiction.
 export const GENRES = [
-  { label: "Fantasy", q: 'subject:"young adult fiction" subject:fantasy' },
-  { label: "Mystery", q: 'subject:"young adult fiction" subject:mystery' },
-  { label: "Science fiction", q: 'subject:"young adult fiction" subject:"science fiction"' },
-  { label: "Historical", q: 'subject:"young adult fiction" subject:"historical fiction"' },
-  { label: "Romance", q: 'subject:"young adult fiction" subject:romance' },
-  { label: "Novels in verse", q: 'subject:"novels in verse"' },
-  { label: "Graphic novels", q: 'subject:"young adult fiction" subject:"graphic novels"' },
+  { label: "Fantasy", query: 'subject:"young adult fiction" subject:fantasy' },
+  { label: "Mystery", query: 'subject:"young adult fiction" subject:mystery' },
+  { label: "Science fiction", query: 'subject:"young adult fiction" subject:"science fiction"' },
+  { label: "Historical", query: 'subject:"young adult fiction" subject:"historical fiction"' },
+  { label: "Romance", query: 'subject:"young adult fiction" subject:romance' },
+  { label: "Novels in verse", query: 'subject:"novels in verse"' },
+  { label: "Graphic novels", query: 'subject:"young adult fiction" subject:"graphic novels"' },
 ] as const;
 
-export const READING_LINKS = [
+export const LENDING = [
   {
     label: "The library's book list",
     note: "LHS Media Center on Goodreads",
@@ -126,7 +126,7 @@ export const READING_LINKS = [
   { label: "Book clubs", note: "Goodreads groups", href: "https://www.goodreads.com/group" },
 ];
 
-export const FREE_BOOKS = [
+export const ARCHIVES = [
   { label: "Project Gutenberg", note: "Tens of thousands of free classics", href: "https://www.gutenberg.org/" },
   { label: "HathiTrust", note: "Millions of digitised library titles", href: "https://www.hathitrust.org/" },
   {
@@ -147,16 +147,13 @@ export const FREE_BOOKS = [
   },
 ];
 
-export type ResourceLink = { label: string; note?: string; href: string };
-export type ResourceGroup = { title: string; intro: string; links: ResourceLink[] };
-
 export const NOODLETOOLS = {
   features: ["Create citations", "Take notes", "Organise & outline", "Collaborate with peers", "Share with teachers"],
   student: "https://my.noodletools.com/logon/signin?domain=students.lindenps.org",
   teacher: "https://my.noodletools.com/logon/signin?domain=lindenps.org",
 };
 
-export const RESOURCE_GROUPS: ResourceGroup[] = [
+export const RESOURCES: { title: string; intro: string; links: { label: string; note?: string; href: string }[] }[] = [
   {
     title: "Research databases",
     intro:
@@ -323,7 +320,7 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
   },
 ];
 
-export const CAS_STRANDS = [
+export const STRANDS = [
   {
     letter: "C",
     title: "Creativity",
@@ -344,7 +341,7 @@ export const CAS_STRANDS = [
   },
 ];
 
-export const CAS_OUTCOMES = [
+export const OUTCOMES = [
   "Identify your own strengths and the areas where you want to grow",
   "Show that you took on challenges and built new skills along the way",
   "Show how you started and planned a CAS experience",
@@ -354,9 +351,9 @@ export const CAS_OUTCOMES = [
   "Recognise and consider the ethics of your choices and actions",
 ];
 
-export const CAS_STAGES = ["Investigation", "Preparation", "Action", "Reflection", "Demonstration"];
+export const STAGES = ["Investigation", "Preparation", "Action", "Reflection", "Demonstration"];
 
-export const CAS_LINKS = [
+export const GUIDES = [
   {
     label: "CAS presentation",
     note: "Google Slides",
@@ -370,7 +367,7 @@ export const CAS_LINKS = [
   },
 ];
 
-export const IB_HELP = [
+export const TIPS = [
   {
     title: "Extended Essay",
     body: "Book a research consult with Ms. Colish and start your source list in NoodleTools.",
@@ -380,7 +377,7 @@ export const IB_HELP = [
 ];
 
 // IB Diploma courses offered at Linden High. Edit this list as offerings change.
-export const IB_COURSES = [
+export const SUBJECTS = [
   { name: "English A", level: "HL", group: "Language & literature", use: "Bloom's Literature, Purdue OWL" },
   { name: "History", level: "HL", group: "Individuals & societies", use: "Library of Congress, Modern World History" },
   { name: "Chemistry", level: "HL", group: "Sciences", use: "Science Online, EBSCOhost" },
@@ -405,7 +402,7 @@ export const IB_COURSES = [
 
 // Internal Assessment by course. Formats follow the current IB subject guides;
 // check deadlines and details with each teacher.
-export const IA_STEPS = [
+export const STEPS = [
   {
     title: "Pick a focused question",
     body: "Narrow enough to answer well in the space you have. Run it past your teacher early.",
@@ -418,7 +415,7 @@ export const IA_STEPS = [
   { title: "Revise & submit", body: "Act on the feedback, check your citations and hand in the final version." },
 ];
 
-export const IA_BY_COURSE = [
+export const ASSESSMENTS = [
   {
     course: "English A HL",
     task: "Individual oral",
@@ -458,7 +455,7 @@ export const IA_BY_COURSE = [
   },
 ];
 
-export const IB_CORE = [
+export const CORE = [
   {
     title: "Theory of Knowledge",
     short: "TOK",
@@ -503,7 +500,7 @@ export const MAKERSPACE = [
   },
 ];
 
-export const LIBRARIAN_HELPS = [
+export const SERVICES = [
   "Research consults for essays, the EE and IAs",
   "Database passwords and logins",
   "Lunch passes",
@@ -512,40 +509,46 @@ export const LIBRARIAN_HELPS = [
   "Booking the conference room",
 ];
 
-export const FAQ = [
+export const QUESTIONS = [
   {
-    q: "How do I get into the library during class?",
-    a: "Come with your teacher or bring a pass from class, and wear your student ID. Scan in at the front door, hand in your pass, and scan out when you leave.",
+    question: "How do I get into the library during class?",
+    answer:
+      "Come with your teacher or bring a pass from class, and wear your student ID. Scan in at the front door, hand in your pass, and scan out when you leave.",
   },
   {
-    q: "Can I come to the library at lunch?",
-    a: "Yes — pick up a lunch pass from Ms. Colish in the library in the morning. The cafeteria does not give out library passes.",
+    question: "Can I come to the library at lunch?",
+    answer:
+      "Yes — pick up a lunch pass from Ms. Colish in the library in the morning. The cafeteria does not give out library passes.",
   },
   {
-    q: "Where do I get database passwords?",
-    a: "Ask Ms. Colish. Cameron's Collection eBooks use the Gale password.",
+    question: "Where do I get database passwords?",
+    answer: "Ask Ms. Colish. Cameron's Collection eBooks use the Gale password.",
   },
   {
-    q: "Can I print or make copies?",
-    a: "Yes. Colour printing and copying are self-service for single copies. Bulk and class-set jobs go through the main office.",
+    question: "Can I print or make copies?",
+    answer:
+      "Yes. Colour printing and copying are self-service for single copies. Bulk and class-set jobs go through the main office.",
   },
   {
-    q: "How do I borrow eBooks and audiobooks?",
-    a: "Use Sora (OverDrive) for eBooks and audiobooks, or Cameron's Collection on Gale for more eBooks. Ms. Colish can help you sign in.",
+    question: "How do I borrow eBooks and audiobooks?",
+    answer:
+      "Use Sora (OverDrive) for eBooks and audiobooks, or Cameron's Collection on Gale for more eBooks. Ms. Colish can help you sign in.",
   },
   {
-    q: "How do I cite a book?",
-    a: "Find it in the book finder and press Cite for MLA or APA, then keep your sources organised in NoodleTools.",
+    question: "How do I cite a book?",
+    answer:
+      "Find it in the book finder and press Cite for MLA or APA, then keep your sources organised in NoodleTools.",
   },
   {
-    q: "Can I book a room for group work?",
-    a: "Students can see Ms. Colish to book the conference room. Teachers can request the library classroom or conference room with the online form.",
+    question: "Can I book a room for group work?",
+    answer:
+      "Students can see Ms. Colish to book the conference room. Teachers can request the library classroom or conference room with the online form.",
   },
   {
-    q: "Is the library open after school?",
-    a: "Yes — until 4:00pm on Tuesday, Wednesday and Friday, and until 7:00pm on Thursday.",
+    question: "Is the library open after school?",
+    answer: "Yes — until 4:00pm on Tuesday, Wednesday and Friday, and until 7:00pm on Thursday.",
   },
 ];
 
-export const SCHEDULE_FORM =
+export const BOOKING =
   "https://docs.google.com/forms/d/e/1FAIpQLScrLQwoIJGkqy5KFdZ_KPgy37p5XMV89fxz7X2Z3zG2zquewA/viewform";

@@ -1,24 +1,18 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import {
-  CAS_LINKS,
-  CAS_OUTCOMES,
-  CAS_STAGES,
-  CAS_STRANDS,
-  IA_BY_COURSE,
-  IA_STEPS,
-  IB_CORE,
-  IB_COURSES,
-  IB_HELP,
-} from "../data";
-import { Ext } from "./Ext";
-import { gsap, useGSAP } from "./gsap";
-import { Split } from "./Split";
+import { ASSESSMENTS, CORE, GUIDES, OUTCOMES, STAGES, STEPS, STRANDS, SUBJECTS, TIPS } from "../data";
+import { Split } from "./split";
 
-const STRAND_STYLE = ["bg-accent text-ink", "bg-ink text-paper", "bg-soft text-ink"];
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export function Cas() {
+const COLORS = ["bg-accent text-ink", "bg-ink text-paper", "bg-soft text-ink"];
+
+// International Baccalaureate: courses, the core, CAS and the Internal Assessment.
+export function Diploma() {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -56,13 +50,13 @@ export function Cas() {
 
       // Each strand card shrinks back as the next one slides over it.
       const cards = gsap.utils.toArray<HTMLElement>(".strand");
-      cards.forEach((card, i) => {
+      cards.forEach((card, index) => {
         gsap.from(card.querySelector(".strand-letter"), {
           yPercent: 40,
           ease: "none",
           scrollTrigger: { trigger: card, start: "top bottom", end: "top top", scrub: true },
         });
-        const next = cards[i + 1];
+        const next = cards[index + 1];
         if (!next) return;
         gsap.to(card.querySelector(".strand-inner"), {
           scale: 0.9,
@@ -77,7 +71,7 @@ export function Cas() {
         .from(".stage-fill", { scaleX: 0, ease: "none" })
         .from(".stage-dot", { backgroundColor: "#e6e6e6", scale: 0.6, stagger: 0.2, ease: "none" }, 0);
 
-      gsap.utils.toArray<HTMLElement>(".outcome").forEach((row) => {
+      for (const row of gsap.utils.toArray<HTMLElement>(".outcome")) {
         gsap
           .timeline({ scrollTrigger: { trigger: row, start: "top 92%" } })
           .from(row.querySelector(".row-line"), { scaleX: 0, duration: 1.2, ease: "expo.out" })
@@ -86,7 +80,7 @@ export function Cas() {
             { yPercent: 100, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" },
             0.1,
           );
-      });
+      }
 
       gsap.from(".ib-tile", {
         y: 50,
@@ -105,7 +99,7 @@ export function Cas() {
         ease: "power3.out",
         scrollTrigger: { trigger: ".ia-steps", start: "top 85%" },
       });
-      gsap.utils.toArray<HTMLElement>(".ia-row").forEach((row) => {
+      for (const row of gsap.utils.toArray<HTMLElement>(".ia-row")) {
         gsap
           .timeline({ scrollTrigger: { trigger: row, start: "top 92%" } })
           .from(row.querySelector(".row-line"), { scaleX: 0, duration: 1.2, ease: "expo.out" })
@@ -114,17 +108,19 @@ export function Cas() {
             { yPercent: 60, autoAlpha: 0, stagger: 0.06, duration: 0.8, ease: "power3.out" },
             0.1,
           );
-      });
+      }
     },
     { scope: root },
   );
 
-  const sweep = (e: React.MouseEvent<HTMLElement>, enter: boolean) => {
-    const row = e.currentTarget;
+  // Row fills from the edge the pointer came in on.
+  const sweep = (event: React.MouseEvent<HTMLElement>) => {
+    const row = event.currentTarget;
+    const enter = event.type === "mouseenter";
     const { top, height } = row.getBoundingClientRect();
     gsap.fromTo(
       row.querySelector(".row-fill"),
-      { transformOrigin: e.clientY - top < height / 2 ? "top" : "bottom" },
+      { transformOrigin: event.clientY - top < height / 2 ? "top" : "bottom" },
       { scaleY: enter ? 1 : 0, duration: 0.45, ease: "power3.out", overwrite: true },
     );
     gsap.to(row.querySelectorAll(".row-cell"), { x: enter ? 16 : 0, duration: 0.45, ease: "power3.out" });
@@ -151,24 +147,24 @@ export function Cas() {
       <div className="ib-courses mt-16">
         <h3 className="font-display mb-6 text-3xl font-semibold tracking-tight">IB courses at Linden High</h3>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {IB_COURSES.map((c) => (
+          {SUBJECTS.map((subject) => (
             <li
-              key={c.name + c.level}
+              key={subject.name + subject.level}
               className="ib-course flex flex-col justify-between gap-8 rounded-2xl border border-line bg-paper p-6 transition-colors hover:border-ink"
             >
               <div className="flex items-start justify-between gap-4">
-                <span className="text-xs tracking-widest text-muted uppercase">{c.group}</span>
-                {c.level && (
+                <span className="text-xs tracking-widest text-muted uppercase">{subject.group}</span>
+                {subject.level && (
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${c.level === "HL" ? "bg-accent text-paper" : "bg-soft"}`}
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${subject.level === "HL" ? "bg-accent text-paper" : "bg-soft"}`}
                   >
-                    {c.level === "HL" ? "Higher Level" : "Standard Level"}
+                    {subject.level === "HL" ? "Higher Level" : "Standard Level"}
                   </span>
                 )}
               </div>
               <div>
-                <p className="font-display text-2xl leading-tight font-semibold tracking-tight">{c.name}</p>
-                <p className="mt-2 text-sm text-muted">Start with: {c.use}</p>
+                <p className="font-display text-2xl leading-tight font-semibold tracking-tight">{subject.name}</p>
+                <p className="mt-2 text-sm text-muted">Start with: {subject.use}</p>
               </div>
             </li>
           ))}
@@ -176,23 +172,23 @@ export function Cas() {
       </div>
 
       <div className="ib-cores mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {IB_CORE.map((c, i) => (
+        {CORE.map((part, index) => (
           <a
-            key={c.short}
-            href={c.href}
+            key={part.short}
+            href={part.href}
             className={`ib-core group flex flex-col justify-between gap-10 rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1 sm:p-8 ${
               ["bg-ink text-paper", "bg-accent text-ink", "bg-soft text-ink", "border border-line bg-paper text-ink"][
-                i % 4
+                index % 4
               ]
             }`}
           >
             <div className="flex items-start justify-between">
-              <span className="text-xs tracking-widest uppercase opacity-60">({c.short})</span>
+              <span className="text-xs tracking-widest uppercase opacity-60">({part.short})</span>
               <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">→</span>
             </div>
             <div>
-              <p className="font-display text-3xl leading-tight font-semibold tracking-tight">{c.title}</p>
-              <p className="mt-2 text-sm opacity-75">{c.body}</p>
+              <p className="font-display text-3xl leading-tight font-semibold tracking-tight">{part.title}</p>
+              <p className="mt-2 text-sm opacity-75">{part.body}</p>
             </div>
           </a>
         ))}
@@ -214,18 +210,18 @@ export function Cas() {
       </div>
 
       <div>
-        {CAS_STRANDS.map((s, i) => (
-          <article key={s.title} className="strand sticky top-0 flex h-svh items-center py-6">
+        {STRANDS.map((strand, index) => (
+          <article key={strand.title} className="strand sticky top-0 flex h-svh items-center py-6">
             <div
-              className={`strand-inner relative flex h-full w-full origin-top flex-col justify-between overflow-hidden rounded-3xl p-6 sm:p-10 ${STRAND_STYLE[i]}`}
+              className={`strand-inner relative flex h-full w-full origin-top flex-col justify-between overflow-hidden rounded-3xl p-6 sm:p-10 ${COLORS[index]}`}
             >
               <div className="relative z-10 flex max-w-xl flex-col gap-5">
-                <span className="text-xs tracking-widest uppercase opacity-60">0{i + 1} / 03</span>
-                <h3 className="font-display text-5xl font-semibold tracking-tight sm:text-7xl">{s.title}</h3>
-                <p className="max-w-md text-lg opacity-80">{s.body}</p>
+                <span className="text-xs tracking-widest uppercase opacity-60">0{index + 1} / 03</span>
+                <h3 className="font-display text-5xl font-semibold tracking-tight sm:text-7xl">{strand.title}</h3>
+                <p className="max-w-md text-lg opacity-80">{strand.body}</p>
               </div>
               <div className="relative z-10 flex flex-wrap gap-2">
-                {s.ideas.map((idea) => (
+                {strand.ideas.map((idea) => (
                   <span key={idea} className="rounded-full border border-current/25 px-3 py-1 text-sm">
                     {idea}
                   </span>
@@ -235,7 +231,7 @@ export function Cas() {
                 aria-hidden
                 className="strand-letter font-display pointer-events-none absolute right-[4%] bottom-[16%] text-[55vw] md:bottom-[-6%] leading-[0.8] font-semibold tracking-[-0.08em] md:text-[34vw]"
               >
-                {s.letter}
+                {strand.letter}
               </span>
             </div>
           </article>
@@ -248,10 +244,10 @@ export function Cas() {
           <div className="absolute top-[7px] right-0 left-0 hidden h-px bg-line sm:block" />
           <div className="stage-fill absolute top-[7px] right-0 left-0 hidden h-px origin-left bg-accent sm:block" />
           <ol className="relative grid gap-5 sm:grid-cols-5 sm:gap-2">
-            {CAS_STAGES.map((stage, i) => (
+            {STAGES.map((stage, index) => (
               <li key={stage} className="flex items-center gap-4 sm:block">
                 <span className="stage-dot block h-[15px] w-[15px] shrink-0 rounded-full bg-accent" />
-                <span className="block text-xs text-muted sm:mt-4">0{i + 1}</span>
+                <span className="block text-xs text-muted sm:mt-4">0{index + 1}</span>
                 <span className="font-display block text-xl font-medium">{stage}</span>
               </li>
             ))}
@@ -271,18 +267,13 @@ export function Cas() {
           </p>
         </div>
         <ol className="md:col-span-8">
-          {CAS_OUTCOMES.map((o, i) => (
-            <li
-              key={o}
-              className="outcome relative overflow-hidden"
-              onMouseEnter={(e) => sweep(e, true)}
-              onMouseLeave={(e) => sweep(e, false)}
-            >
+          {OUTCOMES.map((outcome, index) => (
+            <li key={outcome} className="outcome relative overflow-hidden" onMouseEnter={sweep} onMouseLeave={sweep}>
               <div className="row-line absolute inset-x-0 top-0 h-px origin-left bg-ink" />
               <div className="row-fill absolute inset-0 scale-y-0 bg-accent" />
               <div className="relative flex items-baseline gap-6 overflow-hidden py-5">
-                <span className="row-cell text-sm tabular-nums">0{i + 1}</span>
-                <span className="row-cell font-display text-lg font-medium sm:text-2xl">{o}</span>
+                <span className="row-cell text-sm tabular-nums">0{index + 1}</span>
+                <span className="row-cell font-display text-lg font-medium sm:text-2xl">{outcome}</span>
               </div>
             </li>
           ))}
@@ -290,10 +281,10 @@ export function Cas() {
       </div>
 
       <div className="ib-tiles mt-24 grid gap-4 md:grid-cols-3">
-        {IB_HELP.map((t) => (
-          <div key={t.title} className="ib-tile rounded-2xl bg-soft p-6 sm:p-8">
-            <h4 className="font-display text-2xl font-semibold tracking-tight">{t.title}</h4>
-            <p className="mt-3 text-sm text-muted">{t.body}</p>
+        {TIPS.map((tip) => (
+          <div key={tip.title} className="ib-tile rounded-2xl bg-soft p-6 sm:p-8">
+            <h4 className="font-display text-2xl font-semibold tracking-tight">{tip.title}</h4>
+            <p className="mt-3 text-sm text-muted">{tip.body}</p>
             <a
               href="#resources"
               className="mt-4 inline-block py-2 text-sm font-medium underline-offset-4 hover:underline"
@@ -305,18 +296,20 @@ export function Cas() {
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {CAS_LINKS.map((l) => (
-          <Ext
-            key={l.href}
-            href={l.href}
+        {GUIDES.map((guide) => (
+          <a
+            key={guide.href}
+            href={guide.href}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group flex items-center justify-between rounded-2xl bg-ink p-6 text-paper transition-colors hover:bg-accent sm:p-8"
           >
             <span>
-              <span className="font-display block text-2xl font-semibold tracking-tight">{l.label}</span>
-              <span className="text-sm text-white/60 group-hover:text-white/90">{l.note}</span>
+              <span className="font-display block text-2xl font-semibold tracking-tight">{guide.label}</span>
+              <span className="text-sm text-white/60 group-hover:text-white/90">{guide.note}</span>
             </span>
             <span className="text-2xl transition-transform duration-300 group-hover:rotate-45">↗</span>
-          </Ext>
+          </a>
         ))}
       </div>
       <div id="ia" className="mt-28">
@@ -335,11 +328,11 @@ export function Cas() {
         </div>
 
         <ol className="ia-steps mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {IA_STEPS.map((st, i) => (
-            <li key={st.title} className="ia-step rounded-2xl bg-soft p-6">
-              <span className="font-display text-4xl font-semibold text-accent">0{i + 1}</span>
-              <p className="font-display mt-6 text-xl font-semibold">{st.title}</p>
-              <p className="mt-2 text-sm text-muted">{st.body}</p>
+          {STEPS.map((step, index) => (
+            <li key={step.title} className="ia-step rounded-2xl bg-soft p-6">
+              <span className="font-display text-4xl font-semibold text-accent">0{index + 1}</span>
+              <p className="font-display mt-6 text-xl font-semibold">{step.title}</p>
+              <p className="mt-2 text-sm text-muted">{step.body}</p>
             </li>
           ))}
         </ol>
@@ -348,19 +341,19 @@ export function Cas() {
           What&apos;s expected in each course
         </h4>
         <ul>
-          {IA_BY_COURSE.map((r) => (
+          {ASSESSMENTS.map((assessment) => (
             <li
-              key={r.course}
+              key={assessment.course}
               className="ia-row relative overflow-hidden"
-              onMouseEnter={(e) => sweep(e, true)}
-              onMouseLeave={(e) => sweep(e, false)}
+              onMouseEnter={sweep}
+              onMouseLeave={sweep}
             >
               <div className="row-line absolute inset-x-0 top-0 h-px origin-left bg-ink" />
               <div className="row-fill absolute inset-0 scale-y-0 bg-accent" />
               <div className="relative grid gap-2 py-5 md:grid-cols-12 md:gap-6">
-                <span className="row-cell font-display text-lg font-semibold md:col-span-3">{r.course}</span>
-                <span className="row-cell text-sm font-medium md:col-span-3 md:text-base">{r.task}</span>
-                <span className="row-cell text-sm text-muted md:col-span-6">{r.format}</span>
+                <span className="row-cell font-display text-lg font-semibold md:col-span-3">{assessment.course}</span>
+                <span className="row-cell text-sm font-medium md:col-span-3 md:text-base">{assessment.task}</span>
+                <span className="row-cell text-sm text-muted md:col-span-6">{assessment.format}</span>
               </div>
             </li>
           ))}
