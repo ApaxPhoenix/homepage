@@ -1,40 +1,31 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { SITE } from "../data";
-import { gsap, useGSAP } from "./gsap";
-import { lockScroll } from "./SmoothScroll";
 
-const LEAVE_EVENT = "commons:leave";
+gsap.registerPlugin(useGSAP);
 
-// Ask before sending the visitor to `url` (used by forms such as catalog search).
-export function confirmLeave(url: string) {
-  window.dispatchEvent(new CustomEvent(LEAVE_EVENT, { detail: url }));
-}
-
-function isExternal(href: string) {
-  const url = new URL(href, window.location.href);
-  return (url.protocol === "http:" || url.protocol === "https:") && url.origin !== window.location.origin;
-}
-
-export function ExitModal() {
+// Warns before the visitor leaves the site: catches clicks on outbound links,
+// and "commons:leave" events from forms such as the catalog search.
+export function Exit() {
   const root = useRef<HTMLDivElement>(null);
-  const confirmBtn = useRef<HTMLButtonElement>(null);
-  const returnFocus = useRef<HTMLElement | null>(null);
-  const [url, setUrl] = useState<string | null>(null);
-
-  const tl = useRef<gsap.core.Timeline | null>(null);
+  const button = useRef<HTMLButtonElement>(null);
+  const focus = useRef<HTMLElement | null>(null);
+  const timeline = useRef<gsap.core.Timeline | null>(null);
+  const [address, setAddress] = useState<string | null>(null);
 
   useGSAP(
     () => {
-      tl.current = gsap
+      timeline.current = gsap
         .timeline({
           paused: true,
-          onComplete: () => confirmBtn.current?.focus(),
+          onComplete: () => button.current?.focus(),
           onReverseComplete: () => {
-            setUrl(null);
-            lockScroll("exit", false);
-            returnFocus.current?.focus();
+            setAddress(null);
+            window.dispatchEvent(new CustomEvent("commons:unlock", { detail: "exit" }));
+            focus.current?.focus();
           },
         })
         .set(root.current, { autoAlpha: 1, immediateRender: false })
@@ -55,44 +46,55 @@ export function ExitModal() {
     { scope: root },
   );
 
-  const close = () => tl.current?.timeScale(1.8).reverse();
+  const close = () => timeline.current?.timeScale(1.8).reverse();
 
   useEffect(() => {
     const show = (href: string) => {
-      returnFocus.current = document.activeElement as HTMLElement | null;
-      setUrl(href);
-      lockScroll("exit", true);
-      tl.current?.timeScale(1).play();
+      focus.current = document.activeElement as HTMLElement | null;
+      setAddress(href);
+      window.dispatchEvent(new CustomEvent("commons:lock", { detail: "exit" }));
+      timeline.current?.timeScale(1).play();
     };
-    const onClick = (e: MouseEvent) => {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      const a = (e.target as Element).closest<HTMLAnchorElement>("a[href]");
-      if (!a || !isExternal(a.href)) return;
-      e.preventDefault();
-      show(a.href);
+    const click = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+      const anchor = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
+      if (!anchor) return;
+      const link = new URL(anchor.href, window.location.href);
+      if (!["http:", "https:"].includes(link.protocol) || link.origin === window.location.origin) return;
+      event.preventDefault();
+      show(anchor.href);
     };
-    const onLeave = (e: Event) => show((e as CustomEvent<string>).detail);
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && tl.current && tl.current.progress() > 0 && !tl.current.reversed()) {
-        tl.current.timeScale(1.8).reverse();
+    const leave = (event: Event) => show((event as CustomEvent<string>).detail);
+    const press = (event: KeyboardEvent) => {
+      if (
+        event.key === "Escape" &&
+        timeline.current &&
+        timeline.current.progress() > 0 &&
+        !timeline.current.reversed()
+      ) {
+        timeline.current.timeScale(1.8).reverse();
       }
     };
-    document.addEventListener("click", onClick);
-    window.addEventListener(LEAVE_EVENT, onLeave);
-    window.addEventListener("keydown", onKey);
+    document.addEventListener("click", click);
+    window.addEventListener("commons:leave", leave);
+    window.addEventListener("keydown", press);
     return () => {
-      document.removeEventListener("click", onClick);
-      window.removeEventListener(LEAVE_EVENT, onLeave);
-      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("click", click);
+      window.removeEventListener("commons:leave", leave);
+      window.removeEventListener("keydown", press);
     };
   }, []);
 
-  const go = () => {
-    if (url) window.open(url, "_blank", "noopener,noreferrer");
-    close();
-  };
-
-  const host = url ? new URL(url).hostname.replace(/^www\./, "") : "";
+  const host = address ? new URL(address).hostname.replace(/^www\./, "") : "";
 
   return (
     <div ref={root} className="invisible fixed inset-0 z-[80] flex items-end justify-center p-4 sm:items-center">
@@ -131,8 +133,11 @@ export function ExitModal() {
           </button>
           <button
             type="button"
-            ref={confirmBtn}
-            onClick={go}
+            ref={button}
+            onClick={() => {
+              if (address) window.open(address, "_blank", "noopener,noreferrer");
+              close();
+            }}
             className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-ink"
           >
             Continue ↗

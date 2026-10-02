@@ -1,11 +1,14 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 import { SITE } from "../data";
-import { Ext } from "./Ext";
-import { gsap, useGSAP } from "./gsap";
 
-export function LearnHouse() {
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+export function Courses() {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -37,21 +40,23 @@ export function LearnHouse() {
         </div>
         <div className="flex flex-col items-start gap-4 overflow-hidden md:col-span-5 md:items-end">
           <ul className="lh-rise flex flex-wrap gap-2 text-sm md:justify-end">
-            {["Courses", "Lessons", "Progress"].map((t) => (
-              <li key={t} className="rounded-full border border-white/20 px-3 py-1">
-                {t}
+            {["Courses", "Lessons", "Progress"].map((tag) => (
+              <li key={tag} className="rounded-full border border-white/20 px-3 py-1">
+                {tag}
               </li>
             ))}
           </ul>
-          <Ext
+          <a
             href={SITE.learnhouse}
+            target="_blank"
+            rel="noopener noreferrer"
             className="lh-rise group inline-flex items-center gap-3 rounded-full bg-accent py-3 pr-3 pl-6 font-medium"
           >
             Open courses
             <span className="grid h-8 w-8 place-items-center rounded-full bg-ink transition-transform duration-500 group-hover:rotate-45">
               ↗
             </span>
-          </Ext>
+          </a>
         </div>
       </div>
     </section>

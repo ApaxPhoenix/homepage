@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const config: NextConfig = {
   // Emit a fully static site into ./out for GitHub Pages.
   output: "export",
   // Project pages live under /<repo>; the Pages workflow passes that prefix in.
@@ -8,4 +8,4 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
 };
 
-export default nextConfig;
+export default config;

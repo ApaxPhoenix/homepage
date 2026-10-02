@@ -1,14 +1,17 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
-import { NAV, SITE } from "../data";
-import { gsap, onIntroDone, ScrollTrigger, useGSAP } from "./gsap";
-import { lockScroll, scrollToHash } from "./SmoothScroll";
+import { SECTIONS, SITE } from "../data";
 
-export function Nav() {
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+export function Header() {
   const bar = useRef<HTMLElement>(null);
   const menu = useRef<HTMLDivElement>(null);
-  const menuTl = useRef<gsap.core.Timeline | null>(null);
+  const timeline = useRef<gsap.core.Timeline | null>(null);
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState("");
 
@@ -16,7 +19,7 @@ export function Nav() {
     gsap.set(bar.current, { yPercent: -100 });
 
     // Full-screen mobile menu: panel wipes down, links rise in.
-    menuTl.current = gsap
+    timeline.current = gsap
       .timeline({ paused: true })
       .set(menu.current, { autoAlpha: 1, immediateRender: false })
       .fromTo(
@@ -28,23 +31,23 @@ export function Nav() {
       .from(".menu-foot", { autoAlpha: 0, y: 20, duration: 0.5 }, "-=0.5");
 
     // Highlight the nav link for the section in the middle of the screen.
-    NAV.forEach((item) => {
-      if (!document.querySelector(item.href)) return;
+    for (const section of SECTIONS) {
+      if (!document.querySelector(section.href)) continue;
       ScrollTrigger.create({
-        trigger: item.href,
+        trigger: section.href,
         start: "top center",
         end: "bottom center",
         onToggle: (self) => {
-          if (self.isActive) setCurrent(item.href);
-          else setCurrent((c) => (c === item.href ? "" : c));
+          if (self.isActive) setCurrent(section.href);
+          else setCurrent((active) => (active === section.href ? "" : active));
         },
       });
-    });
+    }
 
-    const off = onIntroDone(() => {
+    // Slides in once the loader is done, then hides when scrolling down and
+    // comes back when scrolling up.
+    const reveal = () => {
       gsap.to(bar.current, { yPercent: 0, duration: 1, ease: "expo.out", delay: 0.6 });
-
-      // Hide when scrolling down, reveal when scrolling up.
       ScrollTrigger.create({
         start: 200,
         end: "max",
@@ -57,29 +60,17 @@ export function Nav() {
           });
         },
       });
-    });
-    return off;
+    };
+    if (document.documentElement.dataset.intro) reveal();
+    else window.addEventListener("commons:intro", reveal, { once: true });
+    return () => window.removeEventListener("commons:intro", reveal);
   });
 
   const toggle = (next = !open) => {
     setOpen(next);
-    if (next) menuTl.current?.timeScale(1).play();
-    else menuTl.current?.timeScale(1.6).reverse();
-    lockScroll("menu", next);
-  };
-
-  const go = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    toggle(false);
-    scrollToHash(href);
-  };
-
-  const hover = (e: React.MouseEvent<HTMLAnchorElement>, enter: boolean) => {
-    gsap.to(e.currentTarget.querySelectorAll(".roll"), {
-      yPercent: enter ? -100 : 0,
-      duration: 0.45,
-      ease: "power3.out",
-    });
+    if (next) timeline.current?.timeScale(1).play();
+    else timeline.current?.timeScale(1.6).reverse();
+    window.dispatchEvent(new CustomEvent(next ? "commons:lock" : "commons:unlock", { detail: "menu" }));
   };
 
   return (
@@ -95,18 +86,30 @@ export function Nav() {
             {SITE.name}
           </a>
           <nav className="hidden gap-7 text-sm lg:flex">
-            {NAV.map((item) => (
+            {SECTIONS.map((section) => (
               <a
-                key={item.href}
-                href={item.href}
-                onMouseEnter={(e) => hover(e, true)}
-                onMouseLeave={(e) => hover(e, false)}
-                aria-current={current === item.href ? "location" : undefined}
-                className={`relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === item.href ? "text-accent" : ""}`}
+                key={section.href}
+                href={section.href}
+                onMouseEnter={(event) =>
+                  gsap.to(event.currentTarget.querySelectorAll(".roll"), {
+                    yPercent: -100,
+                    duration: 0.45,
+                    ease: "power3.out",
+                  })
+                }
+                onMouseLeave={(event) =>
+                  gsap.to(event.currentTarget.querySelectorAll(".roll"), {
+                    yPercent: 0,
+                    duration: 0.45,
+                    ease: "power3.out",
+                  })
+                }
+                aria-current={current === section.href ? "location" : undefined}
+                className={`relative block h-[1.25em] overflow-hidden leading-[1.25em] transition-colors ${current === section.href ? "text-accent" : ""}`}
               >
-                <span className="roll block">{item.label}</span>
+                <span className="roll block">{section.label}</span>
                 <span className="roll block" aria-hidden>
-                  {item.label}
+                  {section.label}
                 </span>
               </a>
             ))}
@@ -130,21 +133,25 @@ export function Nav() {
         className="invisible fixed inset-0 z-40 flex flex-col justify-between overflow-y-auto bg-ink px-4 pt-24 pb-8 text-paper lg:hidden"
       >
         <nav className="flex flex-col">
-          {NAV.map((item, i) => (
-            <span key={item.href} className="overflow-hidden border-b border-white/15">
+          {SECTIONS.map((section, index) => (
+            <span key={section.href} className="overflow-hidden border-b border-white/15">
               <a
-                href={item.href}
-                onClick={(e) => go(e, item.href)}
+                href={section.href}
+                onClick={(event) => {
+                  event.preventDefault();
+                  toggle(false);
+                  window.dispatchEvent(new CustomEvent("commons:scroll", { detail: section.href }));
+                }}
                 className="menu-link font-display flex items-baseline justify-between py-3 text-5xl font-semibold tracking-tight"
               >
-                {item.label}
-                <span className="text-sm font-normal text-white/40">0{i + 1}</span>
+                {section.label}
+                <span className="text-sm font-normal text-white/40">0{index + 1}</span>
               </a>
             </span>
           ))}
         </nav>
         <div className="menu-foot text-sm text-white/60">
-          <p>{SITE.fullName}</p>
+          <p>{SITE.title}</p>
           <p>{SITE.location}</p>
         </div>
       </div>

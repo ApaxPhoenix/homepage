@@ -1,20 +1,23 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "./gsap";
-import { scrollToHash } from "./SmoothScroll";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // Floating button that pops in once you're a screen or two down the page.
-export function BackToTop() {
-  const btn = useRef<HTMLButtonElement>(null);
+export function Top() {
+  const button = useRef<HTMLButtonElement>(null);
 
   useGSAP(() => {
-    gsap.set(btn.current, { autoAlpha: 0, scale: 0.6, y: 20 });
+    gsap.set(button.current, { autoAlpha: 0, scale: 0.6, y: 20 });
     ScrollTrigger.create({
       start: () => window.innerHeight * 1.5,
       end: "max",
       onToggle: (self) =>
-        gsap.to(btn.current, {
+        gsap.to(button.current, {
           autoAlpha: self.isActive ? 1 : 0,
           scale: self.isActive ? 1 : 0.6,
           y: self.isActive ? 0 : 20,
@@ -27,8 +30,8 @@ export function BackToTop() {
   return (
     <button
       type="button"
-      ref={btn}
-      onClick={() => scrollToHash("#top")}
+      ref={button}
+      onClick={() => window.dispatchEvent(new CustomEvent("commons:scroll", { detail: "#top" }))}
       aria-label="Back to top"
       className="fixed right-4 bottom-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-ink text-lg text-paper shadow-lg transition-colors hover:bg-accent sm:right-8 sm:bottom-8"
     >

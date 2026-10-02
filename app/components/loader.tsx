@@ -1,19 +1,22 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useRef } from "react";
 import { SITE } from "../data";
-import { gsap, INTRO_EVENT, useGSAP } from "./gsap";
-import { lockScroll } from "./SmoothScroll";
 
-export function Preloader() {
+gsap.registerPlugin(useGSAP);
+
+export function Loader() {
   const root = useRef<HTMLDivElement>(null);
   const count = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
+      // Lets the header and hero know they can animate in.
       const finish = () => {
-        (window as Window & { __introDone?: boolean }).__introDone = true;
-        window.dispatchEvent(new Event(INTRO_EVENT));
+        document.documentElement.dataset.intro = "done";
+        window.dispatchEvent(new Event("commons:intro"));
       };
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -22,13 +25,13 @@ export function Preloader() {
         return;
       }
 
-      const counter = { v: 0 };
-      lockScroll("preloader", true);
+      const counter = { value: 0 };
+      window.dispatchEvent(new CustomEvent("commons:lock", { detail: "loader" }));
 
       gsap
         .timeline({
           onComplete: () => {
-            lockScroll("preloader", false);
+            window.dispatchEvent(new CustomEvent("commons:unlock", { detail: "loader" }));
             gsap.set(root.current, { display: "none" });
           },
         })
@@ -36,11 +39,11 @@ export function Preloader() {
         .to(
           counter,
           {
-            v: 100,
+            value: 100,
             duration: 1.6,
             ease: "power2.inOut",
             onUpdate: () => {
-              if (count.current) count.current.textContent = String(Math.round(counter.v)).padStart(3, "0");
+              if (count.current) count.current.textContent = String(Math.round(counter.value)).padStart(3, "0");
             },
           },
           0,
@@ -61,14 +64,14 @@ export function Preloader() {
     >
       <div className="flex justify-between text-xs uppercase tracking-widest text-white/60">
         <span>Loading</span>
-        <span>{SITE.fullName}</span>
+        <span>{SITE.title}</span>
       </div>
       <div className="font-display text-[17vw] leading-none font-semibold tracking-tighter">
         <span className="split-mask">
-          {[...SITE.wordmark].map((ch, i) => (
+          {[...SITE.wordmark].map((letter, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: static text, never reorders
-            <span key={i} className="pl-letter inline-block">
-              {ch}
+            <span key={index} className="pl-letter inline-block">
+              {letter}
             </span>
           ))}
         </span>

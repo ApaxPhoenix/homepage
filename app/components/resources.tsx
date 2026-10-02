@@ -1,27 +1,30 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
-import { NOODLETOOLS, RESOURCE_GROUPS } from "../data";
-import { Ext } from "./Ext";
-import { gsap, ScrollTrigger, useGSAP } from "./gsap";
+import { NOODLETOOLS, RESOURCES } from "../data";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function Resources() {
   const root = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(0);
   const [filter, setFilter] = useState("");
-  const q = filter.trim().toLowerCase();
-  const matches = q
-    ? RESOURCE_GROUPS.flatMap((g) =>
-        g.links
-          .filter((l) => `${l.label} ${l.note ?? ""} ${g.title}`.toLowerCase().includes(q))
-          .map((l) => ({ ...l, group: g.title })),
+  const term = filter.trim().toLowerCase();
+  const matches = term
+    ? RESOURCES.flatMap((group) =>
+        group.links
+          .filter((link) => `${link.label} ${link.note ?? ""} ${group.title}`.toLowerCase().includes(term))
+          .map((link) => ({ ...link, group: group.title })),
       )
     : [];
 
   const { contextSafe } = useGSAP(
     () => {
-      gsap.set(".res-body", { height: (i: number) => (i === 0 ? "auto" : "0px") });
-      gsap.set(".res-icon", { rotate: (i: number) => (i === 0 ? 45 : 0) });
+      gsap.set(".res-body", { height: (index: number) => (index === 0 ? "auto" : "0px") });
+      gsap.set(".res-icon", { rotate: (index: number) => (index === 0 ? 45 : 0) });
 
       gsap.from(".noodle > *", {
         y: 40,
@@ -44,27 +47,31 @@ export function Resources() {
     { scope: root },
   );
 
-  const toggle = contextSafe((i: number) => {
-    const next = open === i ? -1 : i;
+  const toggle = contextSafe((index: number) => {
+    const next = open === index ? -1 : index;
     const bodies = gsap.utils.toArray<HTMLElement>(".res-body");
-    bodies.forEach((el, j) => {
-      gsap.to(el, {
-        height: j === next ? "auto" : 0,
+    bodies.forEach((body, position) => {
+      gsap.to(body, {
+        height: position === next ? "auto" : 0,
         duration: 0.7,
         ease: "expo.inOut",
         overwrite: true,
         // Page height changed, so later scroll animations need new positions.
-        onComplete: j === bodies.length - 1 ? () => ScrollTrigger.refresh() : undefined,
+        onComplete: position === bodies.length - 1 ? () => ScrollTrigger.refresh() : undefined,
       });
-      if (j === next) {
+      if (position === next) {
         gsap.fromTo(
-          el.querySelectorAll(".res-link"),
+          body.querySelectorAll(".res-link"),
           { y: 24, autoAlpha: 0 },
           { y: 0, autoAlpha: 1, stagger: 0.04, duration: 0.6, delay: 0.2, ease: "power3.out" },
         );
       }
     });
-    gsap.to(".res-icon", { rotate: (j: number) => (j === next ? 45 : 0), duration: 0.5, ease: "power3.out" });
+    gsap.to(".res-icon", {
+      rotate: (position: number) => (position === next ? 45 : 0),
+      duration: 0.5,
+      ease: "power3.out",
+    });
     setOpen(next);
   });
 
@@ -96,25 +103,29 @@ export function Resources() {
             </div>
             <div className="flex flex-col gap-5 lg:items-end">
               <ul className="flex flex-wrap gap-2 lg:justify-end">
-                {NOODLETOOLS.features.map((f) => (
-                  <li key={f} className="rounded-full border border-ink/25 px-3 py-1 text-sm">
-                    {f}
+                {NOODLETOOLS.features.map((feature) => (
+                  <li key={feature} className="rounded-full border border-ink/25 px-3 py-1 text-sm">
+                    {feature}
                   </li>
                 ))}
               </ul>
               <div className="flex flex-wrap gap-2">
-                <Ext
+                <a
                   href={NOODLETOOLS.student}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-paper hover:text-ink"
                 >
                   Student login ↗
-                </Ext>
-                <Ext
+                </a>
+                <a
                   href={NOODLETOOLS.teacher}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="rounded-full border border-ink px-5 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-paper"
                 >
                   Teacher login ↗
-                </Ext>
+                </a>
               </div>
             </div>
           </div>
@@ -125,7 +136,7 @@ export function Resources() {
             <span className="sr-only">Filter resources</span>
             <input
               value={filter}
-              onChange={(e) => setFilter(e.target.value)}
+              onChange={(event) => setFilter(event.target.value)}
               placeholder="Filter resources — try “history”, “citation” or “college”"
               className="min-w-0 flex-1 bg-transparent text-paper outline-none placeholder:text-white/40"
             />
@@ -141,24 +152,26 @@ export function Resources() {
             )}
           </label>
 
-          {q && (
+          {term && (
             <div aria-live="polite" className="mb-12">
               <p className="mb-4 text-sm text-white/50">
                 {matches.length} {matches.length === 1 ? "match" : "matches"}
               </p>
               <div className="grid gap-2 sm:grid-cols-2">
-                {matches.map((l) => (
-                  <Ext
-                    key={l.group + l.label}
-                    href={l.href}
+                {matches.map((link) => (
+                  <a
+                    key={link.group + link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group/link flex items-center justify-between gap-4 rounded-xl bg-white/5 px-4 py-3 transition-colors hover:bg-accent"
                   >
                     <span>
-                      <span className="block font-medium">{l.label}</span>
-                      <span className="block text-xs text-white/50 group-hover/link:text-white/80">{l.group}</span>
+                      <span className="block font-medium">{link.label}</span>
+                      <span className="block text-xs text-white/50 group-hover/link:text-white/80">{link.group}</span>
                     </span>
                     <span className="transition-transform duration-300 group-hover/link:rotate-45">↗</span>
-                  </Ext>
+                  </a>
                 ))}
               </div>
               {matches.length === 0 && (
@@ -167,19 +180,19 @@ export function Resources() {
             </div>
           )}
 
-          <ul className={`res-list ${q ? "hidden" : ""}`}>
-            {RESOURCE_GROUPS.map((g, i) => (
-              <li key={g.title} className="res-item border-t border-white/20 last:border-b">
+          <ul className={`res-list ${term ? "hidden" : ""}`}>
+            {RESOURCES.map((group, index) => (
+              <li key={group.title} className="res-item border-t border-white/20 last:border-b">
                 <button
                   type="button"
-                  onClick={() => toggle(i)}
-                  aria-expanded={open === i}
+                  onClick={() => toggle(index)}
+                  aria-expanded={open === index}
                   className="group flex w-full items-center justify-between gap-6 py-6 text-left sm:py-8"
                 >
                   <span className="flex min-w-0 items-baseline gap-4 sm:gap-8">
-                    <span className="text-sm text-white/40 tabular-nums">0{i + 1}</span>
+                    <span className="text-sm text-white/40 tabular-nums">0{index + 1}</span>
                     <span className="font-display text-2xl font-medium tracking-tight transition-colors group-hover:text-accent sm:text-4xl">
-                      {g.title}
+                      {group.title}
                     </span>
                   </span>
                   <span className="res-icon grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/30 text-xl">
@@ -188,24 +201,26 @@ export function Resources() {
                 </button>
                 <div className="res-body overflow-hidden">
                   <div className="pb-8 sm:pl-14">
-                    <p className="mb-5 max-w-xl text-white/60">{g.intro}</p>
+                    <p className="mb-5 max-w-xl text-white/60">{group.intro}</p>
                     <div className="grid gap-2 sm:grid-cols-2">
-                      {g.links.map((l) => (
-                        <Ext
-                          key={l.label}
-                          href={l.href}
+                      {group.links.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="res-link group/link flex items-center justify-between gap-4 rounded-xl bg-white/5 px-4 py-3 transition-colors hover:bg-accent"
                         >
                           <span>
-                            <span className="block font-medium">{l.label}</span>
-                            {l.note && (
+                            <span className="block font-medium">{link.label}</span>
+                            {link.note && (
                               <span className="block text-xs text-white/50 group-hover/link:text-white/80">
-                                {l.note}
+                                {link.note}
                               </span>
                             )}
                           </span>
                           <span className="transition-transform duration-300 group-hover/link:rotate-45">↗</span>
-                        </Ext>
+                        </a>
                       ))}
                     </div>
                   </div>

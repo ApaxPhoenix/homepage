@@ -1,9 +1,13 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 
-const ITEMS = ["Read", "Research", "Create", "Make", "Reflect", "Connect"];
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const WORDS = ["Read", "Research", "Create", "Make", "Reflect", "Connect"];
 
 // Infinite ticker whose speed and direction follow scroll velocity.
 export function Marquee() {
@@ -20,29 +24,29 @@ export function Marquee() {
         start: "top bottom",
         end: "bottom top",
         onUpdate: (self) => {
-          const v = self.getVelocity() / 300;
-          const dir = self.direction;
-          gsap.to(loop, { timeScale: dir * Math.max(1, Math.abs(v)), duration: 0.2, overwrite: true });
-          gsap.to(loop, { timeScale: dir, duration: 1, delay: 0.2, ease: "power2.out" });
-          gsap.to(".mq-star", { rotate: `+=${dir * 45}`, duration: 0.6, overwrite: "auto" });
+          const velocity = self.getVelocity() / 300;
+          const direction = self.direction;
+          gsap.to(loop, { timeScale: direction * Math.max(1, Math.abs(velocity)), duration: 0.2, overwrite: true });
+          gsap.to(loop, { timeScale: direction, duration: 1, delay: 0.2, ease: "power2.out" });
+          gsap.to(".mq-star", { rotate: `+=${direction * 45}`, duration: 0.6, overwrite: "auto" });
         },
       });
     },
     { scope: root },
   );
 
-  const row = ["a", "b"].flatMap((pass) => ITEMS.map((item) => ({ key: `${pass}-${item}`, item })));
+  const row = ["a", "b"].flatMap((pass) => WORDS.map((word) => ({ key: `${pass}-${word}`, word })));
   return (
     <div ref={root} className="overflow-hidden border-y border-ink bg-accent py-5 text-ink">
       <div className="mq-track flex w-max">
-        {[0, 1].map((dup) => (
-          <div key={dup} className="flex shrink-0" aria-hidden={dup === 1}>
-            {row.map(({ key, item }) => (
+        {[0, 1].map((copy) => (
+          <div key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
+            {row.map(({ key, word }) => (
               <span
                 key={key}
                 className="font-display flex items-center gap-8 pr-8 text-4xl font-medium tracking-tight sm:text-6xl"
               >
-                {item}
+                {word}
                 <span className="mq-star inline-block">✦</span>
               </span>
             ))}
