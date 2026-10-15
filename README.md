@@ -23,3 +23,5 @@ npm run build      # static export to ./out
 Every push to `main` runs `.github/workflows/nextjs.yml`: `npm ci`, `biome ci`, `next build`, then publishes `./out` to GitHub Pages, served at the root of [lhscommons.org](https://lhscommons.org).
 
 On GitLab, `.gitlab-ci.yml` does the same on the default branch and publishes to GitLab Pages. The build reads `CI_PAGES_URL`, so the site also works when GitLab serves it under a `/<project>` folder.
+
+E
