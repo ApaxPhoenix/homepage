@@ -1,0 +1,76 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+:root {
+  --ink: #000000;
+  --paper: #ffffff;
+  --accent: #ff3c00;
+  --muted: #6b6b6b;
+  --line: #e6e6e6;
+  --soft: #f3f3f3;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-soft: var(--soft);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), system-ui, sans-serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+/* Split text helpers: each word/char is clipped so it can slide up into view. */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room below the baseline so g, y and commas aren't clipped. */
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+.split-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.has-cursor,
+  body.has-cursor a,
+  body.has-cursor button {
+    cursor: none;
+  }
+}
+
+/* Loading placeholder for book covers and search results. */
+.shimmer {
+  background: linear-gradient(100deg, var(--line) 40%, var(--soft) 50%, var(--line) 60%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+  }
+}
